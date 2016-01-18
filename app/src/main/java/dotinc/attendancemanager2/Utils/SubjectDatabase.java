@@ -59,10 +59,11 @@ public class SubjectDatabase extends SQLiteOpenHelper {
                 subjectsList.setSubjectName(cursor.getString(1));
                 SubjectName.add(subjectsList);
             } while (cursor.moveToNext());
-        }
-        else {
-            Log.d("option_cur","null");
+        } else {
+            Log.d("option_cur", "null");
         }
         return SubjectName;
     }
+
+
 }
