@@ -1,18 +1,23 @@
 package dotinc.attendancemanager2.Objects;
 
 /**
- * Created by vellapanti on 17/1/16.
+ * Created by vellapanti on 18/1/16.
  */
-public class SubjectsList {
-
+public class TimeTableList {
     int id;
     String subjectName;
+    int dayCode;
 
-    public SubjectsList(int id, String subjectName) {
+
+    public void TimeTableList() {
+    }
+
+    public void TimeTableList(int id, int dayCode, String subjectName) {
         this.id = id;
+        this.dayCode = dayCode;
         this.subjectName = subjectName;
     }
-    public SubjectsList(){}
+
     public int getId() {
         return id;
     }
@@ -27,6 +32,14 @@ public class SubjectsList {
 
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
+    }
+
+    public int getDayCode() {
+        return dayCode;
+    }
+
+    public void setDayCode(int dayCode) {
+        this.dayCode = dayCode;
     }
 
 

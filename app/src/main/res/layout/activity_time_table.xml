@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="dotinc.attendancemanager2.TimeTableActivity">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/action_bar" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:gravity="center"
+        android:id="@+id/day"
+        android:text="Monday"
+        android:textSize="34sp"
+        android:layout_centerHorizontal="true"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/timetable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/day" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_subjects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_add_white_24dp"
+        app:layout_anchorGravity="bottom|center"
+        android:layout_alignParentBottom="true"/>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/next_day"
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
+        android:src="@mipmap/ic_navigate_next_white_24dp"
+        android:background="@android:color/transparent"/>
+
+</RelativeLayout>
