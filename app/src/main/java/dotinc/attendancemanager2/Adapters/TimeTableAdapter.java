@@ -2,6 +2,7 @@ package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public TimeTableAdapter(Context context,ArrayList<TimeTableList> arrayList){
         this.context=context;
         this.arrayList=arrayList;
+        Log.d("option_Arr",arrayList.get(0).getSubjectName());
         inflater=LayoutInflater.from(context);
     }
 

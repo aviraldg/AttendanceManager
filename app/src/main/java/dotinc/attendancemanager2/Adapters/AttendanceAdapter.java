@@ -7,12 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.Objects.DayWiseList;
-import dotinc.attendancemanager2.Objects.SubjectsList;
+import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.R;
 
 /**
@@ -20,10 +19,10 @@ import dotinc.attendancemanager2.R;
  */
 public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
-    ArrayList<DayWiseList> arrayList;
+    ArrayList<TimeTableList> arrayList;
     LayoutInflater inflater;
 
-    public AttendanceAdapter(Context context, ArrayList<DayWiseList> arrayList) {
+    public AttendanceAdapter(Context context, ArrayList<TimeTableList> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         inflater = LayoutInflater.from(context);
@@ -33,20 +32,20 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view =  inflater.inflate(R.layout.custom_daywise_subjects,parent,false);
-        AttendanceViewHolder viewHolder =  new AttendanceViewHolder(view);
+        View view = inflater.inflate(R.layout.custom_daywise_subjects, parent, false);
+        AttendanceViewHolder viewHolder = new AttendanceViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        AttendanceViewHolder viewHolder =(AttendanceViewHolder)holder;
-        viewHolder.subject.setText(arrayList.get(position));
+        AttendanceViewHolder viewHolder = (AttendanceViewHolder) holder;
+        viewHolder.subject.setText(arrayList.get(position).getSubjectName());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return arrayList.size();
     }
 
     static class AttendanceViewHolder extends RecyclerView.ViewHolder {
@@ -54,7 +53,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public AttendanceViewHolder(View itemView) {
             super(itemView);
-            subject= (TextView) itemView.findViewById(R.id.daywise_subject);
+            subject = (TextView) itemView.findViewById(R.id.daywise_subject);
 
         }
     }
