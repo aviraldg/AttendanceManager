@@ -56,6 +56,7 @@ public class SubjectsActivity extends AppCompatActivity {
                         arrayList = database.getAllSubjects();
                         Log.d("option_subject",arrayList.get(arrayList.size()-1).getSubjectName());
                         adapter.notifyDataSetChanged();
+                        database.toast();
 
                     }
                 });
@@ -73,8 +74,10 @@ public class SubjectsActivity extends AppCompatActivity {
     }
 
     private void instantiate() {
+
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("NearBy");
         database = new SubjectDatabase(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);

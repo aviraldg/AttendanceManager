@@ -31,7 +31,8 @@ public class TimeTableActivity extends AppCompatActivity {
     private FloatingActionButton add_subject;
     private ImageButton next;
     private ArrayAdapter<String> arrayAdapter;
-    private  ArrayList<SubjectsList> subjectsListArrayList;
+    private ArrayList<SubjectsList> subjectsNameList;
+    private int day_code;
     ArrayList<String> subjects;
     ArrayList<TimeTableList> arrayList;
     TimeTableAdapter adapter;
@@ -51,6 +52,60 @@ public class TimeTableActivity extends AppCompatActivity {
                 addTimetable();
             }
         });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateDayCode();
+            }
+        });
+    }
+
+    private void updateDayCode() {
+        day_code++;
+        database.toast();
+        switch (day_code) {
+            case 1:
+                day.setText("Monday");
+                arrayList.clear();
+                timeTableList.setDayCode(day_code);
+                database.getSubjects(timeTableList);
+                adapter.notifyDataSetChanged();
+                break;
+            case 2:
+                day.setText("Tuesday");
+                arrayList.clear();
+                timeTableList.setDayCode(day_code);
+                database.getSubjects(timeTableList);
+                //Log.d("option_su",arrayList.get(0).getSubjectName());
+                adapter.notifyDataSetChanged();
+                break;
+            case 3:
+                day.setText("Wednesday");
+                arrayList.clear();
+                timeTableList.setDayCode(day_code);
+                database.getSubjects(timeTableList);
+                adapter.notifyDataSetChanged();
+                break;
+            case 4:
+                day.setText("Thursday");
+                arrayList.clear();
+                timeTableList.setDayCode(day_code);
+                database.getSubjects(timeTableList);
+                adapter.notifyDataSetChanged();
+                break;
+            case 5:
+                day.setText("Friday");
+                arrayList.clear();
+                timeTableList.setDayCode(day_code);
+                database.getSubjects(timeTableList);
+                adapter.notifyDataSetChanged();
+                break;
+            case 6:
+                day.setText("Saturday");
+                break;
+        }
+
     }
 
     private void addTimetable() {
@@ -58,16 +113,16 @@ public class TimeTableActivity extends AppCompatActivity {
         LayoutInflater layoutInflater = getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.subjects_list, null);
         ListView subjects_view = (ListView) view.findViewById(R.id.subjectList);
-        subjectsListArrayList = subjectDatabase.getAllSubjects();
-
-
-        for (int i = 0; i < subjectsListArrayList.size(); i++)
-            subjects.add(subjectsListArrayList.get(i).getSubjectName().toString());
+        subjectsNameList.clear();
+        subjectsNameList = subjectDatabase.getAllSubjects();
+        Log.d("option_size", String.valueOf(subjectsNameList.size()));
+        subjects.clear();
+        for (int i = 0; i < subjectsNameList.size(); i++)
+            subjects.add(subjectsNameList.get(i).getSubjectName().toString());
 
         arrayAdapter = new ArrayAdapter<String>(TimeTableActivity.this, android.R.layout.simple_list_item_1, subjects);
         subjects_view.setAdapter(arrayAdapter);
         builder.setView(view);
-
         subjects_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -81,21 +136,18 @@ public class TimeTableActivity extends AppCompatActivity {
 
     private void addSubjectToTimetable(int position) {
         String subjectSelected = subjects.get(position).toString();
-        int id =subjectsListArrayList.get(position).getId();
-        Log.d("option_position", String.valueOf(position));
+        int id = subjectsNameList.get(position).getId();
         timeTableList.setId(id);
-        timeTableList.setDayCode(0);
+        timeTableList.setDayCode(day_code);
         timeTableList.setSubjectName(subjectSelected);
         database.addTimeTable(timeTableList);
         arrayList = database.getSubjects(timeTableList);
         database.toast();
-//        for(int i =0 ;i<arrayList.size();i++)
-//            Log.d("option_name",arrayList.get(i).getSubjectName());
-        Log.d("option_timetablearr",arrayList.get(0).getSubjectName());
         adapter.notifyDataSetChanged();
     }
 
     private void instantiate() {
+        day_code = 1;
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         timeTableList = new TimeTableList();
@@ -103,12 +155,14 @@ public class TimeTableActivity extends AppCompatActivity {
         subjectsList = new SubjectsList();
         add_subject = (FloatingActionButton) findViewById(R.id.add_subjects);
         view = (RecyclerView) findViewById(R.id.timetable);
+        next = (ImageButton) findViewById(R.id.next_day);
+        day = (TextView) findViewById(R.id.day);
         view.setHasFixedSize(true);
         view.setLayoutManager(new LinearLayoutManager(this));
         arrayList = new ArrayList<>();
         subjectDatabase = new SubjectDatabase(this);
         subjects = new ArrayList<String>();
-        subjectsListArrayList= new ArrayList<>();
+        subjectsNameList = new ArrayList<>();
         arrayList = database.getSubjects(timeTableList);
         adapter = new TimeTableAdapter(this, arrayList);
         view.setAdapter(adapter);

@@ -38,24 +38,26 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-    public void toast(){
-        SQLiteDatabase dbs= this.getWritableDatabase();
 
-        String[] col={Subject_Id,Day_Code,Subjects_Selected};
-        Cursor cur=dbs.query(TimeTable_Table, col, null, null, null, null, null);
-        StringBuffer buffer=new StringBuffer();
+    public void toast() {
+        SQLiteDatabase dbs = this.getWritableDatabase();
+
+        String[] col = {Subject_Id, Day_Code, Subjects_Selected};
+        Cursor cur = dbs.query(TimeTable_Table, col, null, null, null, null, null);
+        StringBuffer buffer = new StringBuffer();
         //#2yulqqpp
-        if(cur!=null){
-            while (cur.moveToNext()){
-                int id=cur.getInt(0);
-                int dc=cur.getInt(1);
-                String subject=cur.getString(2);
-                Log.d("option_database", "id:"+String.valueOf(id)+" "+"name:"+subject+ "  "+ "dc:"+dc);
+        if (cur != null) {
+            while (cur.moveToNext()) {
+                int id = cur.getInt(0);
+                int dc = cur.getInt(1);
+                String subject = cur.getString(2);
+                Log.d("option_database", "id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc);
             }
-        }else{
+        } else {
             Log.d("option", "cursor is null");
         }
     }
+
     public void addTimeTable(TimeTableList list) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -75,7 +77,7 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         cursor.moveToFirst();
         if (cursor.moveToNext()) {
             do {
-                TimeTableList timeTableList =new TimeTableList();
+                TimeTableList timeTableList = new TimeTableList();
                 timeTableList.setId(cursor.getInt(0));
                 timeTableList.setDayCode(cursor.getInt(1));
                 timeTableList.setSubjectName(cursor.getString(2));
