@@ -76,13 +76,13 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();
         if (cursor!=null) {
-            do {
+            while (cursor.moveToNext()) {
                 TimeTableList timeTableList = new TimeTableList();
                 timeTableList.setId(cursor.getInt(0));
                 timeTableList.setDayCode(cursor.getInt(1));
                 timeTableList.setSubjectName(cursor.getString(2));
                 tableLists.add(timeTableList);
-            } while (cursor.moveToNext());
+            }
         } else {
             Log.d("option_cur", "null");
         }

@@ -2,10 +2,16 @@ package dotinc.attendancemanager2;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import dotinc.attendancemanager2.Adapters.AttendanceAdapter;
 import dotinc.attendancemanager2.Objects.TimeTableList;
@@ -16,13 +22,69 @@ public class AttendanceActivity extends AppCompatActivity {
     private RecyclerView view;
     private ArrayList<TimeTableList> arrayList;
     private Toolbar toolbar;
+    private TextView day;
     AttendanceAdapter adapter;
     AttendanceDatabase database;
     TimeTableDatabase timeTableDatabase;
+    TimeTableList timeTableList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance);
+        instantiate();
+        timetableDisplay();
     }
 
+    private void timetableDisplay() {
+        Date date = new Date();
+        String myDate;
+        SimpleDateFormat format = new SimpleDateFormat("EEE");
+        myDate = format.format(date.getTime());
+        switch (myDate) {
+            case "Mon":
+                day.setText("Monday");
+                getSubjects(1);
+            case "Tue":
+                day.setText("Tuesday");
+                getSubjects(2);
+            case "Wed":
+                day.setText("Wednesday");
+                getSubjects(3);
+            case "Thu":
+                day.setText("Thursday");
+                getSubjects(4);
+            case "Fri":
+                day.setText("Friday");
+                getSubjects(5);
+            case "Sat":
+                day.setText("Saturday");
+                getSubjects(6);
+        }
+    }
+
+    private void getSubjects(int dayCode) {
+        timeTableList.setDayCode(dayCode);
+        arrayList = timeTableDatabase.getSubjects(timeTableList);
+//        adapter.notifyDataSetChanged();
+        Log.d("option_subarr",arrayList.get(0).getSubjectName());
+    }
+
+    private void instantiate() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        day = (TextView) findViewById(R.id.day);
+        timeTableList = new TimeTableList();
+        database = new AttendanceDatabase(this);
+        timeTableDatabase = new TimeTableDatabase(this);
+        arrayList = new ArrayList<>();
+        timetableDisplay();
+        view = (RecyclerView) findViewById(R.id.days_subjects);
+        view.setHasFixedSize(true);
+        view.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new AttendanceAdapter(this, arrayList);
+        view.setAdapter(adapter);
+
+    }
 }

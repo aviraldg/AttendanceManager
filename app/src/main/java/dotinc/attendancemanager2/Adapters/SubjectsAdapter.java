@@ -62,7 +62,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     public void onClick(DialogInterface dialog, int which) {
                         String subjectName = subject.getText().toString().trim();
                         database.editSubject(subjectName,old_subject);
-                        database.toast();
+                        //database.toast();
                     }
                 });
                 builder.create().show();
@@ -79,7 +79,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     public void onClick(DialogInterface dialog, int which) {
                         String subject = arrayList.get(position).getSubjectName();
                         database.deleteSubject(subject);
-                        database.toast();
+                        //database.toast();
                     }
                 });
                 builder.create().show();

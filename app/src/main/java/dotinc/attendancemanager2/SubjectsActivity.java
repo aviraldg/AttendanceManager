@@ -76,18 +76,18 @@ public class SubjectsActivity extends AppCompatActivity {
 
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("NearBy");
-        database = new SubjectDatabase(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
-        arrayList = new ArrayList<SubjectsList>();
+        database = new SubjectDatabase(this);
+        subjectsList = new SubjectsList();
+        arrayList = new ArrayList<>();
         arrayList = database.getAllSubjects();
         recyclerView = (RecyclerView) findViewById(R.id.subjects);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new SubjectsAdapter(this, arrayList);
         recyclerView.setAdapter(adapter);
-        subjectsList = new SubjectsList();
+
     }
 
     @Override
