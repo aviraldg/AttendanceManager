@@ -1,6 +1,7 @@
 package dotinc.attendancemanager2;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,7 +64,6 @@ public class TimeTableActivity extends AppCompatActivity {
 
     private void updateDayCode() {
         day_code++;
-        database.toast();
         switch (day_code) {
             case 1:
                 day.setText("Monday");
@@ -89,6 +89,9 @@ public class TimeTableActivity extends AppCompatActivity {
                 day.setText("Saturday");
                 updateList(day_code);
                 break;
+            case 7:
+                Intent in = new Intent(this,AttendanceActivity.class);
+                startActivity(in);
         }
 
     }
@@ -97,7 +100,8 @@ public class TimeTableActivity extends AppCompatActivity {
         arrayList.clear();
         timeTableList.setDayCode(dayCode);
         arrayList = database.getSubjects(timeTableList);
-        adapter.notifyDataSetChanged();
+        adapter = new TimeTableAdapter(this,arrayList);
+        view.setAdapter(adapter);
     }
 
     private void addTimetable() {
@@ -107,7 +111,6 @@ public class TimeTableActivity extends AppCompatActivity {
         ListView subjects_view = (ListView) view.findViewById(R.id.subjectList);
         subjectsNameList.clear();
         subjectsNameList = subjectDatabase.getAllSubjects();
-        Log.d("option_size", String.valueOf(subjectsNameList.size()));
         subjects.clear();
         for (int i = 0; i < subjectsNameList.size(); i++)
             subjects.add(subjectsNameList.get(i).getSubjectName().toString());
@@ -133,7 +136,7 @@ public class TimeTableActivity extends AppCompatActivity {
         timeTableList.setSubjectName(subjectSelected);
         database.addTimeTable(timeTableList);
         arrayList = database.getSubjects(timeTableList);
-        database.toast();
+        //database.toast();
         adapter.notifyDataSetChanged();
     }
 
@@ -145,7 +148,7 @@ public class TimeTableActivity extends AppCompatActivity {
         database = new TimeTableDatabase(this);
         subjectsList = new SubjectsList();
         arrayList = new ArrayList<>();
-        subjects = new ArrayList<String>();
+        subjects = new ArrayList<>();
         subjectsNameList = new ArrayList<>();
         subjectDatabase = new SubjectDatabase(this);
         add_subject = (FloatingActionButton) findViewById(R.id.add_subjects);

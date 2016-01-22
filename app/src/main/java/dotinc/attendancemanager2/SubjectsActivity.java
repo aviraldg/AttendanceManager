@@ -54,9 +54,8 @@ public class SubjectsActivity extends AppCompatActivity {
                         subjectsList.setSubjectName(subjectName);
                         database.addsubject(subjectsList);
                         arrayList = database.getAllSubjects();
-                        Log.d("option_subject",arrayList.get(arrayList.size()-1).getSubjectName());
                         adapter.notifyDataSetChanged();
-                        database.toast();
+                        //database.toast();
 
                     }
                 });

@@ -25,8 +25,9 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public TimeTableAdapter(Context context,ArrayList<TimeTableList> arrayList){
         this.context=context;
         this.arrayList=arrayList;
-        Log.d("option_Arr",arrayList.get(0).getSubjectName());
+//        Log.d("option_Arr",arrayList.get(0).getSubjectName());
         inflater=LayoutInflater.from(context);
+  //      Log.d("option_day", String.valueOf(arrayList.get(0).getDayCode()));
     }
 
     @Override
@@ -40,6 +41,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         TimeTableViewHolder viewHolder=(TimeTableViewHolder)holder;
+     //   Log.d("option_possub",arrayList.get(position).getSubjectName());
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
     }
 

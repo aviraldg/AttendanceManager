@@ -49,18 +49,13 @@ public class SubjectDatabase extends SQLiteOpenHelper {
 
     public void editSubject(String new_subject, String old_subject) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
         String query = "UPDATE " + Subjects_Table + " SET " + Subject_List + " = '" + new_subject + "' WHERE " + Subject_List + " = '" + old_subject+"'";
-        //db.rawQuery(query, null);
         db.execSQL(query);
     }
 
     public void deleteSubject(String subject) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //ContentValues values= new ContentValues();
         String query = "DELETE FROM " + Subjects_Table + " WHERE " + Subject_List + " = '" + subject + "'";
-        Log.d("option_quer",query);
-        //db.rawQuery(query, null);
         db.execSQL(query);
     }
 
@@ -83,20 +78,20 @@ public class SubjectDatabase extends SQLiteOpenHelper {
         return SubjectName;
     }
 
-    public void toast() {
-        SQLiteDatabase dbs = this.getWritableDatabase();
-
-        String[] col = {Subject_Id, Subject_List};
-        Cursor cur = dbs.query(Subjects_Table, col, null, null, null, null, null);
-        StringBuffer buffer = new StringBuffer();
-        if (cur != null) {
-            while (cur.moveToNext()) {
-                int id = cur.getInt(0);
-                String subject = cur.getString(1);
-                Log.d("option_database", "id:" + String.valueOf(id) + " " + "name:" + subject);
-            }
-        } else {
-            Log.d("option", "cursor is null");
-        }
-    }
+//    public void toast() {
+//        SQLiteDatabase dbs = this.getWritableDatabase();
+//
+//        String[] col = {Subject_Id, Subject_List};
+//        Cursor cur = dbs.query(Subjects_Table, col, null, null, null, null, null);
+//        StringBuffer buffer = new StringBuffer();
+//        if (cur != null) {
+//            while (cur.moveToNext()) {
+//                int id = cur.getInt(0);
+//                String subject = cur.getString(1);
+//                Log.d("option_database", "id:" + String.valueOf(id) + " " + "name:" + subject);
+//            }
+//        } else {
+//            Log.d("option", "cursor is null");
+//        }
+//    }
 }
