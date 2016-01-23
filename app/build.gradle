@@ -27,4 +27,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23+'
     compile 'com.appyvet:materialrangebar:1.0'
     compile 'com.android.support:design:23+'
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
 }

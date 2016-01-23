@@ -3,19 +3,21 @@ package dotinc.attendancemanager2;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -26,9 +28,12 @@ import dotinc.attendancemanager2.Utils.SubjectDatabase;
 public class SubjectsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FloatingActionButton addSubjects;
+    private TextView subjectText;
     private ArrayList<SubjectsList> arrayList;
     private Toolbar toolbar;
     private EditText subject;
+    private LinearLayout emptyView;
+    private CoordinatorLayout root;
     SubjectsAdapter adapter;
     SubjectDatabase database;
     SubjectsList subjectsList;
@@ -39,6 +44,9 @@ public class SubjectsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subjects);
 
         instantiate();
+
+        recyclerView.setAdapter(adapter);
+
         addSubjects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,15 +60,18 @@ public class SubjectsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String subjectName = subject.getText().toString().trim();
-                        if (checkIfAlreadyEntered(subjectName) == 0) {
+                        if (checkIfAlreadyEntered(subjectName) == 0 && subjectName.length() != 0) {
                             subjectsList.setSubjectName(subjectName);
                             database.addsubject(subjectsList);
-                            arrayList = database.getAllSubjects();
+                            arrayList.clear();
+                            arrayList.addAll(database.getAllSubjects());
+                            setEmptyView(arrayList.size());
                             adapter.notifyDataSetChanged();
-                        } else
-                            Toast.makeText(SubjectsActivity.this, "Subject already entered", Toast.LENGTH_LONG).show();
-                        //database.toast();
-
+                        } else if (subjectName.length() == 0) {
+                            Snackbar.make(root, "Subject cannot be empty", Snackbar.LENGTH_LONG).show();
+                        } else {
+                            Snackbar.make(root, "Subject already entered", Snackbar.LENGTH_LONG).show();
+                        }
                     }
                 });
                 dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -89,20 +100,32 @@ public class SubjectsActivity extends AppCompatActivity {
     }
 
     private void instantiate() {
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        getSupportActionBar().setTitle("Input Subjects");
         addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
+        subjectText = (TextView) findViewById(R.id.subject_layout_title);
         database = new SubjectDatabase(this);
+        emptyView = (LinearLayout) findViewById(R.id.empty_view);
+        root = (CoordinatorLayout) findViewById(R.id.root);
         subjectsList = new SubjectsList();
-        arrayList = new ArrayList<>();
         arrayList = database.getAllSubjects();
+        setEmptyView(arrayList.size());
         recyclerView = (RecyclerView) findViewById(R.id.subjects);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new SubjectsAdapter(this, arrayList);
-        recyclerView.setAdapter(adapter);
+    }
+
+
+    public void setEmptyView(int size) {
+        if (size == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+            subjectText.setVisibility(View.GONE);
+        } else {
+            emptyView.setVisibility(View.GONE);
+            subjectText.setVisibility(View.VISIBLE);
+        }
 
     }
 
