@@ -51,15 +51,17 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder.subject.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+               // database.toast();
                 timeTableList.setSubjectName(viewHolder.subject.getText().toString());
                 timeTableList.setId(arrayList.get(position).getId());
+                timeTableList.setPosition(position);
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("DELETE");
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         database.deleteTimeTable(timeTableList);
-                        database.toast();
+                        //database.toast();
                     }
                 });
                 builder.create().show();
