@@ -1,16 +1,17 @@
 package dotinc.attendancemanager2.Adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.daimajia.swipe.SwipeLayout;
 
 import java.util.ArrayList;
 
@@ -28,66 +29,98 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     LayoutInflater inflater;
     SubjectDatabase database;
     private EditText subject;
+
     public SubjectsAdapter(Context context, ArrayList<SubjectsList> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         inflater = LayoutInflater.from(context);
         database = new SubjectDatabase(context);
-
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.custom_subjects, parent, false);
         SubjectsViewHolder viewHolder = new SubjectsViewHolder(view);
-
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         SubjectsViewHolder viewHolder = (SubjectsViewHolder) holder;
-        viewHolder.sub_name.setText(arrayList.get(position).getSubjectName());
+        viewHolder.subName.setText(arrayList.get(position).getSubjectName());
 
-        viewHolder.subject_layout.setOnClickListener(new View.OnClickListener() {
+        viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, viewHolder.swipeLayout.findViewById(R.id.right_swipe));
+        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, viewHolder.swipeLayout.findViewById(R.id.left_swipe));
+
+
+        viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
             @Override
-            public void onClick(View v) {
+            public void onStartOpen(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onOpen(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onStartClose(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onClose(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+
+            }
+
+            @Override
+            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+
+            }
+        });
+
+
+        viewHolder.delSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String subject = arrayList.get(position).getSubjectName();
+                database.deleteSubject(subject);
+
+                arrayList.remove(position);
+                ((SubjectsActivity) context).setEmptyView(arrayList.size());
+                notifyDataSetChanged();
+            }
+        });
+
+        viewHolder.editSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                View view = inflater.inflate(R.layout.add_subject, null);
-                subject = (EditText) view.findViewById(R.id.subject_name);
+                View v = inflater.inflate(R.layout.add_subject, null);
+                subject = (EditText) v.findViewById(R.id.subject_name);
+                subject.setText(arrayList.get(position).getSubjectName());
                 final String old_subject = arrayList.get(position).getSubjectName();
-                builder.setView(view);
+                builder.setView(v);
                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String subjectName = subject.getText().toString().trim();
-                        database.editSubject(subjectName,old_subject);
-                        //database.toast();
+                        database.editSubject(subjectName, old_subject);
+                        arrayList.clear();
+                        arrayList.addAll(database.getAllSubjects());
+                        notifyDataSetChanged();
                     }
                 });
                 builder.create().show();
             }
         });
-
-        viewHolder.subject_layout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("DELETE");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String subject = arrayList.get(position).getSubjectName();
-                        database.deleteSubject(subject);
-                        //database.toast();
-                    }
-                });
-                builder.create().show();
-                return true;
-            }
-        });
-
-
     }
 
     @Override
@@ -97,13 +130,16 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     static class SubjectsViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView sub_name;
-        private LinearLayout subject_layout;
+        private TextView subName;
+        private SwipeLayout swipeLayout;
+        private ImageButton editSub, delSub;
 
         public SubjectsViewHolder(View itemView) {
             super(itemView);
-            sub_name = (TextView) itemView.findViewById(R.id.subject);
-            subject_layout = (LinearLayout) itemView.findViewById(R.id.subject_root);
+            subName = (TextView) itemView.findViewById(R.id.subject);
+            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
+            editSub = (ImageButton) itemView.findViewById(R.id.edit);
+            delSub = (ImageButton) itemView.findViewById(R.id.delete_subject);
         }
     }
 }

@@ -28,6 +28,7 @@ dependencies {
     compile 'com.appyvet:materialrangebar:1.0'
     compile 'com.github.SpongeBobSun:mCalendarView:81d61a4f59'
     compile 'com.android.support:design:23+'
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
 }
 repositories {
     maven {
