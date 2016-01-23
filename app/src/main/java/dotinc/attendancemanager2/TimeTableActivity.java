@@ -115,7 +115,7 @@ public class TimeTableActivity extends AppCompatActivity {
         for (int i = 0; i < subjectsNameList.size(); i++)
             subjects.add(subjectsNameList.get(i).getSubjectName().toString());
 
-        arrayAdapter = new ArrayAdapter<String>(TimeTableActivity.this, android.R.layout.simple_list_item_1, subjects);
+        arrayAdapter = new ArrayAdapter<>(TimeTableActivity.this, android.R.layout.simple_list_item_1, subjects);
         subjects_view.setAdapter(arrayAdapter);
         builder.setView(view);
         subjects_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -133,7 +133,7 @@ public class TimeTableActivity extends AppCompatActivity {
         int id = subjectsNameList.get(position).getId();
         timeTableList.setId(id);
         timeTableList.setDayCode(day_code);
-        timeTableList.setPosition(position);
+        timeTableList.setPosition(arrayList.size());
         timeTableList.setSubjectName(subjectSelected);
         database.addTimeTable(timeTableList);
         arrayList = database.getSubjects(timeTableList);
