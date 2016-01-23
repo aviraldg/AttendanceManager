@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -51,10 +52,13 @@ public class SubjectsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String subjectName = subject.getText().toString().trim();
-                        subjectsList.setSubjectName(subjectName);
-                        database.addsubject(subjectsList);
-                        arrayList = database.getAllSubjects();
-                        adapter.notifyDataSetChanged();
+                        if (checkIfAlreadyEntered(subjectName) == 0) {
+                            subjectsList.setSubjectName(subjectName);
+                            database.addsubject(subjectsList);
+                            arrayList = database.getAllSubjects();
+                            adapter.notifyDataSetChanged();
+                        } else
+                            Toast.makeText(SubjectsActivity.this, "Subject already entered", Toast.LENGTH_LONG).show();
                         //database.toast();
 
                     }
@@ -72,9 +76,21 @@ public class SubjectsActivity extends AppCompatActivity {
         });
     }
 
+
+    private int checkIfAlreadyEntered(String subject) {
+        int flag = 0;
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (arrayList.get(i).getSubjectName().equals(subject)) {
+                flag = 1;
+                break;
+            }
+        }
+        return flag;
+    }
+
     private void instantiate() {
 
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
@@ -92,14 +108,14 @@ public class SubjectsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.subject_name,menu);
+        getMenuInflater().inflate(R.menu.subject_name, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.done){
-            Intent intent = new Intent(SubjectsActivity.this,TimeTableActivity.class);
+        if (item.getItemId() == R.id.done) {
+            Intent intent = new Intent(SubjectsActivity.this, TimeTableActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

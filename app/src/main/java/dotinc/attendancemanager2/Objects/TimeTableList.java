@@ -5,16 +5,26 @@ package dotinc.attendancemanager2.Objects;
  */
 public class TimeTableList {
     int id;
-    String subjectName;
     int dayCode;
+    int position;
+    String subjectName;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
 
     public void TimeTableList() {
     }
 
-    public void TimeTableList(int id, int dayCode, String subjectName) {
+    public void TimeTableList(int id, int dayCode, int position, String subjectName) {
         this.id = id;
         this.dayCode = dayCode;
+        this.position = position;
         this.subjectName = subjectName;
     }
 

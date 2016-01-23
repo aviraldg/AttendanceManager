@@ -33,7 +33,7 @@ public class AttendanceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance);
         instantiate();
-        timetableDisplay();
+        //timetableDisplay();
     }
 
     private void timetableDisplay() {

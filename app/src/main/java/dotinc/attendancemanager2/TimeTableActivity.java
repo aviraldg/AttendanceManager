@@ -90,7 +90,7 @@ public class TimeTableActivity extends AppCompatActivity {
                 updateList(day_code);
                 break;
             case 7:
-                Intent in = new Intent(this,AttendanceActivity.class);
+                Intent in = new Intent(this, AttendanceActivity.class);
                 startActivity(in);
         }
 
@@ -100,7 +100,7 @@ public class TimeTableActivity extends AppCompatActivity {
         arrayList.clear();
         timeTableList.setDayCode(dayCode);
         arrayList = database.getSubjects(timeTableList);
-        adapter = new TimeTableAdapter(this,arrayList);
+        adapter = new TimeTableAdapter(this, arrayList, timeTableList);
         view.setAdapter(adapter);
     }
 
@@ -133,6 +133,7 @@ public class TimeTableActivity extends AppCompatActivity {
         int id = subjectsNameList.get(position).getId();
         timeTableList.setId(id);
         timeTableList.setDayCode(day_code);
+        timeTableList.setPosition(position);
         timeTableList.setSubjectName(subjectSelected);
         database.addTimeTable(timeTableList);
         arrayList = database.getSubjects(timeTableList);
@@ -159,7 +160,7 @@ public class TimeTableActivity extends AppCompatActivity {
         view.setLayoutManager(new LinearLayoutManager(this));
         timeTableList.setDayCode(day_code);
         arrayList = database.getSubjects(timeTableList);
-        adapter = new TimeTableAdapter(this, arrayList);
+        adapter = new TimeTableAdapter(this, arrayList, timeTableList);
         view.setAdapter(adapter);
     }
 }
