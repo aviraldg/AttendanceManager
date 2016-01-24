@@ -33,7 +33,7 @@ public class AttendanceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendance);
         instantiate();
-        //timetableDisplay();
+
     }
 
     private void timetableDisplay() {
@@ -66,8 +66,6 @@ public class AttendanceActivity extends AppCompatActivity {
     private void getSubjects(int dayCode) {
         timeTableList.setDayCode(dayCode);
         arrayList = timeTableDatabase.getSubjects(timeTableList);
-//        adapter.notifyDataSetChanged();
-        Log.d("option_subarr",arrayList.get(0).getSubjectName());
     }
 
     private void instantiate() {
