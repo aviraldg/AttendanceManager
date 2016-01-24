@@ -59,6 +59,7 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         } else {
             Log.d("option", "cursor is null");
         }
+        dbs.close();
     }
 
     public void addTimeTable(TimeTableList list) {
@@ -82,8 +83,9 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
             while (cursor.moveToNext()) {
                 TimeTableList timeTableList = new TimeTableList();
                 timeTableList.setId(cursor.getInt(0));
-                timeTableList.setDayCode(cursor.getInt(1));
+                timeTableList.setDayCode(cursor.getInt(2));
                 timeTableList.setSubjectName(cursor.getString(3));
+                timeTableList.setPosition(cursor.getInt(1));
                 tableLists.add(timeTableList);
             }
         } else {

@@ -2,13 +2,12 @@ package dotinc.attendancemanager2;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,6 +40,30 @@ public class TimeTableActivity extends AppCompatActivity {
     TimeTableList timeTableList;
     TimeTableDatabase database;
     SubjectsList subjectsList;
+
+
+    private void instantiate() {
+        day_code = 1;
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        timeTableList = new TimeTableList();
+        database = new TimeTableDatabase(this);
+        subjectsList = new SubjectsList();
+        arrayList = new ArrayList<>();
+        subjects = new ArrayList<>();
+        subjectsNameList = new ArrayList<>();
+        subjectDatabase = new SubjectDatabase(this);
+        add_subject = (FloatingActionButton) findViewById(R.id.add_subjects);
+        view = (RecyclerView) findViewById(R.id.timetable);
+        next = (ImageButton) findViewById(R.id.next_day);
+        day = (TextView) findViewById(R.id.day);
+        view.setHasFixedSize(true);
+        view.setLayoutManager(new LinearLayoutManager(this));
+        timeTableList.setDayCode(day_code);
+        arrayList = database.getSubjects(timeTableList);
+        //adapter = new TimeTableAdapter(this, arrayList, timeTableList);
+        //view.setAdapter(adapter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +123,7 @@ public class TimeTableActivity extends AppCompatActivity {
         arrayList.clear();
         timeTableList.setDayCode(dayCode);
         arrayList = database.getSubjects(timeTableList);
-        adapter = new TimeTableAdapter(this, arrayList, timeTableList);
+        // adapter = new TimeTableAdapter(this, arrayList, timeTableList);
         view.setAdapter(adapter);
     }
 
@@ -139,28 +162,5 @@ public class TimeTableActivity extends AppCompatActivity {
         arrayList = database.getSubjects(timeTableList);
         //database.toast();
         adapter.notifyDataSetChanged();
-    }
-
-    private void instantiate() {
-        day_code = 1;
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        timeTableList = new TimeTableList();
-        database = new TimeTableDatabase(this);
-        subjectsList = new SubjectsList();
-        arrayList = new ArrayList<>();
-        subjects = new ArrayList<>();
-        subjectsNameList = new ArrayList<>();
-        subjectDatabase = new SubjectDatabase(this);
-        add_subject = (FloatingActionButton) findViewById(R.id.add_subjects);
-        view = (RecyclerView) findViewById(R.id.timetable);
-        next = (ImageButton) findViewById(R.id.next_day);
-        day = (TextView) findViewById(R.id.day);
-        view.setHasFixedSize(true);
-        view.setLayoutManager(new LinearLayoutManager(this));
-        timeTableList.setDayCode(day_code);
-        arrayList = database.getSubjects(timeTableList);
-        adapter = new TimeTableAdapter(this, arrayList, timeTableList);
-        view.setAdapter(adapter);
     }
 }

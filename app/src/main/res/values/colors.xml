@@ -5,4 +5,5 @@
     <color name="colorAccent">#388E3C</color>
     <color name="backgroundColor">#dedede</color>
     <color name="iconTintColor">#777</color>
+    <color name="emptyIconTintColor">#999</color>
 </resources>

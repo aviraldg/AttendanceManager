@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TimeTableActivity" />
-        <activity android:name=".AttendanceActivity"></activity>
+        <activity android:name=".AttendanceActivity" />
+        <activity android:name=".WeeklySubjectsActivity"></activity>
     </application>
 
 </manifest>

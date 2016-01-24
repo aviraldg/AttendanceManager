@@ -138,8 +138,11 @@ public class SubjectsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.done) {
-            Intent intent = new Intent(SubjectsActivity.this, TimeTableActivity.class);
-            startActivity(intent);
+            if (!arrayList.isEmpty()) {
+                Intent intent = new Intent(SubjectsActivity.this, WeeklySubjectsActivity.class);
+                startActivity(intent);
+            } else
+                Snackbar.make(root, "Enter atleast one subject", Snackbar.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }
