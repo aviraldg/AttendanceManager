@@ -2,12 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <sun.bob.mcalendarview.mCalendarView
-        android:id="@+id/calendar"
-        tools:context=".CalendarActivity"
-        android:layout_width="400dp"
-        android:layout_height="400dp" />
+        android:id="@+id/calendarview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

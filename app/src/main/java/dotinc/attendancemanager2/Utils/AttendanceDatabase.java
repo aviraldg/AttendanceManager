@@ -53,9 +53,10 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
                 "dae:" + attendanceList.getDate() + "pos:" + attendanceList.getPosition());
         db.close();
     }
-    public ArrayList<AttendanceList> getDates(AttendanceList list){
+    public ArrayList<AttendanceList> getDates(int id){
         ArrayList<AttendanceList> attendanceLists = new ArrayList<>();
-        String query = "SELECT * FROM "+ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = "+ list.getId();
+        String query = "SELECT * FROM "+ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = "+ id +" AND "+
+                Action + " =1";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
