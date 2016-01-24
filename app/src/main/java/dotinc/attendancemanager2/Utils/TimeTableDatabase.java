@@ -59,6 +59,7 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         } else {
             Log.d("option", "cursor is null");
         }
+        dbs.close();
     }
 
     public void addTimeTable(TimeTableList list) {

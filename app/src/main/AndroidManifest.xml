@@ -18,6 +18,7 @@
         <activity android:name=".TimeTableActivity" />
         <activity android:name=".AttendanceActivity" />
         <activity android:name=".DetailedAnalysisActivity"></activity>
+        <activity android:name=".WeeklySubjectsActivity"></activity>
     </application>
 
 </manifest>
