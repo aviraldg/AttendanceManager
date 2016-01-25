@@ -9,6 +9,9 @@ import java.util.ArrayList;
 /**
  * Created by ddvlslyr on 25/1/16.
  */
+
+// Adapter for viewpager of MainActivity(Collapsing Toolbar)
+
 public class MainViewPagerAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Fragment> list;
 

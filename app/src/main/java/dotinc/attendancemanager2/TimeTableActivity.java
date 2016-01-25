@@ -33,6 +33,7 @@ public class TimeTableActivity extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<SubjectsList> subjectsNameList;
     private int day_code;
+    private int timetableFlag;
     ArrayList<String> subjects;
     ArrayList<TimeTableList> arrayList;
     TimeTableAdapter adapter;
@@ -43,6 +44,8 @@ public class TimeTableActivity extends AppCompatActivity {
 
 
     private void instantiate() {
+        Intent intent = getIntent();
+        timetableFlag = intent.getIntExtra("timetableFlag", 0);
         day_code = 1;
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -138,7 +141,7 @@ public class TimeTableActivity extends AppCompatActivity {
         for (int i = 0; i < subjectsNameList.size(); i++)
             subjects.add(subjectsNameList.get(i).getSubjectName().toString());
 
-        arrayAdapter = new ArrayAdapter<>(TimeTableActivity.this, android.R.layout.simple_list_item_1, subjects);
+        //arrayAdapter = new ArrayAdapter<>(TimeTableActivity.this, android.R.layout.simple_list_item_1, subjects,timetableFlag);
         subjects_view.setAdapter(arrayAdapter);
         builder.setView(view);
         subjects_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {

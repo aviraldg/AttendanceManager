@@ -22,6 +22,9 @@ import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 /**
  * Created by vellapanti on 18/1/16.
  */
+
+//Adapter of WeeklySubjectsActivity*******************//
+
 public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     LayoutInflater inflater;
@@ -29,6 +32,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     ArrayList<SubjectsList> subjectsLists;
     TimeTableDatabase database;
     TimeTableList timeTableList;
+    int timetableFlag;
     private WeeklySubjectsFragment fragment;
 
     public TimeTableAdapter

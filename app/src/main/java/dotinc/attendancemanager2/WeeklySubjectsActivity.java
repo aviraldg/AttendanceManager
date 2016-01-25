@@ -32,21 +32,27 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private FloatingActionButton fab;
-    private ArrayList<Fragment> fragments;
     private String[] tabTitles;
-    private ArrayList<TimeTableList> arrayList;
 
+    private ArrayList<Fragment> fragments;
+    private ArrayList<TimeTableList> arrayList;
     private ArrayList<SubjectsList> subjectsNameList;
     private ArrayList<String> subjects;
+
     private SubjectDatabase subjectDatabase;
     private TimeTableDatabase database;
 
+
+    private int timetableFlag;
     private static int pageNumber = 1;
 
     void instantiate() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Weekly Subjects");
+
+        Intent intent = getIntent();
+        timetableFlag = intent.getIntExtra("timetableFlag", 0);
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.pager);
