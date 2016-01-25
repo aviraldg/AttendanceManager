@@ -93,25 +93,25 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         }
         return tableLists;
     }
-    public ArrayList<TimeTableList> getAllSubjects() {
-        ArrayList<TimeTableList> tableLists = new ArrayList<>();
-        String query = "SELECT * FROM " + TimeTable_Table + " GROUP BY " + Subjects_Selected;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-        if (cursor!=null) {
-            while (cursor.moveToNext()) {
-                TimeTableList timeTableList = new TimeTableList();
-                timeTableList.setId(cursor.getInt(0));
-                timeTableList.setDayCode(cursor.getInt(2));
-                timeTableList.setSubjectName(cursor.getString(3));
-                timeTableList.setPosition(cursor.getInt(1));
-                tableLists.add(timeTableList);
-            }
-        } else {
-            Log.d("option_cur", "null");
-        }
-        return tableLists;
-    }
+//    public ArrayList<TimeTableList> getAllSubjects() {
+//        ArrayList<TimeTableList> tableLists = new ArrayList<>();
+//        String query = "SELECT * FROM " + TimeTable_Table + " GROUP BY " + Subjects_Selected;
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        Cursor cursor = db.rawQuery(query, null);
+//        if (cursor!=null) {
+//            while (cursor.moveToNext()) {
+//                TimeTableList timeTableList = new TimeTableList();
+//                timeTableList.setId(cursor.getInt(0));
+//                timeTableList.setDayCode(cursor.getInt(2));
+//                timeTableList.setSubjectName(cursor.getString(3));
+//                timeTableList.setPosition(cursor.getInt(1));
+//                tableLists.add(timeTableList);
+//            }
+//        } else {
+//            Log.d("option_cur", "null");
+//        }
+//        return tableLists;
+//    }
     public void deleteTimeTable(TimeTableList list){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + TimeTable_Table+ " WHERE "+Subject_Id+" = "+list.getId()+" and "+

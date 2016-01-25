@@ -96,7 +96,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             @Override
             public void onClick(View view) {
                 Log.d("option_bind", String.valueOf(arrayList.size()));
-                fragment.deleteItem(position);
+                fragment.deleteItem(position,timeTableList);
+                update();
             }
         });
     }
@@ -106,7 +107,9 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         //Log.d("option_gic", String.valueOf(arrayList.size()));
         return arrayList.size();
     }
-
+    private void update(){
+        this.notifyDataSetChanged();
+    }
     static class TimeTableViewHolder extends RecyclerView.ViewHolder {
 
         private TextView subject;

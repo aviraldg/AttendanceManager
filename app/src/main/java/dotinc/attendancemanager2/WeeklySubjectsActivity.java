@@ -135,11 +135,12 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         TimeTableList timeTableList = new TimeTableList();
         timeTableList.setId(id);
         timeTableList.setDayCode(pageNumber);
-        timeTableList.setPosition(arrayList.size());
         timeTableList.setSubjectName(subjectSelected);
-        database.addTimeTable(timeTableList);
         arrayList = database.getSubjects(timeTableList);
+        timeTableList.setPosition(arrayList.size());
+        database.addTimeTable(timeTableList);
         database.toast();
+
     }
 
     private class PageListener extends ViewPager.SimpleOnPageChangeListener {

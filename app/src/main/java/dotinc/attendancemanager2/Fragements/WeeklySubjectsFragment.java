@@ -26,13 +26,12 @@ public class WeeklySubjectsFragment extends Fragment {
     private RecyclerView recyclerView;
     public static TimeTableAdapter adapter;
     public static int pageNumber;
-    public static TimeTableList timeTableList;
-    public static TimeTableDatabase database;
-    public static ArrayList<TimeTableList> arrayList;
+    public TimeTableList timeTableList;
+    public TimeTableDatabase database;
+    public ArrayList<TimeTableList> arrayList;
 
 
     public WeeklySubjectsFragment() {
-
     }
 
 
@@ -51,38 +50,33 @@ public class WeeklySubjectsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.d("option_c","inside");
         database = new TimeTableDatabase(getActivity());
         timeTableList = new TimeTableList();
         timeTableList.setDayCode(pageNumber);
+        database.toast();
         arrayList = database.getSubjects(timeTableList);
-        Log.d("option_size_1", String.valueOf(arrayList.size()));
         adapter = new TimeTableAdapter(getActivity(), arrayList, timeTableList, WeeklySubjectsFragment.this);
         recyclerView.setAdapter(adapter);
     }
 
-    public static void updateView() {
-        arrayList.clear();
-        timeTableList.setDayCode(pageNumber);
-        arrayList.addAll(database.getSubjects(timeTableList));
-        adapter.notifyDataSetChanged();
-    }
+//    public static void updateView() {
+//        arrayList.clear();
+//        timeTableList.setDayCode(pageNumber);
+//        arrayList.addAll(database.getSubjects(timeTableList));
+//        adapter.notifyDataSetChanged();
+//    }
 
-    public void deleteItem(int position) {
+    public void deleteItem(int position, TimeTableList timeTableList) {
         database.toast();
-        Log.d("option_po", String.valueOf(position));
-        Log.d("option_po", arrayList.get(position).getSubjectName());
-        Log.d("option_po", String.valueOf(arrayList.get(position).getPosition()));
-        Log.d("option_po", String.valueOf(arrayList.get(position).getDayCode()));
+        arrayList = database.getSubjects(timeTableList);
         timeTableList.setSubjectName(arrayList.get(position).getSubjectName());
         timeTableList.setId(arrayList.get(position).getId());
         timeTableList.setPosition(arrayList.get(position).getPosition());
         database.deleteTimeTable(timeTableList);
-
-        arrayList.clear();
-        timeTableList.setDayCode(pageNumber);
-        arrayList.addAll(database.getSubjects(timeTableList));
-        adapter.notifyDataSetChanged();
+        //arrayList.clear();
+        //timeTableList.setDayCode(pageNumber);
+        ///arrayList.addAll(database.getSubjects(timeTableList));
+        //adapter.notifyDataSetChanged();
         database.toast();
     }
 }
