@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import dotinc.attendancemanager2.Adapters.AttendanceAdapter;
+import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
+import dotinc.attendancemanager2.Utils.SubjectDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
 public class AttendanceActivity extends AppCompatActivity {
@@ -21,10 +23,12 @@ public class AttendanceActivity extends AppCompatActivity {
     private ArrayList<TimeTableList> arrayList;
     private Toolbar toolbar;
     private TextView day;
+    private ArrayList<TimeTableList> allSubjectsArrayList;      //add
     AttendanceAdapter adapter;
     AttendanceDatabase database;
     TimeTableDatabase timeTableDatabase;
     TimeTableList timeTableList;
+    SubjectDatabase subjectDatabase;                            //add
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,27 @@ public class AttendanceActivity extends AppCompatActivity {
         arrayList = timeTableDatabase.getSubjects(timeTableList);
     }
 
+    private void extraClass() {
+        timeTableList.setDayCode(6);                //daycode
+        arrayList = timeTableDatabase.getSubjects(timeTableList);
+        allSubjectsArrayList=subjectDatabase.getAllSubjectsForExtra();
+        for (int i =0;i<arrayList.size();i++)
+            Log.d("option_arl",arrayList.get(i).getSubjectName());
+        for (int i =0;i<allSubjectsArrayList.size();i++)
+            Log.d("option_all",allSubjectsArrayList.get(i).getSubjectName());
+
+        for (int i = 0; i < arrayList.size(); i++) {
+            for (int j=0;j<allSubjectsArrayList.size();j++){
+                if ((allSubjectsArrayList.get(j).getSubjectName().equals(arrayList.get(i).getSubjectName())))
+                    allSubjectsArrayList.remove(j);
+            }
+
+        }
+        for (int i =0;i<allSubjectsArrayList.size();i++)
+            Log.d("option_extra",allSubjectsArrayList.get(i).getSubjectName());
+
+    }
+
     private void instantiate() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -88,6 +113,8 @@ public class AttendanceActivity extends AppCompatActivity {
         view.setLayoutManager(new LinearLayoutManager(this));
         adapter = new AttendanceAdapter(this, arrayList);
         view.setAdapter(adapter);
-
+        allSubjectsArrayList = new ArrayList<>();               //add
+        subjectDatabase = new SubjectDatabase(this);            //add
+        extraClass();
     }
 }

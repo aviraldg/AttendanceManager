@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dotinc.attendancemanager2.Objects.SubjectsList;
+import dotinc.attendancemanager2.Objects.TimeTableList;
 
 /**
  * Created by vellapanti on 18/1/16.
@@ -70,6 +71,25 @@ public class SubjectDatabase extends SQLiteOpenHelper {
                 subjectsList.setId(cursor.getInt(0));
                 subjectsList.setSubjectName(cursor.getString(1));
                 SubjectName.add(subjectsList);
+
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("option_cur", "null");
+        }
+        return SubjectName;
+    }
+    public ArrayList<TimeTableList> getAllSubjectsForExtra() {
+        ArrayList<TimeTableList> SubjectName = new ArrayList<>();
+        String query = "SELECT * FROM " + Subjects_Table+" GROUP BY " + Subject_List
+                ;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToNext()) {
+            do {
+                TimeTableList timeTableList = new TimeTableList();
+                timeTableList.setId(cursor.getInt(0));
+                timeTableList.setSubjectName(cursor.getString(1));
+                SubjectName.add(timeTableList);
 
             } while (cursor.moveToNext());
         } else {
