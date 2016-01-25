@@ -52,16 +52,24 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     }
 
     private void addSubjects() {
-        calendarView.unMarkDate(flag[0], flag[1], flag[2]);
         for (int i = 0; i < attendanceObject.size(); i++) {
             String string = attendanceObject.get(i).getDate();
             date = string.split("-");
             for (int j = 0; j < 3; j++)
                 flag[j] = Integer.parseInt(date[j]);
-            Log.d("option_date", flag[0] + " " + flag[1] + " " + flag[2]);
-            calendarView.setMarkedStyle(MarkStyle.LEFTSIDEBAR, getResources().getColor(R.color.presentColor));
-            calendarView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-            calendarView.markDate(flag[0], flag[1], flag[2]);
+            Log.d("option_dates", String.valueOf(attendanceObject.get(i).getAction()));
+            if(attendanceObject.get(i).getAction()==1) {
+                calendarView.setMarkedStyle(MarkStyle.LEFTSIDEBAR, getResources().getColor(R.color.colorPrimaryDark));
+                calendarView.markDate(flag[0], flag[1], flag[2]);
+            }
+            else {
+                Log.d("option_el", "inside");
+                Log.d("option_date",flag[0]+" "+flag[1]+" "+flag[2]);
+                calendarView.setMarkedStyle(MarkStyle.LEFTSIDEBAR, getResources().getColor(R.color.absentColor));
+                calendarView.markDate(flag[0], flag[1], flag[2]);
+            }
+            calendarView.setBackgroundColor(getResources().getColor(R.color.backgroundColor));
+
         }
 
     }
