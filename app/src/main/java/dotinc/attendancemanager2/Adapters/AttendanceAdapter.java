@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,7 +54,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = inflater.inflate(R.layout.custom_daywise_subjects, parent, false);
+        View view = inflater.inflate(R.layout.custom_main_row, parent, false);
         AttendanceViewHolder viewHolder = new AttendanceViewHolder(view);
         return viewHolder;
     }
@@ -60,7 +62,11 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final AttendanceViewHolder viewHolder = (AttendanceViewHolder) holder;
+        int id = arrayList.get(position).getId();
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
+        viewHolder.attended.setText("Attended: " + database.totalPresent(id));
+        viewHolder.total.setText("Total: " + database.totalClasses(id));
+//        viewHolder.subject_percentage.setText(" "+ new Float(database.totalPresent(id) / database.totalClasses(id)) * 100);
         viewHolder.subject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,15 +76,12 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         addAttendance(1, position);
-                        database.addAttendance(attendanceList);
                     }
                 });
                 builder.setNegativeButton("Bunked", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         addAttendance(0, position);
-                        int i = database.totalBunked(attendanceList);
-                        Log.d("option_va", String.valueOf(i));
                     }
                 });
                 builder.create().show();
@@ -90,7 +93,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             public boolean onLongClick(View v) {
                 Log.d("option_id_l", String.valueOf(arrayList.get(position).getId()));
                 Intent intent = new Intent(context, DetailedAnalysisActivity.class);
-                intent.putExtra("id",arrayList.get(position).getId());
+                intent.putExtra("id", arrayList.get(position).getId());
                 context.startActivity(intent);
                 return true;
             }
@@ -113,13 +116,15 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     static class AttendanceViewHolder extends RecyclerView.ViewHolder {
         private TextView subject;
-
-
+        private TextView attended;
+        private TextView total;
+        private TextView subject_percentage;
         public AttendanceViewHolder(View itemView) {
             super(itemView);
-            subject = (TextView) itemView.findViewById(R.id.daywise_subject);
-
-
+            subject = (TextView) itemView.findViewById(R.id.subject_name);
+            attended = (TextView) itemView.findViewById(R.id.attended);
+            total = (TextView) itemView.findViewById(R.id.total);
+            subject_percentage= (TextView) itemView.findViewById(R.id.sub_perc);
         }
     }
 }

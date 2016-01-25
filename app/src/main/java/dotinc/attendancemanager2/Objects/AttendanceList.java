@@ -9,7 +9,26 @@ public class AttendanceList {
     int action;
     int dayCode;
     int position;
+    int total;
+    int present;
     String date;
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public int getPresent() {
+        return present;
+    }
+
+    public void setPresent(int present) {
+        this.present = present;
+    }
+
 
     public int getDayCode() {
         return dayCode;

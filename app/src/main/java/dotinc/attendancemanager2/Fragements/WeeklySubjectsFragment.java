@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,11 +51,12 @@ public class WeeklySubjectsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        Log.d("option_c","inside");
         database = new TimeTableDatabase(getActivity());
         timeTableList = new TimeTableList();
         timeTableList.setDayCode(pageNumber);
         arrayList = database.getSubjects(timeTableList);
+        Log.d("option_size_1", String.valueOf(arrayList.size()));
         adapter = new TimeTableAdapter(getActivity(), arrayList, timeTableList, WeeklySubjectsFragment.this);
         recyclerView.setAdapter(adapter);
     }
@@ -67,10 +69,11 @@ public class WeeklySubjectsFragment extends Fragment {
     }
 
     public void deleteItem(int position) {
-//        Log.d("option_po", String.valueOf(position));
-//        Log.d("option_po", arrayList.get(position).getSubjectName());
-//        Log.d("option_po", String.valueOf(arrayList.get(position).getPosition()));
-//        Log.d("option_po", String.valueOf(arrayList.get(position).getDayCode()));
+        database.toast();
+        Log.d("option_po", String.valueOf(position));
+        Log.d("option_po", arrayList.get(position).getSubjectName());
+        Log.d("option_po", String.valueOf(arrayList.get(position).getPosition()));
+        Log.d("option_po", String.valueOf(arrayList.get(position).getDayCode()));
         timeTableList.setSubjectName(arrayList.get(position).getSubjectName());
         timeTableList.setId(arrayList.get(position).getId());
         timeTableList.setPosition(arrayList.get(position).getPosition());

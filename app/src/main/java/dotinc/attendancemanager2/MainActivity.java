@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -24,14 +25,18 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import dotinc.attendancemanager2.Adapters.AttendanceAdapter;
 import dotinc.attendancemanager2.Adapters.MainViewPagerAdapter;
 import dotinc.attendancemanager2.Fragements.HeaderFragment;
 import dotinc.attendancemanager2.Fragements.SecondFragment;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 import dotinc.attendancemanager2.Utils.ProgressPageIndicator;
+import dotinc.attendancemanager2.Utils.SubjectDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,10 +52,15 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private Button attendAll;
 
+    private int dayCode;
+
+    private ArrayList<TimeTableList> allSubjectsArrayList;      //add
     private ArrayList<TimeTableList> arrayList;
+
     AttendanceDatabase database;
     TimeTableDatabase timeTableDatabase;
     TimeTableList timeTableList;
+    SubjectDatabase subjectDatabase;                            //add
 
     private Boolean isViewopened = false;
 
@@ -63,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         root = (CoordinatorLayout) findViewById(R.id.root);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
         attendAll = (Button) findViewById(R.id.attend_all);
 
@@ -80,15 +91,65 @@ public class MainActivity extends AppCompatActivity {
         pageList = new ArrayList<>();
         pageList.add(new HeaderFragment());
         pageList.add(new SecondFragment());
+        allSubjectsArrayList = new ArrayList<>();
 
         timeTableList = new TimeTableList();
         database = new AttendanceDatabase(this);
         timeTableDatabase = new TimeTableDatabase(this);
-        timeTableList.setDayCode(1);
+        subjectDatabase = new SubjectDatabase(this);
+
+        dayCode = getdaycode();
+        timeTableList.setDayCode(dayCode);
         arrayList = timeTableDatabase.getSubjects(timeTableList);
 
     }
+    private void extraClass(){
+        timeTableList.setDayCode(dayCode);                //daycode
+        arrayList = timeTableDatabase.getSubjects(timeTableList);
+        allSubjectsArrayList = subjectDatabase.getAllSubjectsForExtra();
+        for (int i = 0; i < arrayList.size(); i++)
+            Log.d("option_arl", arrayList.get(i).getSubjectName());
+        for (int i = 0; i < allSubjectsArrayList.size(); i++)
+            Log.d("option_all", allSubjectsArrayList.get(i).getSubjectName());
 
+        for (int i = 0; i < arrayList.size(); i++) {
+            for (int j = 0; j < allSubjectsArrayList.size(); j++) {
+                if ((allSubjectsArrayList.get(j).getSubjectName().equals(arrayList.get(i).getSubjectName())))
+                    allSubjectsArrayList.remove(j);
+            }
+        }
+        for (int i = 0; i < allSubjectsArrayList.size(); i++)
+            Log.d("option_extra", allSubjectsArrayList.get(i).getSubjectName());
+        exclRecyclerView.setAdapter(new AttendanceAdapter(this, allSubjectsArrayList));
+    }
+    private int getdaycode() {
+        int day_code = 1;
+        Date date = new Date();
+        String myDate;
+        SimpleDateFormat format = new SimpleDateFormat("EEE");
+        myDate = format.format(date.getTime());
+        switch (myDate) {
+            case "Mon":
+                day_code = 1;
+                break;
+            case "Tue":
+                day_code = 2;
+                break;
+            case "Wed":
+                day_code = 3;
+                break;
+            case "Thu":
+                day_code = 4;
+                break;
+            case "Fri":
+                day_code = 5;
+                break;
+            case "Sat":
+                day_code = 6;
+                break;
+        }
+        return day_code;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,18 +157,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         instantiate();
-
+        extraClass();
         getSupportActionBar().setTitle("Wednesday");
 
-
-        //recyclerView.setAdapter(new AttendanceAdapter(this, arrayList));
-        recyclerView.setAdapter(new ExampleAdapter());
+        recyclerView.setAdapter(new AttendanceAdapter(this, arrayList));
         pager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager(), pageList));
 
         pager.addOnPageChangeListener(new CustomOnPageChangeListener());
         indicator.setViewPager(pager);
 
-        exclRecyclerView.setAdapter(new ExampleAdapter());
+        exclRecyclerView.setAdapter(new AttendanceAdapter(this, arrayList));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,6 +272,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         anim.start();
+
     }
 
 
@@ -264,27 +324,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
-        @Override
-        public ExampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_main_row, parent, false);
-            return new ExampleViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(ExampleViewHolder holder, int position) {
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return 6;
-        }
-
-        class ExampleViewHolder extends RecyclerView.ViewHolder {
-            public ExampleViewHolder(View itemView) {
-                super(itemView);
-            }
-        }
-    }
+//    private class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
+//        @Override
+//        public ExampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//            View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_main_row, parent, false);
+//            return new ExampleViewHolder(view);
+//        }
+//
+//        @Override
+//        public void onBindViewHolder(ExampleViewHolder holder, int position) {
+//
+//        }
+//
+//        @Override
+//        public int getItemCount() {
+//            return 6;
+//        }
+//
+//        class ExampleViewHolder extends RecyclerView.ViewHolder {
+//            public ExampleViewHolder(View itemView) {
+//                super(itemView);
+//            }
+//        }
+//    }
 }

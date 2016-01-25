@@ -53,14 +53,15 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
                 "dae:" + attendanceList.getDate() + "pos:" + attendanceList.getPosition());
         db.close();
     }
-    public ArrayList<AttendanceList> getDates(int id){
+
+    public ArrayList<AttendanceList> getDates(int id) {
         ArrayList<AttendanceList> attendanceLists = new ArrayList<>();
-        String query = "SELECT * FROM "+ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = "+ id +
+        String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id +
                 " AND (" + Action + " =1 OR " + Action + "=0)";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        if (cursor!=null) {
+        if (cursor != null) {
             while (cursor.moveToNext()) {
                 AttendanceList attendanceList = new AttendanceList();
                 attendanceList.setId(cursor.getInt(0));
@@ -73,47 +74,48 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         }
         return attendanceLists;
     }
-    public int totalPresent(AttendanceList list) {
-        int id=0;
+
+    public int totalPresent(int id) {
+        int totalPresent = 0;
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "SELECT COUNT(" + Action + ") FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " +
-                list.getId() + " AND " + Action + " =1 ";
+                id + " AND " + Action + " =1 ";
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor != null) {
             while (cursor.moveToNext())
-                id = cursor.getInt(0);
+                totalPresent = cursor.getInt(0);
         } else
             Log.d("option", "cursor is null");
-        return id;
+        return totalPresent;
     }
 
-    public int totalBunked(AttendanceList list) {
-        int id = 0;
+    public int totalBunked(int id) {
+        int totalBunked = 0;
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "SELECT COUNT(" + Action + ") FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " +
-                list.getId() + " AND " + Action + " =0 ";
+                id + " AND " + Action + " =0 ";
         Cursor cursor = database.rawQuery(query, null);
         if (cursor != null) {
             while (cursor.moveToNext())
-                id = cursor.getInt(0);
+                totalBunked = cursor.getInt(0);
         } else
             Log.d("option", "cursor is null");
-        return id;
+        return totalBunked;
     }
 
-    public int totalClasses(AttendanceList list) {
-        int id=0;
+    public int totalClasses(int id) {
+        int totalClasses = 0;
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "SELECT COUNT(" + Action + ") FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " +
-                list.getId() + " AND (" + Action + " =1 OR " + Action + "=0)";
+                id + " AND (" + Action + " =1 OR " + Action + "=0)";
         Cursor cursor = database.rawQuery(query, null);
         if (cursor != null) {
             while (cursor.moveToNext())
-                id = cursor.getInt(0);
+                totalClasses = cursor.getInt(0);
         } else
             Log.d("option", "cursor is null");
-        return id;
+        return totalClasses;
     }
 
 }

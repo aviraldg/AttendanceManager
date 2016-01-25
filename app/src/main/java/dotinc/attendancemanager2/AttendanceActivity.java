@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -82,7 +83,7 @@ public class AttendanceActivity extends AppCompatActivity {
         arrayList = timeTableDatabase.getSubjects(timeTableList);
         allSubjectsArrayList=subjectDatabase.getAllSubjectsForExtra();
         for (int i =0;i<arrayList.size();i++)
-            Log.d("option_arl",arrayList.get(i).getSubjectName());
+            Log.d("option_arl", arrayList.get(i).getSubjectName());
         for (int i =0;i<allSubjectsArrayList.size();i++)
             Log.d("option_all",allSubjectsArrayList.get(i).getSubjectName());
 

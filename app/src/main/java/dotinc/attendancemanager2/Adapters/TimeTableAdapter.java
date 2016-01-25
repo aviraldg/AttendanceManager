@@ -2,6 +2,7 @@ package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,11 +34,12 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public TimeTableAdapter
             (Context context, ArrayList<TimeTableList> arrayList, TimeTableList timeTableList, WeeklySubjectsFragment fragment) {
         this.context = context;
-        this.arrayList = arrayList;
-        inflater = LayoutInflater.from(context);
-        database = new TimeTableDatabase(context);
         this.timeTableList = timeTableList;
         this.fragment = fragment;
+        this.arrayList = arrayList;
+        Log.d("option_ad", String.valueOf(arrayList.size()));
+        inflater = LayoutInflater.from(context);
+        database = new TimeTableDatabase(context);
         subjectsLists = new ArrayList<>();
     }
 
@@ -93,6 +95,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("option_bind", String.valueOf(arrayList.size()));
                 fragment.deleteItem(position);
             }
         });
@@ -100,6 +103,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
+        //Log.d("option_gic", String.valueOf(arrayList.size()));
         return arrayList.size();
     }
 
