@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="192dp"
+    android:background="@drawable/drawer_background">
+
+    <ImageButton
+        android:id="@+id/user_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="35dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@mipmap/ic_account_circle_white_36dp"
+        android:transitionName="profile_image_transition" />
+
+    <TextView
+        android:id="@+id/name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="35dp"
+        android:layout_toRightOf="@+id/user_img"
+        android:text="Michell"
+        android:textColor="#fff"
+        android:textSize="25sp"
+        android:transitionName="profile_name_transition" />
+
+    <TextView
+        android:id="@+id/overall_perc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_text"
+        android:layout_marginRight="16dp"
+        android:layout_toRightOf="@+id/user_img"
+        android:text="Overall: 85%"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        android:transitionName="Overall_perc_transition" />
+
+    <ImageButton
+        android:id="@+id/det_anl_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/name_text"
+        android:layout_marginRight="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        android:src="@mipmap/ic_equalizer_white_36dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/det_anl_btn"
+        android:layout_alignEnd="@+id/det_anl_btn"
+        android:layout_alignLeft="@+id/det_anl_btn"
+        android:layout_alignRight="@+id/det_anl_btn"
+        android:layout_alignStart="@+id/det_anl_btn"
+        android:gravity="center"
+        android:text="Analysis"
+        android:textColor="#fff"
+        android:textSize="12sp" />
+</RelativeLayout>

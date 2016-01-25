@@ -1,12 +1,10 @@
 package dotinc.attendancemanager2;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -45,21 +43,28 @@ public class AttendanceActivity extends AppCompatActivity {
             case "Mon":
                 day.setText("Monday");
                 getSubjects(1);
+                break;
+
             case "Tue":
                 day.setText("Tuesday");
                 getSubjects(2);
+                break;
             case "Wed":
                 day.setText("Wednesday");
                 getSubjects(3);
+                break;
             case "Thu":
                 day.setText("Thursday");
                 getSubjects(4);
+                break;
             case "Fri":
                 day.setText("Friday");
                 getSubjects(5);
+                break;
             case "Sat":
                 day.setText("Saturday");
                 getSubjects(6);
+                break;
         }
     }
 
