@@ -10,6 +10,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -103,25 +104,22 @@ public class MainActivity extends AppCompatActivity {
         arrayList = timeTableDatabase.getSubjects(timeTableList);
 
     }
-    private void extraClass(){
+    public void showSnackbar(String meesage){
+        Snackbar.make(root,meesage,Snackbar.LENGTH_SHORT).show();
+    }
+    private void extraClass() {
         timeTableList.setDayCode(dayCode);                //daycode
         arrayList = timeTableDatabase.getSubjects(timeTableList);
         allSubjectsArrayList = subjectDatabase.getAllSubjectsForExtra();
-        for (int i = 0; i < arrayList.size(); i++)
-            Log.d("option_arl", arrayList.get(i).getSubjectName());
-        for (int i = 0; i < allSubjectsArrayList.size(); i++)
-            Log.d("option_all", allSubjectsArrayList.get(i).getSubjectName());
-
         for (int i = 0; i < arrayList.size(); i++) {
             for (int j = 0; j < allSubjectsArrayList.size(); j++) {
                 if ((allSubjectsArrayList.get(j).getSubjectName().equals(arrayList.get(i).getSubjectName())))
                     allSubjectsArrayList.remove(j);
             }
         }
-        for (int i = 0; i < allSubjectsArrayList.size(); i++)
-            Log.d("option_extra", allSubjectsArrayList.get(i).getSubjectName());
         exclRecyclerView.setAdapter(new AttendanceAdapter(this, allSubjectsArrayList));
     }
+
     private int getdaycode() {
         int day_code = 1;
         Date date = new Date();
@@ -165,8 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
         pager.addOnPageChangeListener(new CustomOnPageChangeListener());
         indicator.setViewPager(pager);
-
-        exclRecyclerView.setAdapter(new AttendanceAdapter(this, arrayList));
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -322,29 +318,4 @@ public class MainActivity extends AppCompatActivity {
             super.onPageSelected(position);
         }
     }
-
-
-//    private class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
-//        @Override
-//        public ExampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.custom_main_row, parent, false);
-//            return new ExampleViewHolder(view);
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(ExampleViewHolder holder, int position) {
-//
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            return 6;
-//        }
-//
-//        class ExampleViewHolder extends RecyclerView.ViewHolder {
-//            public ExampleViewHolder(View itemView) {
-//                super(itemView);
-//            }
-//        }
-//    }
 }

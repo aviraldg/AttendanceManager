@@ -23,6 +23,9 @@ import dotinc.attendancemanager2.Utils.SubjectDatabase;
 /**
  * Created by vellapanti on 17/1/16.
  */
+
+//*********Adapter of Subjects activity************//
+
 public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     ArrayList<SubjectsList> arrayList;

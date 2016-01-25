@@ -9,8 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+
+import com.daimajia.swipe.SwipeLayout;
 
 import org.w3c.dom.Text;
 
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import dotinc.attendancemanager2.DetailedAnalysisActivity;
+import dotinc.attendancemanager2.MainActivity;
 import dotinc.attendancemanager2.Objects.AttendanceList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.R;
@@ -28,6 +32,9 @@ import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 /**
  * Created by vellapanti on 21/1/16.
  */
+
+//**********Adapter of MainActivity**************//
+
 public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
@@ -63,41 +70,81 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final AttendanceViewHolder viewHolder = (AttendanceViewHolder) holder;
         int id = arrayList.get(position).getId();
+
+        viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right,
+                viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper));
+        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left,
+                viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper1));
+        viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
+            @Override
+            public void onStartOpen(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onOpen(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onStartClose(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onClose(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+
+            }
+
+            @Override
+            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+
+            }
+        });
+
+
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
         viewHolder.attended.setText("Attended: " + database.totalPresent(id));
         viewHolder.total.setText("Total: " + database.totalClasses(id));
-//        viewHolder.subject_percentage.setText(" "+ new Float(database.totalPresent(id) / database.totalClasses(id)) * 100);
-        viewHolder.subject.setOnClickListener(new View.OnClickListener() {
+//      viewHolder.subject_percentage.setText(" "+ new Float(database.totalPresent(id) / database.totalClasses(id)) * 100);
+
+
+        viewHolder.attendedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("ADD");
-                builder.setPositiveButton("Attended", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        addAttendance(1, position);
-                    }
-                });
-                builder.setNegativeButton("Bunked", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        addAttendance(0, position);
-                    }
-                });
-                builder.create().show();
+                addAttendance(1, position, "Attended Class");
+            }
+        });
 
+        viewHolder.bunkedbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addAttendance(0, position, "Bunked Class");
+
+            }
+        });
+
+        viewHolder.noClassbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addAttendance(-1, position, "No Class");
             }
         });
         viewHolder.subject.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Log.d("option_id_l", String.valueOf(arrayList.get(position).getId()));
                 Intent intent = new Intent(context, DetailedAnalysisActivity.class);
-                intent.putExtra("id", arrayList.get(position).getId());
                 context.startActivity(intent);
                 return true;
             }
         });
+
     }
 
     @Override
@@ -105,13 +152,16 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return arrayList.size();
     }
 
-    private void addAttendance(int action, int position) {
+    private void addAttendance(int action, int position, String message) {
         attendanceList.setId(arrayList.get(position).getId());
         attendanceList.setPosition(position);
         attendanceList.setAction(action);
         attendanceList.setDate(myDate);
         attendanceObject.add(attendanceList);
         database.addAttendance(attendanceList);
+        this.notifyDataSetChanged();
+        ((MainActivity) context).showSnackbar(message);
+
     }
 
     static class AttendanceViewHolder extends RecyclerView.ViewHolder {
@@ -119,12 +169,21 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private TextView attended;
         private TextView total;
         private TextView subject_percentage;
+        private SwipeLayout swipeLayout;
+        private ImageButton attendedbtn;
+        private ImageButton bunkedbtn;
+        private ImageButton noClassbtn;
+
         public AttendanceViewHolder(View itemView) {
             super(itemView);
             subject = (TextView) itemView.findViewById(R.id.subject_name);
             attended = (TextView) itemView.findViewById(R.id.attended);
             total = (TextView) itemView.findViewById(R.id.total);
-            subject_percentage= (TextView) itemView.findViewById(R.id.sub_perc);
+            subject_percentage = (TextView) itemView.findViewById(R.id.sub_perc);
+            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
+            attendedbtn = (ImageButton) itemView.findViewById(R.id.attended_class);
+            bunkedbtn = (ImageButton) itemView.findViewById(R.id.bunk_class);
+            noClassbtn = (ImageButton) itemView.findViewById(R.id.no_class);
         }
     }
 }
