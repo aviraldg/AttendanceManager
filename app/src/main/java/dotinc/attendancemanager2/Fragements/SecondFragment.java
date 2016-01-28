@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import dotinc.attendancemanager2.R;
-import dotinc.attendancemanager2.TimeTableActivity;
 import dotinc.attendancemanager2.WeeklySubjectsActivity;
 
 /**

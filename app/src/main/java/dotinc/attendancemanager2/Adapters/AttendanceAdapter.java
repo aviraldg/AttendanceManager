@@ -1,21 +1,17 @@
 package dotinc.attendancemanager2.Adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-
 import com.daimajia.swipe.SwipeLayout;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +23,6 @@ import dotinc.attendancemanager2.Objects.AttendanceList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.R;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
-import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
 /**
  * Created by vellapanti on 21/1/16.
@@ -44,6 +39,8 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     AttendanceDatabase database;
     AttendanceList attendanceList;
     String myDate;
+
+    private int lastPosition = -1;
 
     public AttendanceAdapter(Context context, ArrayList<TimeTableList> arrayList) {
         this.context = context;
@@ -114,6 +111,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         viewHolder.total.setText("Total: " + database.totalClasses(id));
 //      viewHolder.subject_percentage.setText(" "+ new Float(database.totalPresent(id) / database.totalClasses(id)) * 100);
 
+        setAnimation(viewHolder.swipeLayout, position);
 
         viewHolder.attendedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +160,15 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.notifyDataSetChanged();
         ((MainActivity) context).showSnackbar(message);
 
+    }
+
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
     }
 
     static class AttendanceViewHolder extends RecyclerView.ViewHolder {

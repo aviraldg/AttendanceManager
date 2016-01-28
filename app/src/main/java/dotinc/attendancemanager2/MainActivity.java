@@ -17,11 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
@@ -104,9 +101,11 @@ public class MainActivity extends AppCompatActivity {
         arrayList = timeTableDatabase.getSubjects(timeTableList);
 
     }
-    public void showSnackbar(String meesage){
-        Snackbar.make(root,meesage,Snackbar.LENGTH_SHORT).show();
+
+    public void showSnackbar(String meesage) {
+        Snackbar.make(root, meesage, Snackbar.LENGTH_SHORT).show();
     }
+
     private void extraClass() {
         timeTableList.setDayCode(dayCode);                //daycode
         arrayList = timeTableDatabase.getSubjects(timeTableList);
@@ -129,21 +128,30 @@ public class MainActivity extends AppCompatActivity {
         switch (myDate) {
             case "Mon":
                 day_code = 1;
+                getSupportActionBar().setTitle("Monday");
                 break;
             case "Tue":
                 day_code = 2;
+                getSupportActionBar().setTitle("Tuesday");
                 break;
             case "Wed":
                 day_code = 3;
+                getSupportActionBar().setTitle("Wednesday");
                 break;
             case "Thu":
                 day_code = 4;
+                getSupportActionBar().setTitle("Thursday");
                 break;
             case "Fri":
+                getSupportActionBar().setTitle("Friiday");
                 day_code = 5;
                 break;
             case "Sat":
                 day_code = 6;
+                getSupportActionBar().setTitle("Saturday");
+                break;
+            case "Sun":
+                getSupportActionBar().setTitle("Sunday");
                 break;
         }
         return day_code;
@@ -156,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
 
         instantiate();
         extraClass();
-        getSupportActionBar().setTitle("Wednesday");
 
         recyclerView.setAdapter(new AttendanceAdapter(this, arrayList));
         pager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager(), pageList));
@@ -236,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
         attendAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "asdadjkjhasdhsiu", Toast.LENGTH_SHORT).show();
                 markedAtt();
             }
         });
