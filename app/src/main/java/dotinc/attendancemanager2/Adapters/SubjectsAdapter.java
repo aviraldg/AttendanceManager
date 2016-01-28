@@ -95,10 +95,10 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             public void onClick(View view) {
                 String subject = arrayList.get(position).getSubjectName();
                 database.deleteSubject(subject);
-
                 arrayList.remove(position);
                 ((SubjectsActivity) context).setEmptyView(arrayList.size());
                 notifyDataSetChanged();
+
             }
         });
 

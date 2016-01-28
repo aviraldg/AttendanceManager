@@ -45,6 +45,14 @@ public class SubjectsActivity extends AppCompatActivity {
 
         instantiate();
 
+
+//        ScaleInAnimator animator = new ScaleInAnimator();
+//        animator.setAddDuration(500);
+//        animator.setRemoveDuration(500);
+//        DefaultItemAnimator animator = new DefaultItemAnimator();
+//        animator.setAddDuration(500);
+//        animator.setRemoveDuration(500);
+//        recyclerView.setItemAnimator(animator);
         recyclerView.setAdapter(adapter);
 
         addSubjects.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +75,7 @@ public class SubjectsActivity extends AppCompatActivity {
                             arrayList.addAll(database.getAllSubjects());
                             setEmptyView(arrayList.size());
                             adapter.notifyDataSetChanged();
+//                            adapter.notifyItemInserted(arrayList.size());
                         } else if (subjectName.length() == 0) {
                             Snackbar.make(root, "Subject cannot be empty", Snackbar.LENGTH_LONG).show();
                         } else {

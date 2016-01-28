@@ -5,7 +5,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dedede"
+    android:background="#DEE5E5"
     android:fitsSystemWindows="true"
     tools:context="dotinc.attendancemanager2.MainActivity">
 
@@ -162,7 +162,7 @@
                 android:layout_below="@+id/extra_class_text"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"/>
+                android:layout_marginTop="16dp" />
         </RelativeLayout>
     </RelativeLayout>
 
