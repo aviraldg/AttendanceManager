@@ -118,4 +118,52 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         return totalClasses;
     }
 
+    public void deleteSubjects(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id;
+        db.execSQL(query);
+        db.close();
+    }
+
+    public void toast() {
+        SQLiteDatabase dbs = this.getWritableDatabase();
+        String[] col = {Subject_Id, POSITION, Action, DATE};
+        Cursor cur = dbs.query(ATTENDANCE_TRACKER, col, null, null, null, null, null);
+        if (cur != null) {
+            while (cur.moveToNext()) {
+                int id = cur.getInt(0);
+                int pos = cur.getInt(1);
+                int dc = cur.getInt(2);
+                String subject = cur.getString(3);
+
+                Log.d("option_database", "id:" + String.valueOf(id) + " " + "date:" + subject + "  " + "act:" + dc + "pos:" + pos);
+            }
+        } else {
+            Log.d("option", "cursor is null");
+        }
+        dbs.close();
+    }
+
+    public ArrayList<AttendanceList> getMarker(TimeTableList list, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Log.d("option,mark", String.valueOf(list.getId()) + " " + date);
+        ArrayList<AttendanceList> attendanceLists = new ArrayList<>();
+        String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + list.getId() +
+                " AND " + DATE + " = '" + date + "'";
+
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToLast();
+        Log.d("option_size", String.valueOf(cursor.getCount()));
+        if (cursor != null && cursor.getCount() != 0) {
+            AttendanceList attendanceList = new AttendanceList();
+            attendanceList.setAction(cursor.getInt(2));
+            attendanceList.setId(cursor.getInt(0));
+            attendanceLists.add(attendanceList);
+            Log.d("option_atte", "actio:" + cursor.getInt(2) + "id:" + cursor.getInt(0));
+        } else {
+            Log.d("option_cur", "null");
+        }
+        return attendanceLists;
+
+    }
 }

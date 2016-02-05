@@ -77,9 +77,9 @@ public class SubjectsActivity extends AppCompatActivity {
                             adapter.notifyDataSetChanged();
 //                            adapter.notifyItemInserted(arrayList.size());
                         } else if (subjectName.length() == 0) {
-                            Snackbar.make(root, "Subject cannot be empty", Snackbar.LENGTH_LONG).show();
+                            showSnackbar("Sbject cannot be empty");
                         } else {
-                            Snackbar.make(root, "Subject already entered", Snackbar.LENGTH_LONG).show();
+                            showSnackbar("Subject already entered");
                         }
                     }
                 });
@@ -97,7 +97,7 @@ public class SubjectsActivity extends AppCompatActivity {
     }
 
 
-    private int checkIfAlreadyEntered(String subject) {
+    public int checkIfAlreadyEntered(String subject) {
         int flag = 0;
         for (int i = 0; i < arrayList.size(); i++) {
             if (arrayList.get(i).getSubjectName().equals(subject)) {
@@ -137,7 +137,9 @@ public class SubjectsActivity extends AppCompatActivity {
         }
 
     }
-
+    public void showSnackbar(String message){
+        Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.subject_name, menu);
@@ -151,7 +153,8 @@ public class SubjectsActivity extends AppCompatActivity {
                 Intent intent = new Intent(SubjectsActivity.this, WeeklySubjectsActivity.class);
                 startActivity(intent);
             } else
-                Snackbar.make(root, "Enter atleast one subject", Snackbar.LENGTH_LONG).show();
+                showSnackbar("Enter atleast one subject");
+
         }
         return super.onOptionsItemSelected(item);
     }

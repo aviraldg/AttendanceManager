@@ -118,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
         }
         exclRecyclerView.setAdapter(new AttendanceAdapter(this, allSubjectsArrayList));
     }
+    private void setTitle(String dayName){
+        getSupportActionBar().setTitle(dayName);
+    }
 
     private int getdaycode() {
         int day_code = 1;
@@ -128,30 +131,30 @@ public class MainActivity extends AppCompatActivity {
         switch (myDate) {
             case "Mon":
                 day_code = 1;
-                getSupportActionBar().setTitle("Monday");
+                setTitle("Monday");
                 break;
             case "Tue":
                 day_code = 2;
-                getSupportActionBar().setTitle("Tuesday");
+                setTitle("Tuesday");
                 break;
             case "Wed":
                 day_code = 3;
-                getSupportActionBar().setTitle("Wednesday");
+                setTitle("Wednesday");
                 break;
             case "Thu":
                 day_code = 4;
-                getSupportActionBar().setTitle("Thursday");
+                setTitle("Thursday");
                 break;
             case "Fri":
-                getSupportActionBar().setTitle("Friiday");
+                setTitle("Friday");
                 day_code = 5;
                 break;
             case "Sat":
                 day_code = 6;
-                getSupportActionBar().setTitle("Saturday");
+                setTitle("Saturday");
                 break;
             case "Sun":
-                getSupportActionBar().setTitle("Sunday");
+                setTitle("Sunday");
                 break;
         }
         return day_code;

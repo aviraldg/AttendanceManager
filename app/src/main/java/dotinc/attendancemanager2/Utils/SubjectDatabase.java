@@ -52,12 +52,14 @@ public class SubjectDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "UPDATE " + Subjects_Table + " SET " + Subject_List + " = '" + new_subject + "' WHERE " + Subject_List + " = '" + old_subject+"'";
         db.execSQL(query);
+        db.close();
     }
 
     public void deleteSubject(String subject) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + Subjects_Table + " WHERE " + Subject_List + " = '" + subject + "'";
         db.execSQL(query);
+        db.close();
     }
 
     public ArrayList<SubjectsList> getAllSubjects() {
@@ -76,6 +78,7 @@ public class SubjectDatabase extends SQLiteOpenHelper {
         } else {
             Log.d("option_cur", "null");
         }
+        db.close();
         return SubjectName;
     }
     public ArrayList<TimeTableList> getAllSubjectsForExtra() {
@@ -95,6 +98,7 @@ public class SubjectDatabase extends SQLiteOpenHelper {
         } else {
             Log.d("option_cur", "null");
         }
+        db.close();
         return SubjectName;
     }
 

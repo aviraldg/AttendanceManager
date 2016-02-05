@@ -2,13 +2,17 @@ package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
@@ -39,7 +43,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     AttendanceDatabase database;
     AttendanceList attendanceList;
     String myDate;
-
+    TimeTableList list;
     private int lastPosition = -1;
 
     public AttendanceAdapter(Context context, ArrayList<TimeTableList> arrayList) {
@@ -52,7 +56,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         myDate = format.format(date);
-
+        list = new TimeTableList();
     }
 
     @Override
@@ -67,6 +71,14 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final AttendanceViewHolder viewHolder = (AttendanceViewHolder) holder;
         int id = arrayList.get(position).getId();
+        list.setId(id);
+        attendanceList.setDate(myDate);
+        attendanceObject = database.getMarker(list, myDate);
+        if (attendanceObject.size() != 0 && attendanceObject.get(0).getAction() == 1)
+            setMarker(1, viewHolder);
+
+        else if (attendanceObject.size() != 0 && attendanceObject.get(0).getAction() == 0)
+            setMarker(0, viewHolder);
 
         viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right,
@@ -116,7 +128,11 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         viewHolder.attendedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 addAttendance(1, position, "Attended Class");
+                setMarker(1, viewHolder);
+
+
             }
         });
 
@@ -124,6 +140,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public void onClick(View v) {
                 addAttendance(0, position, "Bunked Class");
+                setMarker(0, viewHolder);
 
             }
         });
@@ -148,6 +165,21 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public int getItemCount() {
         return arrayList.size();
+    }
+
+    private void setMarker(int marker, AttendanceViewHolder viewHolder) {
+        switch (marker) {
+            case 0:
+                viewHolder.check_mark.setVisibility(View.VISIBLE);
+                viewHolder.check_mark.setImageResource(R.mipmap.ic_highlight_off_black_36dp);
+                viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, android.R.color.holo_red_light));
+                break;
+            case 1:
+                viewHolder.check_mark.setVisibility(View.VISIBLE);
+                viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
+                viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
+                break;
+        }
     }
 
     private void addAttendance(int action, int position, String message) {
@@ -180,6 +212,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private ImageButton attendedbtn;
         private ImageButton bunkedbtn;
         private ImageButton noClassbtn;
+        private ImageView check_mark;
 
         public AttendanceViewHolder(View itemView) {
             super(itemView);
@@ -191,6 +224,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             attendedbtn = (ImageButton) itemView.findViewById(R.id.attended_class);
             bunkedbtn = (ImageButton) itemView.findViewById(R.id.bunk_class);
             noClassbtn = (ImageButton) itemView.findViewById(R.id.no_class);
+            check_mark = (ImageView) itemView.findViewById(R.id.check_mark);
         }
     }
 }

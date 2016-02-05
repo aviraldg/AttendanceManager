@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.R;
 import dotinc.attendancemanager2.SubjectsActivity;
+import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
+import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
 /**
  * Created by vellapanti on 17/1/16.
@@ -32,12 +34,15 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     LayoutInflater inflater;
     SubjectDatabase database;
     private EditText subject;
-
+    TimeTableDatabase timeTableDatabase;
+    AttendanceDatabase attendanceDatabase;
     public SubjectsAdapter(Context context, ArrayList<SubjectsList> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         inflater = LayoutInflater.from(context);
         database = new SubjectDatabase(context);
+        timeTableDatabase= new TimeTableDatabase(context);
+        attendanceDatabase = new AttendanceDatabase(context);
     }
 
     @Override
@@ -95,6 +100,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             public void onClick(View view) {
                 String subject = arrayList.get(position).getSubjectName();
                 database.deleteSubject(subject);
+                timeTableDatabase.deleteSubject(arrayList.get(position).getId());
                 arrayList.remove(position);
                 ((SubjectsActivity) context).setEmptyView(arrayList.size());
                 notifyDataSetChanged();
@@ -115,10 +121,17 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String subjectName = subject.getText().toString().trim();
-                        database.editSubject(subjectName, old_subject);
-                        arrayList.clear();
-                        arrayList.addAll(database.getAllSubjects());
-                        notifyDataSetChanged();
+                        int flag = ((SubjectsActivity) context).checkIfAlreadyEntered(subjectName);
+                        if (flag == 0) {
+                            database.editSubject(subjectName, old_subject);
+                            timeTableDatabase.editSubject(subjectName,old_subject);
+                            arrayList.clear();
+                            arrayList.addAll(database.getAllSubjects());
+                            notifyDataSetChanged();
+                        } else {
+                            ((SubjectsActivity)context).showSnackbar("Subject already entered");
+                        }
+
                     }
                 });
                 builder.create().show();
