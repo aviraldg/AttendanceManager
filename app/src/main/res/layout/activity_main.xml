@@ -145,7 +145,7 @@
             android:id="@+id/extra_class_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#dedede"
+            android:background="@color/colorPrimaryDark"
             android:visibility="invisible">
 
             <TextView

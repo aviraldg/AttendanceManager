@@ -3,6 +3,8 @@ package dotinc.attendancemanager2;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,10 +19,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -31,6 +38,7 @@ import dotinc.attendancemanager2.Adapters.AttendanceAdapter;
 import dotinc.attendancemanager2.Adapters.MainViewPagerAdapter;
 import dotinc.attendancemanager2.Fragements.HeaderFragment;
 import dotinc.attendancemanager2.Fragements.SecondFragment;
+import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 import dotinc.attendancemanager2.Utils.ProgressPageIndicator;
@@ -42,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView recyclerView, exclRecyclerView;
     private CoordinatorLayout root;
+    private RelativeLayout extraClassLayout;
+
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ViewPager pager;
@@ -52,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private Button bunkedAll;
     private Button noClassAll;
 
+    private ArrayList<SubjectsList> subjectsName;
+    private ArrayList<String> subjects;
     private int dayCode;
 
     private ArrayList<TimeTableList> allSubjectsArrayList;      //add
@@ -70,14 +82,15 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        extraClassLayout= (RelativeLayout) findViewById(R.id.extra_class_layout);
         root = (CoordinatorLayout) findViewById(R.id.root);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         attendAll = (Button) findViewById(R.id.attend_all);
-        bunkedAll= (Button) findViewById(R.id.bunked_all);
-        noClassAll= (Button) findViewById(R.id.noclass_all);
+        bunkedAll = (Button) findViewById(R.id.bunked_all);
+        noClassAll = (Button) findViewById(R.id.noclass_all);
 
         pager = (ViewPager) findViewById(R.id.pager);
         indicator = (ProgressPageIndicator) findViewById(R.id.pageIndicator);
@@ -90,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
         exclRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         exclRecyclerView.setHasFixedSize(true);
 
+        subjectsName = new ArrayList<>();
+        subjects = new ArrayList<>();
         pageList = new ArrayList<>();
         pageList.add(new HeaderFragment());
         pageList.add(new SecondFragment());
@@ -122,9 +137,12 @@ public class MainActivity extends AppCompatActivity {
         }
         exclRecyclerView.setAdapter(new AttendanceAdapter(this, allSubjectsArrayList));
     }
-    private void setTitle(String dayName){
+
+    private void setTitle(String dayName) {
         getSupportActionBar().setTitle(dayName);
     }
+
+    private ArrayList<SubjectsList> subjectsNameList;
 
     private int getdaycode() {
         int day_code = 1;
@@ -164,6 +182,32 @@ public class MainActivity extends AppCompatActivity {
         return day_code;
     }
 
+    public void detialedAnalysisShow() {
+        ArrayList<String> subjectName = new ArrayList<>();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.subjects_list, null);
+        ListView subjects_view = (ListView) view.findViewById(R.id.subjectList);
+        subjectsName.clear();
+        subjectsName = subjectDatabase.getAllSubjects();
+        subjects.clear();
+        for (int i = 0; i < subjectsName.size(); i++)
+            subjects.add(subjectsName.get(i).getSubjectName().toString());
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, subjects);
+        subjects_view.setAdapter(arrayAdapter);
+        builder.setView(view);
+        subjects_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this,DetailedAnalysis.class);
+                intent.putExtra("id",subjectsName.get(position).getId());
+                startActivity(intent);
+            }
+        });
+        builder.create().show();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -194,6 +238,13 @@ public class MainActivity extends AppCompatActivity {
                         anim.setDuration(1000).setInterpolator(new DecelerateInterpolator(1));
                         isViewopened = true;
                         extraView.setVisibility(View.VISIBLE);
+                        anim.addListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                extraClassLayout.setBackgroundColor(getResources().getColor(R.color.backgroundColor));
+                            }
+                        });
                         anim.start();
                         fab.hide();
 
@@ -215,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onAnimationEnd(Animator animation) {
                                 super.onAnimationEnd(animation);
                                 extraView.setVisibility(View.INVISIBLE);
+
                             }
                         });
                         anim.start();

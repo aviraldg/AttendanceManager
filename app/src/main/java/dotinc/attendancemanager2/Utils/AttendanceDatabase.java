@@ -54,7 +54,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<AttendanceList> getDates(int id) {
+    public ArrayList<AttendanceList> getAllDates(int id) {
         ArrayList<AttendanceList> attendanceLists = new ArrayList<>();
         String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id +
                 " AND (" + Action + " =1 OR " + Action + "=0)";
@@ -66,12 +66,13 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
                 AttendanceList attendanceList = new AttendanceList();
                 attendanceList.setId(cursor.getInt(0));
                 attendanceList.setDate(cursor.getString(3));
+                //attendanceList.setPresentDate(cursor.getString(3));
                 attendanceList.setAction(cursor.getInt(2));
                 attendanceLists.add(attendanceList);
             }
         } else {
-            Log.d("option_cur", "null");
         }
+        Log.d("option_cur", "null");
         return attendanceLists;
     }
 
@@ -125,7 +126,6 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         db.execSQL(query);
         db.close();
     }
-
     public void deleteSubjects(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id;

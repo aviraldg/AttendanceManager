@@ -2,7 +2,6 @@ package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import dotinc.attendancemanager2.DetailedAnalysisActivity;
+import dotinc.attendancemanager2.DetailedAnalysis;
 import dotinc.attendancemanager2.MainActivity;
 import dotinc.attendancemanager2.Objects.AttendanceList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
@@ -54,7 +53,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         database = new AttendanceDatabase(context);
         attendanceObject = new ArrayList<>();
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         myDate = format.format(date);
         list = new TimeTableList();
     }
@@ -166,14 +165,17 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         });
 //----------------this is to  redirect to the detailed analysis page--------------------//
 
-//        viewHolder.subject.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                Intent intent = new Intent(context, DetailedAnalysisActivity.class);
-//                context.startActivity(intent);
-//                return true;
-//            }
-//        });
+        viewHolder.subject.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                Intent intent = new Intent(context, DetailedAnalysis.class);
+                intent.putExtra("id",id);
+                Log.d("option_a", String.valueOf(id));
+                context.startActivity(intent);
+                return true;
+            }
+        });
 
 
 //---------------- **************************************************-------------------//

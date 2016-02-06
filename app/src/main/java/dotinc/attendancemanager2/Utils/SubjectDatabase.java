@@ -50,7 +50,7 @@ public class SubjectDatabase extends SQLiteOpenHelper {
 
     public void editSubject(String new_subject, String old_subject) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE " + Subjects_Table + " SET " + Subject_List + " = '" + new_subject + "' WHERE " + Subject_List + " = '" + old_subject+"'";
+        String query = "UPDATE " + Subjects_Table + " SET " + Subject_List + " = '" + new_subject + "' WHERE " + Subject_List + " = '" + old_subject + "'";
         db.execSQL(query);
         db.close();
     }
@@ -81,10 +81,26 @@ public class SubjectDatabase extends SQLiteOpenHelper {
         db.close();
         return SubjectName;
     }
+
+    public ArrayList<String> getAllSubjectName(){
+        ArrayList<String> subjectName =  new ArrayList<>();
+        String query = "SELECT * FROM " + Subjects_Table;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToNext()) {
+            do {
+                subjectName.add(cursor.getString(1));
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("option_cur", "null");
+        }
+        db.close();
+        return subjectName;
+    }
+
     public ArrayList<TimeTableList> getAllSubjectsForExtra() {
         ArrayList<TimeTableList> SubjectName = new ArrayList<>();
-        String query = "SELECT * FROM " + Subjects_Table+" GROUP BY " + Subject_List
-                ;
+        String query = "SELECT * FROM " + Subjects_Table + " GROUP BY " + Subject_List;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToNext()) {
