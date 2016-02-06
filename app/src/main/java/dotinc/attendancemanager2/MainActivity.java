@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private ProgressPageIndicator indicator;
     private FloatingActionButton fab;
     private Button attendAll;
+    private Button bunkedAll;
+    private Button noClassAll;
 
     private int dayCode;
 
@@ -74,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         attendAll = (Button) findViewById(R.id.attend_all);
+        bunkedAll= (Button) findViewById(R.id.bunked_all);
+        noClassAll= (Button) findViewById(R.id.noclass_all);
 
         pager = (ViewPager) findViewById(R.id.pager);
         indicator = (ProgressPageIndicator) findViewById(R.id.pageIndicator);
@@ -247,6 +251,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 markedAtt();
+
+
             }
         });
     }

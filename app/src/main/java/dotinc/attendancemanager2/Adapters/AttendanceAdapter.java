@@ -70,10 +70,18 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final AttendanceViewHolder viewHolder = (AttendanceViewHolder) holder;
-        int id = arrayList.get(position).getId();
+        final int id = arrayList.get(position).getId();
+
         list.setId(id);
         attendanceList.setDate(myDate);
         attendanceObject = database.getMarker(list, myDate);
+
+        int attendedClasses = database.totalPresent(id);
+        int totalClasses = database.totalClasses(id);
+
+        float percentage = ((float) attendedClasses / (float) totalClasses) * 100;
+        classesNeeded(attendedClasses, totalClasses, percentage, viewHolder);
+
         if (attendanceObject.size() != 0 && attendanceObject.get(0).getAction() == 1)
             setMarker(1, viewHolder);
 
@@ -119,20 +127,18 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
-        viewHolder.attended.setText("Attended: " + database.totalPresent(id));
-        viewHolder.total.setText("Total: " + database.totalClasses(id));
-//      viewHolder.subject_percentage.setText(" "+ new Float(database.totalPresent(id) / database.totalClasses(id)) * 100);
+        viewHolder.attended.setText("Attended: " + attendedClasses);
+        viewHolder.total.setText("Total: " + totalClasses);
+        viewHolder.subject_percentage.setText(" " +
+                String.format("%.1f", percentage));
 
         setAnimation(viewHolder.swipeLayout, position);
 
         viewHolder.attendedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 addAttendance(1, position, "Attended Class");
                 setMarker(1, viewHolder);
-
-
             }
         });
 
@@ -151,15 +157,26 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 addAttendance(-1, position, "No Class");
             }
         });
-        viewHolder.subject.setOnLongClickListener(new View.OnLongClickListener() {
+
+        viewHolder.resetbtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                Intent intent = new Intent(context, DetailedAnalysisActivity.class);
-                context.startActivity(intent);
-                return true;
+            public void onClick(View v) {
+                resetAttendance(id, viewHolder);
             }
         });
+//----------------this is to  redirect to the detailed analysis page--------------------//
 
+//        viewHolder.subject.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Intent intent = new Intent(context, DetailedAnalysisActivity.class);
+//                context.startActivity(intent);
+//                return true;
+//            }
+//        });
+
+
+//---------------- **************************************************-------------------//
     }
 
     @Override
@@ -180,6 +197,45 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
                 break;
         }
+    }
+
+    private void classesNeeded(int attendedClass, int totalClass, float percentage, AttendanceViewHolder viewHolder) {
+        int flag = 0;
+        int originalAttended = attendedClass;
+        if (percentage >= 75)
+            flag = 1;
+        else if (attendedClass == 0 && totalClass == 0)
+            flag = 2;
+        while (percentage < 75) {
+            flag = 3;
+            attendedClass++;
+            totalClass++;
+            percentage = ((float) attendedClass / (float) totalClass) * 100;
+        }
+        switch (flag) {
+            case 1:
+                viewHolder.needClassDetail.setVisibility(View.VISIBLE);
+                viewHolder.needClassDetail.setText("You are on track !");
+                break;
+
+            case 2:
+                viewHolder.needClassDetail.setVisibility(View.INVISIBLE);
+                break;
+
+            case 3:
+                viewHolder.needClassDetail.setVisibility(View.VISIBLE);
+                viewHolder.needClassDetail.setText("You need " + (attendedClass - originalAttended) +
+                        " more classes");
+                break;
+        }
+
+    }
+
+    private void resetAttendance(int id, AttendanceViewHolder viewHolder) {
+        database.resetAttendance(id, myDate);
+        viewHolder.resetbtn.setImageResource(R.mipmap.ic_restore_black_36dp);
+        this.notifyDataSetChanged();
+        ((MainActivity) context).showSnackbar("Attendance reset");
     }
 
     private void addAttendance(int action, int position, String message) {
@@ -208,10 +264,12 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private TextView attended;
         private TextView total;
         private TextView subject_percentage;
+        private TextView needClassDetail;
         private SwipeLayout swipeLayout;
         private ImageButton attendedbtn;
         private ImageButton bunkedbtn;
         private ImageButton noClassbtn;
+        private ImageButton resetbtn;
         private ImageView check_mark;
 
         public AttendanceViewHolder(View itemView) {
@@ -220,10 +278,12 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             attended = (TextView) itemView.findViewById(R.id.attended);
             total = (TextView) itemView.findViewById(R.id.total);
             subject_percentage = (TextView) itemView.findViewById(R.id.sub_perc);
+            needClassDetail = (TextView) itemView.findViewById(R.id.sub_detail);
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
             attendedbtn = (ImageButton) itemView.findViewById(R.id.attended_class);
             bunkedbtn = (ImageButton) itemView.findViewById(R.id.bunk_class);
             noClassbtn = (ImageButton) itemView.findViewById(R.id.no_class);
+            resetbtn = (ImageButton) itemView.findViewById(R.id.reset_attendance);
             check_mark = (ImageView) itemView.findViewById(R.id.check_mark);
         }
     }

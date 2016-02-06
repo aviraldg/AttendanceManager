@@ -110,6 +110,7 @@
                     android:weightSum="3">
 
                     <Button
+                        android:id="@+id/noclass_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -118,6 +119,7 @@
                         android:textAllCaps="false" />
 
                     <Button
+                        android:id="@+id/bunked_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
