@@ -126,6 +126,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         db.execSQL(query);
         db.close();
     }
+
     public void deleteSubjects(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id;

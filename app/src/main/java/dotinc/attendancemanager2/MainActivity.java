@@ -20,6 +20,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
@@ -28,7 +30,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        extraClassLayout= (RelativeLayout) findViewById(R.id.extra_class_layout);
+        extraClassLayout = (RelativeLayout) findViewById(R.id.extra_class_layout);
         root = (CoordinatorLayout) findViewById(R.id.root);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
@@ -199,8 +200,8 @@ public class MainActivity extends AppCompatActivity {
         subjects_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this,DetailedAnalysis.class);
-                intent.putExtra("id",subjectsName.get(position).getId());
+                Intent intent = new Intent(MainActivity.this, DetailedAnalysis.class);
+                intent.putExtra("id", subjectsName.get(position).getId());
                 startActivity(intent);
             }
         });
@@ -307,6 +308,24 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_page_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+
+//        switch (item.getItemId()){
+//
+//            //case R.id.settings:
+//
+//        }
+
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

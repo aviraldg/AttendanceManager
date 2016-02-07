@@ -26,9 +26,11 @@ import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 
 public class SubjectsActivity extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private FloatingActionButton addSubjects;
     private TextView subjectText;
+    private View view1;
     private ArrayList<SubjectsList> arrayList;
     private Toolbar toolbar;
     private EditText subject;
@@ -37,6 +39,26 @@ public class SubjectsActivity extends AppCompatActivity {
     SubjectsAdapter adapter;
     SubjectDatabase database;
     SubjectsList subjectsList;
+
+
+    private void instantiate() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
+        subjectText = (TextView) findViewById(R.id.subject_layout_title);
+        view1 = findViewById(R.id.view1);
+        database = new SubjectDatabase(this);
+        emptyView = (LinearLayout) findViewById(R.id.empty_view);
+        root = (CoordinatorLayout) findViewById(R.id.root);
+        subjectsList = new SubjectsList();
+        arrayList = database.getAllSubjects();
+        setEmptyView(arrayList.size());
+        recyclerView = (RecyclerView) findViewById(R.id.subjects);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new SubjectsAdapter(this, arrayList);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,38 +130,24 @@ public class SubjectsActivity extends AppCompatActivity {
         return flag;
     }
 
-    private void instantiate() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Input Subjects");
-        addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
-        subjectText = (TextView) findViewById(R.id.subject_layout_title);
-        database = new SubjectDatabase(this);
-        emptyView = (LinearLayout) findViewById(R.id.empty_view);
-        root = (CoordinatorLayout) findViewById(R.id.root);
-        subjectsList = new SubjectsList();
-        arrayList = database.getAllSubjects();
-        setEmptyView(arrayList.size());
-        recyclerView = (RecyclerView) findViewById(R.id.subjects);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new SubjectsAdapter(this, arrayList);
-    }
-
 
     public void setEmptyView(int size) {
         if (size == 0) {
             emptyView.setVisibility(View.VISIBLE);
             subjectText.setVisibility(View.GONE);
+            view1.setVisibility(View.GONE);
         } else {
             emptyView.setVisibility(View.GONE);
             subjectText.setVisibility(View.VISIBLE);
+            view1.setVisibility(View.VISIBLE);
         }
 
     }
-    public void showSnackbar(String message){
+
+    public void showSnackbar(String message) {
         Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.subject_name, menu);

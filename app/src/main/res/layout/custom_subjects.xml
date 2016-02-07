@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     card_view:cardBackgroundColor="#fff"
     card_view:cardCornerRadius="4dp">
 
@@ -33,7 +35,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:src="@mipmap/ic_edit_black_24dp"
-                android:tint="@color/iconTintColor" />
+                android:tint="@color/colorPrimaryDark" />
         </LinearLayout>
 
 
@@ -52,9 +54,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:src="@mipmap/ic_delete_black_24dp"
-                android:tint="@color/iconTintColor" />
+                android:tint="@color/colorPrimaryDark" />
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -5,23 +5,16 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    android:background="@drawable/drawer_background"
     tools:context=".SubjectsActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar_layout"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-    </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,45 +26,58 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:padding="10dp"
             android:text="Your subjects"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
             android:textSize="22sp" />
+
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/subject_layout_title"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white" />
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/subjects"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/subject_layout_title"
+            android:layout_below="@+id/view1"
             android:layout_marginBottom="16dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="20dp" />
 
         <LinearLayout
             android:id="@+id/empty_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="visible">
 
             <ImageView
-                android:layout_width="75dp"
-                android:layout_height="75dp"
-                android:src="@mipmap/ic_library_books_black_36dp"
-                android:tint="@color/emptyIconTintColor" />
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@mipmap/ic_book_white_36dp"
+                android:tint="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="Add your subjects here"
-                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
                 android:textStyle="italic" />
         </LinearLayout>
     </RelativeLayout>
@@ -86,5 +92,8 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@mipmap/ic_add_white_24dp"
-        app:layout_anchorGravity="bottom|right|end" />
+        android:tint="@color/colorPrimaryDark"
+        app:backgroundTint="@color/white"
+        app:layout_anchorGravity="bottom|right|end"
+        app:rippleColor="#dedede" />
 </android.support.design.widget.CoordinatorLayout>

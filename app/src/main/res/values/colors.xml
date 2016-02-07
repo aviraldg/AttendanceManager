@@ -7,4 +7,6 @@
     <color name="iconTintColor">#777</color>
     <color name="absentColor">#C62828</color>
     <color name="emptyIconTintColor">#999</color>
+    <color name="white">#fff</color>
+    <color name="tickColor">#888888</color>
 </resources>

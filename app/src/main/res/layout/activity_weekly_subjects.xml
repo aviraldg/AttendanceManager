@@ -6,23 +6,27 @@
     android:layout_height="match_parent"
     tools:context="dotinc.attendancemanager2.WeeklySubjectsActivity">
 
-    <include
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        layout="@layout/action_bar" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/drawer_background"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         app:tabGravity="fill"
-        app:tabIndicatorColor="#fff"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
         app:tabIndicatorHeight="2dp"
         app:tabMode="fixed"
-        app:tabSelectedTextColor="#fff"
+        app:tabSelectedTextColor="@color/colorPrimaryDark"
         app:tabTextAppearance="@style/TextAppearance.Design.Tab"
-        app:tabTextColor="#64ffffff" />
+        app:tabTextColor="#9e9e9e" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
@@ -40,6 +44,9 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@mipmap/ic_add_white_24dp"
-        app:layout_anchorGravity="bottom|right|end" />
+        android:tint="@color/colorPrimaryDark"
+        app:backgroundTint="@color/white"
+        app:layout_anchorGravity="bottom|right|end"
+        app:rippleColor="#dedede" />
 
 </RelativeLayout>

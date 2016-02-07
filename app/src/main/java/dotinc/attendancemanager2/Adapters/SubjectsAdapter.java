@@ -36,12 +36,13 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private EditText subject;
     TimeTableDatabase timeTableDatabase;
     AttendanceDatabase attendanceDatabase;
+
     public SubjectsAdapter(Context context, ArrayList<SubjectsList> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
         inflater = LayoutInflater.from(context);
         database = new SubjectDatabase(context);
-        timeTableDatabase= new TimeTableDatabase(context);
+        timeTableDatabase = new TimeTableDatabase(context);
         attendanceDatabase = new AttendanceDatabase(context);
     }
 
@@ -124,12 +125,12 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         int flag = ((SubjectsActivity) context).checkIfAlreadyEntered(subjectName);
                         if (flag == 0) {
                             database.editSubject(subjectName, old_subject);
-                            timeTableDatabase.editSubject(subjectName,old_subject);
+                            timeTableDatabase.editSubject(subjectName, old_subject);
                             arrayList.clear();
                             arrayList.addAll(database.getAllSubjects());
                             notifyDataSetChanged();
                         } else {
-                            ((SubjectsActivity)context).showSnackbar("Subject already entered");
+                            ((SubjectsActivity) context).showSnackbar("Subject already entered");
                         }
 
                     }

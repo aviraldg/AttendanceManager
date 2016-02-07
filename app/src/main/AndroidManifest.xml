@@ -8,18 +8,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SubjectsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".SubjectsActivity" />
         <activity android:name=".TimeTableActivity" />
         <activity android:name=".AttendanceActivity" />
         <activity android:name=".WeeklySubjectsActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".DetailedAnalysis"></activity>
+        <activity android:name=".DetailedAnalysis" />
+        <activity android:name=".NameAndCriteriaActivity" />
+        <activity android:name=".ChooseAvatarActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
