@@ -30,8 +30,8 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String TIMETABLE = "CREATE TABLE " + TimeTable_Table + "(" + Subject_Id + " INTEGER ," + POSITION + " INTEGER ,"
-                + Day_Code + " INTEGER ," + Subjects_Selected + " VARCHAR(30));";
+        String TIMETABLE = "CREATE TABLE " + TimeTable_Table + "(" + Subject_Id + " INTEGER ,"
+                + Day_Code + " INTEGER ," + Subjects_Selected + " VARCHAR(30) ," + POSITION + " INTEGER);";
         db.execSQL(TIMETABLE);
     }
 
@@ -81,9 +81,9 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
             while (cursor.moveToNext()) {
                 TimeTableList timeTableList = new TimeTableList();
                 timeTableList.setId(cursor.getInt(0));
-                timeTableList.setDayCode(cursor.getInt(2));
-                timeTableList.setSubjectName(cursor.getString(3));
-                timeTableList.setPosition(cursor.getInt(1));
+                timeTableList.setDayCode(cursor.getInt(1));
+                timeTableList.setSubjectName(cursor.getString(2));
+                timeTableList.setPosition(cursor.getInt(3));
                 tableLists.add(timeTableList);
             }
         } else {

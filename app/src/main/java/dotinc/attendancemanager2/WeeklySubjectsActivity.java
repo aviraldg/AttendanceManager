@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,28 +45,34 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
 
 
     private int timetableFlag;
+    private int view_timetable;
     private static int pageNumber = 1;
 
     void instantiate() {
+        Intent intent = getIntent();
+        view_timetable = intent.getIntExtra("view_timetable", 0);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Weekly Subjects");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (view_timetable == 1)
+            getSupportActionBar().setTitle("Time Table");
+        else
+            getSupportActionBar().setTitle("Weekly Subjects");
 
-        Intent intent = getIntent();
         timetableFlag = intent.getIntExtra("timetableFlag", 0);
-
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.pager);
         fab = (FloatingActionButton) findViewById(R.id.add_subjects);
 
         fragments = new ArrayList<>();
+
         for (int i = 0; i < 6; i++)
             fragments.add(new WeeklySubjectsFragment());
 
         tabTitles = getResources().getStringArray(R.array.tabs);
 
         WeeklySubjectsAdapter pagerAdapter =
-                new WeeklySubjectsAdapter(getSupportFragmentManager(), fragments, tabTitles);
+                new WeeklySubjectsAdapter(getSupportFragmentManager(), fragments, tabTitles, view_timetable);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -85,7 +92,8 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekly_subjects);
         instantiate();
-
+        if (view_timetable == 1)
+            fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +114,10 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.done)
+
+        if (item.getItemId() == android.R.id.home)
+            finish();
+        else if (item.getItemId() == R.id.done)
             startActivity(new Intent(WeeklySubjectsActivity.this, MainActivity.class));
         return super.onOptionsItemSelected(item);
     }

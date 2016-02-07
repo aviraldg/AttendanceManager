@@ -21,6 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+=======
+        <activity android:name=".AttendanceActivity" />
+        <activity android:name=".WeeklySubjectsActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".DetailedAnalysisActivity" />
+        <activity android:name=".GoToDateActivity" />
+        <activity android:name=".OverallAttendanceActivity"></activity>
+>>>>>>> origin/master
     </application>
 
 </manifest>

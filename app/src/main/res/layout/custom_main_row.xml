@@ -115,7 +115,7 @@
                         android:layout_toRightOf="@+id/subject_name"
                         android:src="@mipmap/ic_check_circle_black_36dp"
                         android:tint="@color/iconTintColor"
-                        android:visibility="visible" />
+                        android:visibility="gone" />
                 </RelativeLayout>
 
 

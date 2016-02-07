@@ -20,7 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import dotinc.attendancemanager2.DetailedAnalysis;
+import dotinc.attendancemanager2.DetailedAnalysisActivity;
+import dotinc.attendancemanager2.GoToDateActivity;
 import dotinc.attendancemanager2.MainActivity;
 import dotinc.attendancemanager2.Objects.AttendanceList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
@@ -43,18 +44,22 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     AttendanceList attendanceList;
     String myDate;
     TimeTableList list;
+    String activityName ;
     private int lastPosition = -1;
 
-    public AttendanceAdapter(Context context, ArrayList<TimeTableList> arrayList) {
+    public AttendanceAdapter(Context context, ArrayList<TimeTableList> arrayList, String myDate, String activityName) {
         this.context = context;
         this.arrayList = arrayList;
+        this.myDate = myDate;
+        this.activityName = activityName;
         inflater = LayoutInflater.from(context);
         attendanceList = new AttendanceList();
         database = new AttendanceDatabase(context);
         attendanceObject = new ArrayList<>();
-        Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        myDate = format.format(date);
+//        Date date = new Date();
+//        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+//        myDate = format.format(date);
+        Log.d("option_day_name",myDate);
         list = new TimeTableList();
     }
 
@@ -169,8 +174,8 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public boolean onLongClick(View v) {
 
-                Intent intent = new Intent(context, DetailedAnalysis.class);
-                intent.putExtra("id",id);
+                Intent intent = new Intent(context, DetailedAnalysisActivity.class);
+                intent.putExtra("id", id);
                 Log.d("option_a", String.valueOf(id));
                 context.startActivity(intent);
                 return true;
@@ -233,14 +238,23 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
+    private void showSnackBar(String message){
+
+        if(activityName.equals("MainActivity"))
+            ((MainActivity) context).showSnackbar(message);
+        else
+            ((GoToDateActivity) context).showSnackbar(message);
+    }
+
     private void resetAttendance(int id, AttendanceViewHolder viewHolder) {
         database.resetAttendance(id, myDate);
         viewHolder.resetbtn.setImageResource(R.mipmap.ic_restore_black_36dp);
         this.notifyDataSetChanged();
-        ((MainActivity) context).showSnackbar("Attendance reset");
+        showSnackBar("Attendance reset");
     }
 
     private void addAttendance(int action, int position, String message) {
+        Log.d("option_mydate",myDate);
         attendanceList.setId(arrayList.get(position).getId());
         attendanceList.setPosition(position);
         attendanceList.setAction(action);
@@ -248,7 +262,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         attendanceObject.add(attendanceList);
         database.addAttendance(attendanceList);
         this.notifyDataSetChanged();
-        ((MainActivity) context).showSnackbar(message);
+        showSnackBar(message);
 
     }
 
