@@ -3,10 +3,8 @@ package dotinc.attendancemanager2;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -16,17 +14,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import java.text.SimpleDateFormat;
@@ -44,8 +41,7 @@ import dotinc.attendancemanager2.Utils.ProgressPageIndicator;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
-public class MainActivity extends AppCompatActivity {
-
+public class GoToDateActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView recyclerView, exclRecyclerView;
     private CoordinatorLayout root;
@@ -53,9 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
-    private ViewPager pager;
-    private ArrayList<Fragment> pageList;
-    private ProgressPageIndicator indicator;
+
     private FloatingActionButton fab;
     private Button attendAll;
     private Button bunkedAll;
@@ -64,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<SubjectsList> subjectsName;
     private ArrayList<String> subjects;
     private int dayCode;
-
+    private String day_name;
     private ArrayList<TimeTableList> allSubjectsArrayList;      //add
     private ArrayList<TimeTableList> arrayList;
 
@@ -72,26 +66,23 @@ public class MainActivity extends AppCompatActivity {
     TimeTableDatabase timeTableDatabase;
     TimeTableList timeTableList;
     SubjectDatabase subjectDatabase;                            //add
-    String day;
-    Date date;
     String activityName;
-    AttendanceAdapter exadapter;
-    AttendanceAdapter mainadapter;
+    String date ;
     private Boolean isViewopened = false;
 
 
     void instantiate() {
 
+        Intent intent = getIntent();
+        day_name = intent.getStringExtra("day_name");
+        date = intent.getStringExtra("date");
+        activityName = "GoToDateActivity";
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        activityName = "MainActivity";
-
-        date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        day = format.format(date);
-
-        extraClassLayout= (RelativeLayout) findViewById(R.id.extra_class_layout);
+        extraClassLayout = (RelativeLayout) findViewById(R.id.extra_class_layout);
         root = (CoordinatorLayout) findViewById(R.id.root);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
@@ -101,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
         bunkedAll = (Button) findViewById(R.id.bunked_all);
         noClassAll = (Button) findViewById(R.id.noclass_all);
 
-        pager = (ViewPager) findViewById(R.id.pager);
-        indicator = (ProgressPageIndicator) findViewById(R.id.pageIndicator);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -114,9 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
         subjectsName = new ArrayList<>();
         subjects = new ArrayList<>();
-        pageList = new ArrayList<>();
-        pageList.add(new HeaderFragment());
-        pageList.add(new SecondFragment());
         allSubjectsArrayList = new ArrayList<>();
 
         timeTableList = new TimeTableList();
@@ -124,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         timeTableDatabase = new TimeTableDatabase(this);
         subjectDatabase = new SubjectDatabase(this);
 
-        dayCode = getdaycode();
+        dayCode = getdaycode(day_name);
         timeTableList.setDayCode(dayCode);
         arrayList = timeTableDatabase.getSubjects(timeTableList);
 
@@ -144,22 +130,30 @@ public class MainActivity extends AppCompatActivity {
                     allSubjectsArrayList.remove(j);
             }
         }
-        exadapter = new AttendanceAdapter(this, allSubjectsArrayList, day, activityName);
-        exclRecyclerView.setAdapter(exadapter);
+        exclRecyclerView.setAdapter(new AttendanceAdapter(this, allSubjectsArrayList, date, activityName));
     }
 
     private void setTitle(String dayName) {
         getSupportActionBar().setTitle(dayName);
     }
 
-    private ArrayList<SubjectsList> subjectsNameList;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.go_to_date_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-    private int getdaycode() {
-        int day_code = 1;
-        Date date = new Date();
-        String myDate;
-        SimpleDateFormat format = new SimpleDateFormat("EEE");
-        myDate = format.format(date.getTime());
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId()==android.R.id.home)
+            finish();
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    private int getdaycode(String myDate) {
+        int day_code = 0;
         switch (myDate) {
             case "Mon":
                 day_code = 1;
@@ -192,55 +186,15 @@ public class MainActivity extends AppCompatActivity {
         return day_code;
     }
 
-    public void detialedAnalysisShow() {
-//        ArrayList<String> subjectName = new ArrayList<>();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater layoutInflater = getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.subjects_list, null);
-        ListView subjects_view = (ListView) view.findViewById(R.id.subjectList);
-        subjectsName.clear();
-        subjectsName = subjectDatabase.getAllSubjects();
-        subjects.clear();
-        for (int i = 0; i < subjectsName.size(); i++)
-            subjects.add(subjectsName.get(i).getSubjectName().toString());
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, subjects);
-        subjects_view.setAdapter(arrayAdapter);
-        builder.setView(view);
-        subjects_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MainActivity.this,DetailedAnalysisActivity.class);
-                intent.putExtra("id",subjectsName.get(position).getId());
-                startActivity(intent);
-            }
-        });
-        builder.create().show();
-
-    }
-
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        exadapter.notifyDataSetChanged();
-        mainadapter.notifyDataSetChanged();
-    }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_go_to_date);
         instantiate();
         extraClass();
-        mainadapter = new AttendanceAdapter(this, arrayList,day,activityName);
-        recyclerView.setAdapter(mainadapter);
-        pager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager(), pageList));
 
-        pager.addOnPageChangeListener(new CustomOnPageChangeListener());
-        indicator.setViewPager(pager);
+        recyclerView.setAdapter(new AttendanceAdapter(this, arrayList, date, activityName));
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -386,23 +340,4 @@ public class MainActivity extends AppCompatActivity {
         anim.start();
     }
 
-
-    private class CustomOnPageChangeListener extends ViewPager.SimpleOnPageChangeListener {
-        @Override
-        public void onPageSelected(int position) {
-            switch (position) {
-                case 0:
-                    indicator.setViewPager(pager, 0);
-                    indicator.setFillColor(getResources().getColor(android.R.color.white));
-                    break;
-                case 1:
-                    indicator.setViewPager(pager, 1);
-                    indicator.setFillColor(getResources().getColor(android.R.color.white));
-                    break;
-                default:
-                    break;
-            }
-            super.onPageSelected(position);
-        }
-    }
 }

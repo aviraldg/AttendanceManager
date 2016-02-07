@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +25,7 @@ import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 
-public class DetailedAnalysis extends AppCompatActivity {
+public class DetailedAnalysisActivity extends AppCompatActivity {
 
     private boolean undo = false;
     private CaldroidFragment caldroidFragment;
@@ -32,26 +35,32 @@ public class DetailedAnalysis extends AppCompatActivity {
     ArrayList<AttendanceList> attendanceObject;
     AttendanceDatabase database;
     SubjectDatabase subjectDatabase;
+    SimpleDateFormat formatter;
+
     private void setCustomResourceForDates() {
         Date greenDate = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
 
         for (int i = 0; i < attendanceObject.size(); i++) {
             try {
                 String date = attendanceObject.get(i).getDate();
                 greenDate = formatter.parse(date);
-                if(attendanceObject.get(i).getAction()==1){
+                if (attendanceObject.get(i).getAction() == 1) {
                     caldroidFragment.setBackgroundResourceForDate(R.color.colorPrimary,
                             greenDate);
                     caldroidFragment.setTextColorForDate(R.color.backgroundColor, greenDate);
-                }
-                else if (attendanceObject.get(i).getAction()==0){
+                } else if (attendanceObject.get(i).getAction() == 0) {
                     caldroidFragment.setBackgroundResourceForDate(R.color.absentColor,
                             greenDate);
                     caldroidFragment.setTextColorForDate(R.color.backgroundColor, greenDate);
+                } else {
+//--------------for no class , color not decided yet--------------------//
+//                    caldroidFragment.setBackgroundResourceForDate(R.color.absentColor,
+//                            greenDate);
+//                    caldroidFragment.setTextColorForDate(R.color.backgroundColor, greenDate);
                 }
-                Log.d("option_date",date);
-                Log.d("option_date", String.valueOf(attendanceObject.get(i).getAction()));
+//                Log.d("option_date",date);
+//                Log.d("option_date", String.valueOf(attendanceObject.get(i).getAction()));
 
             } catch (ParseException e) {
 
@@ -72,6 +81,7 @@ public class DetailedAnalysis extends AppCompatActivity {
         attendanceObject = new ArrayList<>();
         attendanceObject.clear();
         attendanceObject = database.getAllDates(id);
+        formatter = new SimpleDateFormat("dd-MM-yyyy");
 
     }
 
@@ -92,5 +102,7 @@ public class DetailedAnalysis extends AppCompatActivity {
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.calendar1, caldroidFragment);
         t.commit();
+
+
     }
 }

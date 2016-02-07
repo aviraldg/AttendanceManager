@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +28,12 @@ public class WeeklySubjectsFragment extends Fragment {
     public TimeTableList timeTableList;
     public TimeTableDatabase database;
     public ArrayList<TimeTableList> arrayList;
-
+    int view_timetable;
 
     public WeeklySubjectsFragment() {
     }
+
+
 
 
     @Override
@@ -44,6 +45,7 @@ public class WeeklySubjectsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         Bundle bundle = getArguments();
         pageNumber = bundle.getInt("pageNumber", 1);
+        view_timetable = bundle.getInt("view_timetable");
         return view;
     }
 
@@ -55,16 +57,10 @@ public class WeeklySubjectsFragment extends Fragment {
         timeTableList.setDayCode(pageNumber);
         database.toast();
         arrayList = database.getSubjects(timeTableList);
-        adapter = new TimeTableAdapter(getActivity(), arrayList, timeTableList, WeeklySubjectsFragment.this);
+        adapter = new TimeTableAdapter(getActivity(), arrayList, timeTableList, WeeklySubjectsFragment.this, view_timetable);
         recyclerView.setAdapter(adapter);
     }
 
-//    public static void updateView() {
-//        arrayList.clear();
-//        timeTableList.setDayCode(pageNumber);
-//        arrayList.addAll(database.getSubjects(timeTableList));
-//        adapter.notifyDataSetChanged();
-//    }
 
     public void deleteItem(int position, TimeTableList timeTableList) {
         database.toast();
@@ -73,10 +69,6 @@ public class WeeklySubjectsFragment extends Fragment {
         timeTableList.setId(arrayList.get(position).getId());
         timeTableList.setPosition(arrayList.get(position).getPosition());
         database.deleteTimeTable(timeTableList);
-        //arrayList.clear();
-        //timeTableList.setDayCode(pageNumber);
-        ///arrayList.addAll(database.getSubjects(timeTableList));
-        //adapter.notifyDataSetChanged();
         database.toast();
     }
 }

@@ -1,6 +1,7 @@
 package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,15 +34,17 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     TimeTableDatabase database;
     TimeTableList timeTableList;
     int timetableFlag;
+    int view_timetable;
     private WeeklySubjectsFragment fragment;
 
     public TimeTableAdapter
-            (Context context, ArrayList<TimeTableList> arrayList, TimeTableList timeTableList, WeeklySubjectsFragment fragment) {
+            (Context context, ArrayList<TimeTableList> arrayList, TimeTableList timeTableList,
+             WeeklySubjectsFragment fragment, int view_timetable) {
         this.context = context;
         this.timeTableList = timeTableList;
         this.fragment = fragment;
         this.arrayList = arrayList;
-        Log.d("option_ad", String.valueOf(arrayList.size()));
+        this.view_timetable = view_timetable;
         inflater = LayoutInflater.from(context);
         database = new TimeTableDatabase(context);
         subjectsLists = new ArrayList<>();
@@ -61,8 +64,14 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
 
         viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
-        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, viewHolder.swipeLayout.findViewById(R.id.right_swipe));
-        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, null);
+        if (view_timetable == 0) {
+            viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, viewHolder.swipeLayout.findViewById(R.id.right_swipe));
+            viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, null);
+        } else {
+            viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, null);
+            viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, null);
+        }
+
 
         viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
             @Override
@@ -99,21 +108,22 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("option_bind", String.valueOf(arrayList.size()));
-                fragment.deleteItem(position,timeTableList);
+                fragment.deleteItem(position, timeTableList);
                 update();
             }
         });
+
     }
 
     @Override
     public int getItemCount() {
-        //Log.d("option_gic", String.valueOf(arrayList.size()));
         return arrayList.size();
     }
-    private void update(){
+
+    private void update() {
         this.notifyDataSetChanged();
     }
+
     static class TimeTableViewHolder extends RecyclerView.ViewHolder {
 
         private TextView subject;

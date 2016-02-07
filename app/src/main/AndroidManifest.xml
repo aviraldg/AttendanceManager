@@ -15,11 +15,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TimeTableActivity" />
         <activity android:name=".AttendanceActivity" />
         <activity android:name=".WeeklySubjectsActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".DetailedAnalysis"></activity>
+        <activity android:name=".DetailedAnalysisActivity" />
+        <activity android:name=".GoToDateActivity" />
+        <activity android:name=".OverallAttendanceActivity"></activity>
     </application>
 
 </manifest>

@@ -30,8 +30,8 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String ATTENDANCE = "CREATE TABLE " + ATTENDANCE_TRACKER + "(" + Subject_Id + " INTEGER ," + POSITION + " INTEGER ,"
-                + Action + " INTEGER ," + DATE + " VARCHAR(50));";
+        String ATTENDANCE = "CREATE TABLE " + ATTENDANCE_TRACKER + "(" + Subject_Id + " INTEGER ,"
+                + Action + " INTEGER ," + DATE + " VARCHAR(50) ,"+ POSITION + " INTEGER);";
         db.execSQL(ATTENDANCE);
     }
 
@@ -65,9 +65,8 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
             while (cursor.moveToNext()) {
                 AttendanceList attendanceList = new AttendanceList();
                 attendanceList.setId(cursor.getInt(0));
-                attendanceList.setDate(cursor.getString(3));
-                //attendanceList.setPresentDate(cursor.getString(3));
-                attendanceList.setAction(cursor.getInt(2));
+                attendanceList.setAction(cursor.getInt(1));
+                attendanceList.setDate(cursor.getString(2));
                 attendanceLists.add(attendanceList);
             }
         } else {
@@ -162,8 +161,9 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         cursor.moveToLast();
         if (cursor != null && cursor.getCount() != 0) {
             AttendanceList attendanceList = new AttendanceList();
-            attendanceList.setAction(cursor.getInt(2));
             attendanceList.setId(cursor.getInt(0));
+            attendanceList.setAction(cursor.getInt(1));
+
             attendanceLists.add(attendanceList);
         } else {
             Log.d("option_cur", "null");

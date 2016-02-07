@@ -3,24 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailedAnalysis">
+    tools:context=".DetailedAnalysisActivity">
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/action_bar">
-
-    </include>
+        layout="@layout/action_bar" />
 
     <LinearLayout
+        android:id="@+id/calendar1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:orientation="vertical">
+        android:layout_below="@+id/toobar"
+        android:orientation="vertical" />
 
-        <LinearLayout
-            android:id="@+id/calendar1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
-    </LinearLayout>
+
 </RelativeLayout>
