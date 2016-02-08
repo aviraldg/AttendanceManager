@@ -9,11 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SubjectsActivity" />
-        <activity android:name=".TimeTableActivity" />
-        <activity android:name=".AttendanceActivity" />
         <activity android:name=".WeeklySubjectsActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".DetailedAnalysis" />
         <activity android:name=".NameAndCriteriaActivity" />
         <activity android:name=".ChooseAvatarActivity">
             <intent-filter>
@@ -21,15 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-=======
-        <activity android:name=".AttendanceActivity" />
-        <activity android:name=".WeeklySubjectsActivity" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".DetailedAnalysisActivity" />
         <activity android:name=".GoToDateActivity" />
         <activity android:name=".OverallAttendanceActivity"></activity>
->>>>>>> origin/master
     </application>
 
 </manifest>
