@@ -3,7 +3,7 @@
     android:id="@+id/fragment_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dedede"
+    android:background="@drawable/drawer_background"
     tools:context="dotinc.attendancemanager2.Fragements.WeeklySubjectsFragment">
 
     <android.support.v7.widget.RecyclerView

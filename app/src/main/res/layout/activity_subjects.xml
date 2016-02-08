@@ -8,13 +8,6 @@
     android:background="@drawable/drawer_background"
     tools:context=".SubjectsActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,6 +26,19 @@
             android:textColor="@color/white"
             android:textSize="22sp" />
 
+        <ImageView
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:onClick="doneAddSubjects"
+            android:padding="10dp"
+            android:src="@mipmap/ic_done_white_36dp" />
 
         <View
             android:id="@+id/view1"

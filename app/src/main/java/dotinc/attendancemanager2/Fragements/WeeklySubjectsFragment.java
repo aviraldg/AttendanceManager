@@ -23,8 +23,8 @@ import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 public class WeeklySubjectsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    public static TimeTableAdapter adapter;
-    public static int pageNumber;
+    public TimeTableAdapter adapter;
+    public int pageNumber;
     public TimeTableList timeTableList;
     public TimeTableDatabase database;
     public ArrayList<TimeTableList> arrayList;
@@ -32,8 +32,6 @@ public class WeeklySubjectsFragment extends Fragment {
 
     public WeeklySubjectsFragment() {
     }
-
-
 
 
     @Override
@@ -57,18 +55,14 @@ public class WeeklySubjectsFragment extends Fragment {
         timeTableList.setDayCode(pageNumber);
         database.toast();
         arrayList = database.getSubjects(timeTableList);
-        adapter = new TimeTableAdapter(getActivity(), arrayList, timeTableList, WeeklySubjectsFragment.this, view_timetable);
+        adapter = new TimeTableAdapter(getActivity(), arrayList, timeTableList, WeeklySubjectsFragment.this, view_timetable, pageNumber);
         recyclerView.setAdapter(adapter);
     }
 
 
-    public void deleteItem(int position, TimeTableList timeTableList) {
-        database.toast();
-        arrayList = database.getSubjects(timeTableList);
-        timeTableList.setSubjectName(arrayList.get(position).getSubjectName());
-        timeTableList.setId(arrayList.get(position).getId());
-        timeTableList.setPosition(arrayList.get(position).getPosition());
-        database.deleteTimeTable(timeTableList);
-        database.toast();
+    public void updateView() {
+        arrayList.clear();
+        arrayList.addAll(database.getSubjects(timeTableList));
+        adapter.notifyDataSetChanged();
     }
 }

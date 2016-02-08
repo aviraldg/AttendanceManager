@@ -1,9 +1,7 @@
 package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,16 +33,18 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     TimeTableList timeTableList;
     int timetableFlag;
     int view_timetable;
+    int pageNumber;
     private WeeklySubjectsFragment fragment;
 
     public TimeTableAdapter
             (Context context, ArrayList<TimeTableList> arrayList, TimeTableList timeTableList,
-             WeeklySubjectsFragment fragment, int view_timetable) {
+             WeeklySubjectsFragment fragment, int view_timetable, int pageNumber) {
         this.context = context;
         this.timeTableList = timeTableList;
         this.fragment = fragment;
         this.arrayList = arrayList;
         this.view_timetable = view_timetable;
+        this.pageNumber = pageNumber;
         inflater = LayoutInflater.from(context);
         database = new TimeTableDatabase(context);
         subjectsLists = new ArrayList<>();
@@ -108,20 +108,26 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragment.deleteItem(position, timeTableList);
-                update();
+                deleteSubject(position);
             }
         });
 
     }
 
+    private void deleteSubject(int position) {
+        TimeTableList timeTableList = new TimeTableList();
+        timeTableList.setDayCode(pageNumber);
+        timeTableList.setSubjectName(arrayList.get(position).getSubjectName());
+        timeTableList.setId(arrayList.get(position).getId());
+        timeTableList.setPosition(arrayList.get(position).getPosition());
+        database.deleteTimeTable(timeTableList);
+        arrayList.remove(position);
+        this.notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return arrayList.size();
-    }
-
-    private void update() {
-        this.notifyDataSetChanged();
     }
 
     static class TimeTableViewHolder extends RecyclerView.ViewHolder {

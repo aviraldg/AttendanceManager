@@ -1,12 +1,10 @@
 package dotinc.attendancemanager2.Fragements;
 
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +28,11 @@ public class SecondFragment extends Fragment {
     private ImageButton viewTimeTable;
     private ImageButton go_to_date;
     private ImageButton overall_attendance;
-    int year, month,day;
+    int year, month, day;
     SimpleDateFormat formatter;
     Date myDate;
     Calendar calendar;
+
     public SecondFragment() {
         // Required empty public constructor
     }
@@ -50,7 +49,7 @@ public class SecondFragment extends Fragment {
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        formatter =new SimpleDateFormat("dd-MM-yyyy");
+        formatter = new SimpleDateFormat("dd-MM-yyyy");
         return view;
     }
 
@@ -69,7 +68,7 @@ public class SecondFragment extends Fragment {
         go_to_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getActivity(), pickerListener, year , month , day ).show();
+                new DatePickerDialog(getActivity(), R.style.DialogTheme, pickerListener, year, month, day).show();
             }
         });
         overall_attendance.setOnClickListener(new View.OnClickListener() {
@@ -80,14 +79,15 @@ public class SecondFragment extends Fragment {
             }
         });
     }
+
     private DatePickerDialog.OnDateSetListener pickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
             int day = selectedDay;
-            int month  = selectedMonth+1;
+            int month = selectedMonth + 1;
             int year = selectedYear;
-            String date = day+"-"+month+"-"+year;
+            String date = day + "-" + month + "-" + year;
             try {
                 myDate = formatter.parse(date);
 
@@ -96,8 +96,8 @@ public class SecondFragment extends Fragment {
             }
             String day_selected = new SimpleDateFormat("EE").format(myDate);
             Intent intent = new Intent(getActivity(), GoToDateActivity.class);
-            intent.putExtra("date",date);
-            intent.putExtra("day_name",day_selected);
+            intent.putExtra("date", date);
+            intent.putExtra("day_name", day_selected);
             startActivity(intent);
         }
     };
