@@ -1,6 +1,7 @@
 package dotinc.attendancemanager2;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,11 +24,13 @@ import dotinc.attendancemanager2.Adapters.WeeklySubjectsAdapter;
 import dotinc.attendancemanager2.Fragements.WeeklySubjectsFragment;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
+import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
 public class WeeklySubjectsActivity extends AppCompatActivity {
 
+    private Context context;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -42,13 +44,16 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
 
     private SubjectDatabase subjectDatabase;
     private TimeTableDatabase database;
+    private WeeklySubjectsAdapter pagerAdapter;
+    private WeeklySubjectsFragment mon, tue, wed, thu, fri, sat;
 
 
     private int timetableFlag;
-    private int view_timetable;
+    private int view_timetable = 0;
     private static int pageNumber = 1;
 
     void instantiate() {
+        context = WeeklySubjectsActivity.this;
         Intent intent = getIntent();
         view_timetable = intent.getIntExtra("view_timetable", 0);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -64,14 +69,24 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.pager);
         fab = (FloatingActionButton) findViewById(R.id.add_subjects);
 
-        fragments = new ArrayList<>();
+        mon = new WeeklySubjectsFragment();
+        tue = new WeeklySubjectsFragment();
+        wed = new WeeklySubjectsFragment();
+        thu = new WeeklySubjectsFragment();
+        fri = new WeeklySubjectsFragment();
+        sat = new WeeklySubjectsFragment();
 
-        for (int i = 0; i < 6; i++)
-            fragments.add(new WeeklySubjectsFragment());
+        fragments = new ArrayList<>();
+        fragments.add(mon);
+        fragments.add(tue);
+        fragments.add(wed);
+        fragments.add(thu);
+        fragments.add(fri);
+        fragments.add(sat);
 
         tabTitles = getResources().getStringArray(R.array.tabs);
 
-        WeeklySubjectsAdapter pagerAdapter =
+        pagerAdapter =
                 new WeeklySubjectsAdapter(getSupportFragmentManager(), fragments, tabTitles, view_timetable);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
@@ -94,14 +109,13 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         instantiate();
         if (view_timetable == 1)
             fab.setVisibility(View.INVISIBLE);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addTimetable();
             }
         });
-
-
     }
 
 
@@ -111,14 +125,17 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home)
             finish();
         else if (item.getItemId() == R.id.done)
-            startActivity(new Intent(WeeklySubjectsActivity.this, MainActivity.class));
+            if (view_timetable != 1)
+                Helper.saveToPref(context, Helper.COMPLETED, "completed");
+        startActivity(new Intent(WeeklySubjectsActivity.this,
+                MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        finish();
         return super.onOptionsItemSelected(item);
     }
 
@@ -158,6 +175,8 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         database.addTimeTable(timeTableList);
         database.toast();
 
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(pageNumber - 1);
     }
 
     private class PageListener extends ViewPager.SimpleOnPageChangeListener {

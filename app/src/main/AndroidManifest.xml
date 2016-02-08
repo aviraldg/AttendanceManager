@@ -15,12 +15,14 @@
         <activity android:name=".ChooseAvatarActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".DetailedAnalysisActivity" />
         <activity android:name=".GoToDateActivity" />
-        <activity android:name=".OverallAttendanceActivity"></activity>
+        <activity android:name=".OverallAttendanceActivity" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

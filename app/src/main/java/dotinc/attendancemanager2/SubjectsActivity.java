@@ -10,12 +10,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,8 +29,8 @@ public class SubjectsActivity extends AppCompatActivity {
     private FloatingActionButton addSubjects;
     private TextView subjectText;
     private View view1;
+    private ImageView done;
     private ArrayList<SubjectsList> arrayList;
-    private Toolbar toolbar;
     private EditText subject;
     private LinearLayout emptyView;
     private CoordinatorLayout root;
@@ -42,15 +40,13 @@ public class SubjectsActivity extends AppCompatActivity {
 
 
     private void instantiate() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
         addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
         subjectText = (TextView) findViewById(R.id.subject_layout_title);
         view1 = findViewById(R.id.view1);
         database = new SubjectDatabase(this);
         emptyView = (LinearLayout) findViewById(R.id.empty_view);
         root = (CoordinatorLayout) findViewById(R.id.root);
+        done = (ImageView) findViewById(R.id.done);
         subjectsList = new SubjectsList();
         arrayList = database.getAllSubjects();
         setEmptyView(arrayList.size());
@@ -136,10 +132,12 @@ public class SubjectsActivity extends AppCompatActivity {
             emptyView.setVisibility(View.VISIBLE);
             subjectText.setVisibility(View.GONE);
             view1.setVisibility(View.GONE);
+            done.setVisibility(View.GONE);
         } else {
             emptyView.setVisibility(View.GONE);
             subjectText.setVisibility(View.VISIBLE);
             view1.setVisibility(View.VISIBLE);
+            done.setVisibility(View.VISIBLE);
         }
 
     }
@@ -148,22 +146,8 @@ public class SubjectsActivity extends AppCompatActivity {
         Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.subject_name, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.done) {
-            if (!arrayList.isEmpty()) {
-                Intent intent = new Intent(SubjectsActivity.this, WeeklySubjectsActivity.class);
-                startActivity(intent);
-            } else
-                showSnackbar("Enter atleast one subject");
-
-        }
-        return super.onOptionsItemSelected(item);
+    public void doneAddSubjects(View view) {
+        Intent intent = new Intent(SubjectsActivity.this, WeeklySubjectsActivity.class);
+        startActivity(intent);
     }
 }

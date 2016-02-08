@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,11 +43,14 @@ import dotinc.attendancemanager2.Fragements.SecondFragment;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
+import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.ProgressPageIndicator;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Context context;
 
     private Toolbar toolbar;
     private RecyclerView recyclerView, exclRecyclerView;
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        context = MainActivity.this;
 
         extraClassLayout = (RelativeLayout) findViewById(R.id.extra_class_layout);
         activityName = "MainActivity";
@@ -214,15 +219,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(MainActivity.this,DetailedAnalysisActivity.class);
-                intent.putExtra("id",subjectsName.get(position).getId());
+                Intent intent = new Intent(MainActivity.this, DetailedAnalysisActivity.class);
+                intent.putExtra("id", subjectsName.get(position).getId());
                 startActivity(intent);
             }
         });
         builder.create().show();
 
     }
-
 
 
     @Override
@@ -240,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
         instantiate();
         extraClass();
-        mainadapter = new AttendanceAdapter(this, arrayList,day,activityName);
+        mainadapter = new AttendanceAdapter(this, arrayList, day, activityName);
         recyclerView.setAdapter(mainadapter);
         pager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager(), pageList));
 
@@ -342,14 +346,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.clear:
+                Helper.clearData(context);
+                break;
+
+        }
         return super.onOptionsItemSelected(item);
-
-//        switch (item.getItemId()){
-//
-//            //case R.id.settings:
-//
-//        }
-
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
