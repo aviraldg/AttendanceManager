@@ -3,6 +3,7 @@ package dotinc.attendancemanager2.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +44,8 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     String myDate;
     TimeTableList list;
     String activityName;
+
+    int markerValue;
     private int lastPosition = -1;
 
     public AttendanceAdapter(Context context, ArrayList<TimeTableList> arrayList, String myDate, String activityName) {
@@ -54,11 +57,8 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         attendanceList = new AttendanceList();
         database = new AttendanceDatabase(context);
         attendanceObject = new ArrayList<>();
-//        Date date = new Date();
-//        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-//        myDate = format.format(date);
-        Log.d("option_day_name", myDate);
         list = new TimeTableList();
+        markerValue = 2;
     }
 
     @Override
@@ -76,7 +76,21 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         list.setId(id);
         attendanceList.setDate(myDate);
-        attendanceObject = database.getMarker(list, myDate);
+        markerValue = database.setMarker(myDate, position);
+        Log.d("option_marker_value", String.valueOf(markerValue));
+        if (markerValue == 1){
+            //viewHolder.cardView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+            viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
+            viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
+        }
+        else if (markerValue == 0){
+            viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
+            viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.absentColor));
+        }
+        else{
+            viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
+            viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.backgroundColor));
+        }
 
         int attendedClasses = database.totalPresent(id);
         int totalClasses = database.totalClasses(id);
@@ -84,11 +98,6 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         float percentage = ((float) attendedClasses / (float) totalClasses) * 100;
         classesNeeded(attendedClasses, totalClasses, percentage, viewHolder);
 
-        if (attendanceObject.size() != 0 && attendanceObject.get(0).getAction() == 1)
-            setMarker(1, viewHolder);
-
-        else if (attendanceObject.size() != 0 && attendanceObject.get(0).getAction() == 0)
-            setMarker(0, viewHolder);
 
         viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right,
@@ -140,7 +149,9 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public void onClick(View v) {
                 addAttendance(1, position, "Attended Class");
-                setMarker(1, viewHolder);
+                markerValue = database.setMarker(myDate, position);
+                Log.d("option_marker_value", String.valueOf(markerValue));
+
             }
         });
 
@@ -148,7 +159,9 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public void onClick(View v) {
                 addAttendance(0, position, "Bunked Class");
-                setMarker(0, viewHolder);
+                markerValue = database.setMarker(myDate, position);
+                Log.d("option_marker_value", String.valueOf(markerValue));
+
 
             }
         });
@@ -164,6 +177,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public void onClick(View v) {
                 resetAttendance(id, viewHolder);
+
             }
         });
 //----------------this is to  redirect to the detailed analysis page--------------------//
@@ -189,20 +203,6 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return arrayList.size();
     }
 
-    private void setMarker(int marker, AttendanceViewHolder viewHolder) {
-        switch (marker) {
-            case 0:
-                viewHolder.check_mark.setVisibility(View.VISIBLE);
-                viewHolder.check_mark.setImageResource(R.mipmap.ic_highlight_off_black_36dp);
-                viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, android.R.color.holo_red_light));
-                break;
-            case 1:
-                viewHolder.check_mark.setVisibility(View.VISIBLE);
-                viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
-                viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
-                break;
-        }
-    }
 
     private void classesNeeded(int attendedClass, int totalClass, float percentage, AttendanceViewHolder viewHolder) {
         int flag = 0;
@@ -238,7 +238,9 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void showSnackBar(String message) {
 
+
         if (activityName.equals("MainActivity")) {
+
             ((MainActivity) context).showSnackbar(message);
             ((MainActivity) context).updateOverallPerc();
         } else
@@ -286,7 +288,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private ImageButton noClassbtn;
         private ImageButton resetbtn;
         private ImageView check_mark;
-
+        private CardView cardView;
         public AttendanceViewHolder(View itemView) {
             super(itemView);
             subject = (TextView) itemView.findViewById(R.id.subject_name);
@@ -300,6 +302,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             noClassbtn = (ImageButton) itemView.findViewById(R.id.no_class);
             resetbtn = (ImageButton) itemView.findViewById(R.id.reset_attendance);
             check_mark = (ImageView) itemView.findViewById(R.id.check_mark);
+            cardView = (CardView) itemView.findViewById(R.id.root_card);
         }
     }
 }

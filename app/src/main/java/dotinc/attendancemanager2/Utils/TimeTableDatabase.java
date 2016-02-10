@@ -91,7 +91,6 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         }
         return tableLists;
     }
-
     //    public ArrayList<TimeTableList> getAllSubjects() {
 //        ArrayList<TimeTableList> tableLists = new ArrayList<>();
 //        String query = "SELECT * FROM " + TimeTable_Table + " GROUP BY " + Subjects_Selected;
