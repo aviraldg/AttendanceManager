@@ -87,6 +87,8 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
                         database.execSQL(updateQuery);
                         cursor.moveToNext();
                         position++;
+                        if (cursor.isAfterLast())
+                            break;
                     }
                     position = 0;
                 }

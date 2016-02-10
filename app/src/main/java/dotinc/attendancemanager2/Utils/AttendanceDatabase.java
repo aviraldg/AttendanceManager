@@ -172,4 +172,22 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         dbs.close();
     }
 
+
+    public boolean checkEmpty() {
+        Boolean isEmpty;
+        SQLiteDatabase db = getReadableDatabase()
+                ;
+        String query = "select exists(select 1 from " + ATTENDANCE_TRACKER + ");";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        if (cursor.getInt(0) >= 1)
+            isEmpty = false;
+        else
+            isEmpty = true;
+        db.close();
+        cursor.close();
+        return isEmpty;
+    }
+
+
 }

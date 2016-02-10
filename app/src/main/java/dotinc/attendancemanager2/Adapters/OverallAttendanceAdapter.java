@@ -5,8 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
@@ -15,7 +13,6 @@ import java.util.ArrayList;
 
 import dotinc.attendancemanager2.Objects.AttendanceList;
 import dotinc.attendancemanager2.Objects.SubjectsList;
-import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.R;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 

@@ -17,9 +17,7 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import dotinc.attendancemanager2.DetailedAnalysisActivity;
 import dotinc.attendancemanager2.GoToDateActivity;
@@ -46,6 +44,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     String myDate;
     TimeTableList list;
     String activityName;
+
     int markerValue;
     private int lastPosition = -1;
 
@@ -237,9 +236,12 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void showSnackBar(String message) {
 
-        if (activityName.equals("MainActivity"))
+
+        if (activityName.equals("MainActivity")) {
+
             ((MainActivity) context).showSnackbar(message);
-        else
+            ((MainActivity) context).updateOverallPerc();
+        } else
             ((GoToDateActivity) context).showSnackbar(message);
     }
 

@@ -1,18 +1,19 @@
 package dotinc.attendancemanager2;
 
-import android.content.Intent;
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
-import com.roomorama.caldroid.CaldroidListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import dotinc.attendancemanager2.Adapters.CustomSpinnerAdapter;
 import dotinc.attendancemanager2.Objects.AttendanceList;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
@@ -27,19 +29,71 @@ import dotinc.attendancemanager2.Utils.SubjectDatabase;
 
 public class DetailedAnalysisActivity extends AppCompatActivity {
 
-    private boolean undo = false;
-    private CaldroidFragment caldroidFragment;
-    private CaldroidFragment dialogCaldroidFragment;
-    private Spinner spinner;
     private Toolbar toolbar;
+    private Spinner spinnerNav;
+    private LinearLayout root;
+    private Context context;
+
+    private ArrayList<String> subjects;
+    private ArrayList<SubjectsList> subjectsLists;
+    private SubjectDatabase subjectDatabase;
     ArrayList<AttendanceList> attendanceObject;
-    AttendanceDatabase database;
-    SubjectDatabase subjectDatabase;
-    SimpleDateFormat formatter;
+    private AttendanceDatabase attendancedb;
+    private SimpleDateFormat formatter;
+
+    private CaldroidFragment caldroidFragment;
+
+
+    private void instantiate() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        spinnerNav = (Spinner) findViewById(R.id.spinner_nav);
+        root = (LinearLayout) findViewById(R.id.display_root);
+
+        context = DetailedAnalysisActivity.this;
+        subjectDatabase = new SubjectDatabase(context);
+        attendancedb = new AttendanceDatabase(context);
+        subjectsLists = subjectDatabase.getAllSubjects();
+        formatter = new SimpleDateFormat("dd-MM-yyyy");
+        subjects = new ArrayList<>();
+
+        for (int pos = 0; pos < subjectsLists.size(); pos++)
+            subjects.add(subjectsLists.get(pos).getSubjectName());
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_exampe);
+
+        instantiate();
+        addItemsToSpinner();
+
+    }
+
+    public void addItemsToSpinner() {
+
+        spinnerNav.setAdapter(new CustomSpinnerAdapter(this, subjects));
+        spinnerNav.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapter, View v,
+                                       int position, long id) {
+                fetchFromDatabase(subjectsLists.get(position).getId());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+    }
 
     private void setCustomResourceForDates() {
         Date greenDate = new Date();
-
 
         for (int i = 0; i < attendanceObject.size(); i++) {
             try {
@@ -70,26 +124,13 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
         }
     }
 
-    private void instantiate() {
-        Intent intent = getIntent();
-        int id = intent.getIntExtra("id", 0);
-        database = new AttendanceDatabase(this);
-        subjectDatabase = new SubjectDatabase(this);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        attendanceObject = new ArrayList<>();
-        attendanceObject.clear();
-        attendanceObject = database.getAllDates(id);
-        formatter = new SimpleDateFormat("dd-MM-yyyy");
-
+    private void fetchFromDatabase(int id) {
+        attendanceObject = attendancedb.getAllDates(id);
+        setUpCalendar();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detailed_analysis);
-        instantiate();
+    private void setUpCalendar() {
+
         caldroidFragment = new CaldroidFragment();
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
@@ -100,9 +141,22 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
         caldroidFragment.setArguments(args);
         setCustomResourceForDates();
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-        t.replace(R.id.calendar1, caldroidFragment);
+        t.replace(R.id.display_root, caldroidFragment);
         t.commit();
 
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.go_to_date_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home)
+            finish();
+        return super.onOptionsItemSelected(item);
     }
 }

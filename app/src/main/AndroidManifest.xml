@@ -22,7 +22,8 @@
         <activity android:name=".DetailedAnalysisActivity" />
         <activity android:name=".GoToDateActivity" />
         <activity android:name=".OverallAttendanceActivity" />
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".Exampe"></activity>
     </application>
 
 </manifest>

@@ -3,9 +3,7 @@ package dotinc.attendancemanager2;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,16 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import java.text.SimpleDateFormat;
@@ -61,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ViewPager pager;
     private ArrayList<Fragment> pageList;
+    private HeaderFragment headerFragment;
     private ProgressPageIndicator indicator;
     private FloatingActionButton fab;
     private Button attendAll;
@@ -124,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
         subjectsName = new ArrayList<>();
         subjects = new ArrayList<>();
         pageList = new ArrayList<>();
-        pageList.add(new HeaderFragment());
+        headerFragment = new HeaderFragment();
+        pageList.add(headerFragment);
         pageList.add(new SecondFragment());
         allSubjectsArrayList = new ArrayList<>();
 
@@ -160,8 +156,6 @@ public class MainActivity extends AppCompatActivity {
     private void setTitle(String dayName) {
         getSupportActionBar().setTitle(dayName);
     }
-
-    private ArrayList<SubjectsList> subjectsNameList;
 
     private int getdaycode() {
         int day_code = 1;
@@ -201,33 +195,9 @@ public class MainActivity extends AppCompatActivity {
         return day_code;
     }
 
-    public void detialedAnalysisShow() {
-//        ArrayList<String> subjectName = new ArrayList<>();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater layoutInflater = getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.subjects_list, null);
-        ListView subjects_view = (ListView) view.findViewById(R.id.subjectList);
-        subjectsName.clear();
-        subjectsName = subjectDatabase.getAllSubjects();
-        subjects.clear();
-        for (int i = 0; i < subjectsName.size(); i++)
-            subjects.add(subjectsName.get(i).getSubjectName().toString());
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, subjects);
-        subjects_view.setAdapter(arrayAdapter);
-        builder.setView(view);
-        subjects_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(MainActivity.this, DetailedAnalysisActivity.class);
-                intent.putExtra("id", subjectsName.get(position).getId());
-                startActivity(intent);
-            }
-        });
-        builder.create().show();
-
+    public void updateOverallPerc() {
+        headerFragment.setOverallPerc();
     }
-
 
     @Override
     protected void onResume() {
@@ -235,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
         exadapter.notifyDataSetChanged();
         mainadapter.notifyDataSetChanged();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -349,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.clear:
                 Helper.clearData(context);
                 break;
+            case R.id.about_us:
 
         }
         return super.onOptionsItemSelected(item);
