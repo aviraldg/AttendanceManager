@@ -10,7 +10,6 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.Objects.AttendanceList;
-import dotinc.attendancemanager2.Objects.TimeTableList;
 
 /**
  * Created by vellapanti on 21/1/16.
@@ -31,7 +30,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String ATTENDANCE = "CREATE TABLE " + ATTENDANCE_TRACKER + "(" + Subject_Id + " INTEGER ,"
-                + Action + " INTEGER ," + DATE + " VARCHAR(50) ,"+ POSITION + " INTEGER);";
+                + Action + " INTEGER ," + DATE + " VARCHAR(50) ," + POSITION + " INTEGER);";
         db.execSQL(ATTENDANCE);
     }
 
@@ -40,27 +39,28 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         String table_update = "ALTER TABLE " + ATTENDANCE_TRACKER + " ADD COLUMN " + POSITION + " INTEGER ";
         db.execSQL(table_update);
     }
-    public int setMarker(String myDate ,  int position){
-        int markerValue =2;
+
+    public int setMarker(String myDate, int position) {
+        int markerValue = 2;
         Log.d("option_marker_position", String.valueOf(position));
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "SELECT * FROM "+ ATTENDANCE_TRACKER + " WHERE "+DATE + " = '" + myDate + "' GROUP BY "+
-                POSITION ;
-        Cursor cursor = database.rawQuery(query,null);
-        if (cursor != null){
-            while (cursor.moveToNext()){
-                if (cursor.getInt(3)==position){
+        String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + DATE + " = '" + myDate + "' GROUP BY " +
+                POSITION;
+        Cursor cursor = database.rawQuery(query, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                if (cursor.getInt(3) == position) {
                     markerValue = cursor.getInt(1);
-                    Log.d("option_marker_toast","action"+cursor.getInt(1)+"pos"+cursor.getInt(3));
+                    Log.d("option_marker_toast", "action" + cursor.getInt(1) + "pos" + cursor.getInt(3));
                 }
 
             }
-        }
-        else {
-            Log.d("option_cursor","is null");
+        } else {
+            Log.d("option_cursor", "is null");
         }
         return markerValue;
     }
+
     public void addAttendance(AttendanceList attendanceList) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -138,10 +138,10 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         return totalClasses;
     }
 
-    public void resetAttendance(int id, String date) {
+    public void resetAttendance(int id, String date, int position) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id + " AND " +
-                DATE + " = '" + date + "'";
+                DATE + " = '" + date + "' AND " + POSITION + " = " + position;
         db.execSQL(query);
         db.close();
     }
@@ -172,24 +172,4 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         dbs.close();
     }
 
-    public ArrayList<AttendanceList> getMarker(TimeTableList list, String date) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ArrayList<AttendanceList> attendanceLists = new ArrayList<>();
-        String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + list.getId() +
-                " AND " + DATE + " = '" + date + "'";
-
-        Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToLast();
-        if (cursor != null && cursor.getCount() != 0) {
-            AttendanceList attendanceList = new AttendanceList();
-            attendanceList.setId(cursor.getInt(0));
-            attendanceList.setAction(cursor.getInt(1));
-
-            attendanceLists.add(attendanceList);
-        } else {
-            Log.d("option_cur", "null");
-        }
-        return attendanceLists;
-
-    }
 }

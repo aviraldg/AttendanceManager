@@ -79,16 +79,14 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         attendanceList.setDate(myDate);
         markerValue = database.setMarker(myDate, position);
         Log.d("option_marker_value", String.valueOf(markerValue));
-        if (markerValue == 1){
+        if (markerValue == 1) {
             //viewHolder.cardView.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
             viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
             viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
-        }
-        else if (markerValue == 0){
+        } else if (markerValue == 0) {
             viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
             viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.absentColor));
-        }
-        else{
+        } else {
             viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
             viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.backgroundColor));
         }
@@ -177,7 +175,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         viewHolder.resetbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetAttendance(id, viewHolder);
+                resetAttendance(id, viewHolder, position);
 
             }
         });
@@ -245,8 +243,8 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ((GoToDateActivity) context).showSnackbar(message);
     }
 
-    private void resetAttendance(int id, AttendanceViewHolder viewHolder) {
-        database.resetAttendance(id, myDate);
+    private void resetAttendance(int id, AttendanceViewHolder viewHolder, int position) {
+        database.resetAttendance(id, myDate, position);
         viewHolder.resetbtn.setImageResource(R.mipmap.ic_restore_black_36dp);
         this.notifyDataSetChanged();
         showSnackBar("Attendance reset");
@@ -287,6 +285,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private ImageButton resetbtn;
         private ImageView check_mark;
         private CardView cardView;
+
         public AttendanceViewHolder(View itemView) {
             super(itemView);
             subject = (TextView) itemView.findViewById(R.id.subject_name);

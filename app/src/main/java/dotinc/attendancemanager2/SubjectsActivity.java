@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import dotinc.attendancemanager2.Adapters.SubjectsAdapter;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
+import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
 public class SubjectsActivity extends AppCompatActivity {
 
@@ -34,16 +36,18 @@ public class SubjectsActivity extends AppCompatActivity {
     private EditText subject;
     private LinearLayout emptyView;
     private CoordinatorLayout root;
+    private boolean ifEmpty;
     SubjectsAdapter adapter;
     SubjectDatabase database;
     SubjectsList subjectsList;
-
+    TimeTableDatabase timeTableDatabase;
 
     private void instantiate() {
         addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
         subjectText = (TextView) findViewById(R.id.subject_layout_title);
         view1 = findViewById(R.id.view1);
         database = new SubjectDatabase(this);
+        timeTableDatabase = new TimeTableDatabase(this);
         emptyView = (LinearLayout) findViewById(R.id.empty_view);
         root = (CoordinatorLayout) findViewById(R.id.root);
         done = (ImageView) findViewById(R.id.done);
@@ -56,13 +60,28 @@ public class SubjectsActivity extends AppCompatActivity {
         adapter = new SubjectsAdapter(this, arrayList);
     }
 
+    public void olderVersionDatabase() {
+        ifEmpty = timeTableDatabase.checkEmpty();
+        if (ifEmpty == true){
+
+            Log.d("option_timedatabase", "is null");
+
+        }
+
+        else {
+            timeTableDatabase.addPosition();
+            timeTableDatabase.toast();
+            Log.d("option_timedatabase","not null");
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subjects);
 
         instantiate();
-
+        olderVersionDatabase();
 
 //        ScaleInAnimator animator = new ScaleInAnimator();
 //        animator.setAddDuration(500);

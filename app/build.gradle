@@ -8,8 +8,8 @@ android {
         applicationId "dotinc.attendancemanager2"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 7
-        versionName "1.2.4"
+        versionCode 8
+        versionName "1.2.5"
     }
     buildTypes {
         release {
