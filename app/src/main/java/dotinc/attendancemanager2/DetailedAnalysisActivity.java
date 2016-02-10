@@ -41,7 +41,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     private ArrayList<String> subjects;
     private ArrayList<SubjectsList> subjectsLists;
     private SubjectDatabase subjectDatabase;
-    ArrayList<AttendanceList> attendanceObject;
+    private ArrayList<AttendanceList> attendanceObject;
     private AttendanceDatabase attendancedb;
     private SimpleDateFormat formatter;
 

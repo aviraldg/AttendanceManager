@@ -4,10 +4,10 @@ package dotinc.attendancemanager2.Objects;
  * Created by vellapanti on 18/1/16.
  */
 public class TimeTableList {
-    int id;
-    int dayCode;
-    int position;
-    String subjectName;
+    public int id;
+    public int dayCode;
+    public int position;
+    public String subjectName;
 
     public int getPosition() {
         return position;

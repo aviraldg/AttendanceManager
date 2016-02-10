@@ -5,13 +5,13 @@ package dotinc.attendancemanager2.Objects;
  */
 public class AttendanceList {
 
-    int id;
-    int action;
-    int dayCode;
-    int position;
-    int total;
-    int present;
-    String date;
+    public int id;
+    public int action;
+    public int dayCode;
+    public int position;
+    public int total;
+    public int present;
+    public String date;
 
     public int getTotal() {
         return total;

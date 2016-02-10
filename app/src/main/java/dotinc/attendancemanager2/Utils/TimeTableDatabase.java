@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,9 +24,10 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
     public static final String Day_Code = "day_code";
     public static final String TimeTable_Table = "timetable";
     public static final String POSITION = "position";
-
+    Context context;
     public TimeTableDatabase(Context context) {
         super(context, TimeTable_Database_Name, null, Database_Version);
+        this.context = context;
     }
 
     @Override
@@ -51,8 +53,8 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
                 int pos = cur.getInt(1);
                 int dc = cur.getInt(2);
                 String subject = cur.getString(3);
-
-                Log.d("option_database", "id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos);
+                Toast.makeText(context,"id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos,Toast.LENGTH_LONG).show();
+                Log.d("option_database_toast", "id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos);
             }
         } else {
             Log.d("option", "cursor is null");
@@ -69,6 +71,48 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         values.put(POSITION, list.getPosition());
         db.insert(TimeTable_Table, null, values);
         db.close();
+    }
+
+    public void addPosition() {
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TimeTable_Table;
+        Cursor cursor = database.rawQuery(query, null);
+        String updateQuery;
+        int position = 0;
+        cursor.moveToFirst();
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                for (int dayCode = 1; dayCode < 7; dayCode++) {
+                    position = 0;
+                    while (cursor.getInt(1) == dayCode) {
+                        Toast.makeText(context,"position:"+position,Toast.LENGTH_LONG).show();
+                        cursor.moveToNext();
+                        position++;
+                        updateQuery = "UPDATE " + TimeTable_Table + " SET " + POSITION + " = " + position;
+                        database.execSQL(updateQuery);
+                        Log.d("option_quer", updateQuery);
+                        Toast.makeText(context,updateQuery,Toast.LENGTH_LONG).show();
+                        if (cursor.isAfterLast())
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean checkEmpty() {
+        Boolean isEmpty;
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "select exists(select 1 from " + TimeTable_Table + ");";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        if (cursor.getInt(0) >= 1)
+            isEmpty = false;
+        else
+            isEmpty = true;
+        db.close();
+        cursor.close();
+        return isEmpty;
     }
 
     public ArrayList<TimeTableList> getSubjects(TimeTableList List) {
@@ -91,25 +135,7 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         }
         return tableLists;
     }
-    //    public ArrayList<TimeTableList> getAllSubjects() {
-//        ArrayList<TimeTableList> tableLists = new ArrayList<>();
-//        String query = "SELECT * FROM " + TimeTable_Table + " GROUP BY " + Subjects_Selected;
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor cursor = db.rawQuery(query, null);
-//        if (cursor!=null) {
-//            while (cursor.moveToNext()) {
-//                TimeTableList timeTableList = new TimeTableList();
-//                timeTableList.setId(cursor.getInt(0));
-//                timeTableList.setDayCode(cursor.getInt(2));
-//                timeTableList.setSubjectName(cursor.getString(3));
-//                timeTableList.setPosition(cursor.getInt(1));
-//                tableLists.add(timeTableList);
-//            }
-//        } else {
-//            Log.d("option_cur", "null");
-//        }
-//        return tableLists;
-//    }
+
     public void deleteSubject(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + TimeTable_Table + " WHERE " + Subject_Id + " = " + id;

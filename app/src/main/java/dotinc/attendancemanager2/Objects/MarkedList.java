@@ -4,9 +4,9 @@ package dotinc.attendancemanager2.Objects;
  * Created by vellapanti on 9/2/16.
  */
 public class MarkedList {
-    int position;
-    int marked;
-    String Date;
+    public int position;
+    public int marked;
+    public String Date;
 
 
 

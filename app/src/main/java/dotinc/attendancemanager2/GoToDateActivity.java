@@ -51,12 +51,13 @@ public class GoToDateActivity extends AppCompatActivity {
     private ArrayList<TimeTableList> allSubjectsArrayList;      //add
     private ArrayList<TimeTableList> arrayList;
 
-    AttendanceDatabase database;
-    TimeTableDatabase timeTableDatabase;
-    TimeTableList timeTableList;
-    SubjectDatabase subjectDatabase;                            //add
-    String activityName;
-    String date;
+    private AttendanceDatabase database;
+    private AttendanceAdapter mainadapter;
+    private TimeTableDatabase timeTableDatabase;
+    private TimeTableList timeTableList;
+    private SubjectDatabase subjectDatabase;                            //add
+    private String activityName;
+    private String date;
     private Boolean exclViewOpen = false, attAllViewOpen = false;
 
 
@@ -192,8 +193,8 @@ public class GoToDateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_go_to_date);
         instantiate();
         extraClass();
-
-        recyclerView.setAdapter(new AttendanceAdapter(this, arrayList, date, activityName));
+        mainadapter = new AttendanceAdapter(this, arrayList, date, activityName);
+        recyclerView.setAdapter(mainadapter);
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -227,16 +228,22 @@ public class GoToDateActivity extends AppCompatActivity {
 
     public void attendAll(View view) {
         //**************** Define the functionality here ***********//
+        database.addAllAttendance(arrayList, 1, date);
+        mainadapter.notifyDataSetChanged();
         markedAtt();
     }
 
     public void bunkedAll(View view) {
         //**************** Define the functionality here ***********//
+        database.addAllAttendance(arrayList, 0, date);
+        mainadapter.notifyDataSetChanged();
         markedAtt();
     }
 
     public void noClassAll(View view) {
         //**************** Define the functionality here ***********//
+        database.addAllAttendance(arrayList, -1, date);
+        mainadapter.notifyDataSetChanged();
         markedAtt();
     }
 

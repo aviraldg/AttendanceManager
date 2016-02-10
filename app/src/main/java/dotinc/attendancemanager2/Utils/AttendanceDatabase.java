@@ -75,6 +75,19 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addAllAttendance(ArrayList<TimeTableList> arrayList, int action, String myDate) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        for (int i = 0; i < arrayList.size(); i++) {
+            values.put(Subject_Id, arrayList.get(i).getId());
+            values.put(Action, action);
+            values.put(DATE, myDate);
+            values.put(POSITION, arrayList.get(i).getPosition());
+            database.insert(ATTENDANCE_TRACKER, null, values);
+        }
+        database.close();
+    }
+
     public ArrayList<AttendanceList> getAllDates(int id) {
         ArrayList<AttendanceList> attendanceLists = new ArrayList<>();
         String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id +
@@ -139,10 +152,10 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         return totalClasses;
     }
 
-    public void resetAttendance(int id, String date) {
+    public void resetAttendance(int id, String date, int position) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id + " AND " +
-                DATE + " = '" + date + "'";
+                DATE + " = '" + date + "' AND " + POSITION + " = " + position;
         db.execSQL(query);
         db.close();
     }
@@ -173,6 +186,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         dbs.close();
     }
 
+
     public boolean checkEmpty() {
         Boolean isEmpty;
         SQLiteDatabase db = getReadableDatabase();
@@ -188,24 +202,5 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         return isEmpty;
     }
 
-    public ArrayList<AttendanceList> getMarker(TimeTableList list, String date) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ArrayList<AttendanceList> attendanceLists = new ArrayList<>();
-        String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + list.getId() +
-                " AND " + DATE + " = '" + date + "'";
 
-        Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToLast();
-        if (cursor != null && cursor.getCount() != 0) {
-            AttendanceList attendanceList = new AttendanceList();
-            attendanceList.setId(cursor.getInt(0));
-            attendanceList.setAction(cursor.getInt(1));
-
-            attendanceLists.add(attendanceList);
-        } else {
-            Log.d("option_cur", "null");
-        }
-        return attendanceLists;
-
-    }
 }

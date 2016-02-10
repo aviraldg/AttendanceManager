@@ -21,11 +21,11 @@ import dotinc.attendancemanager2.Utils.AttendanceDatabase;
  */
 public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttendanceAdapter.OverallViewHolder> {
 
-    Context context;
-    ArrayList<SubjectsList> arrayList;
-    ArrayList<AttendanceList> attendanceObject;
-    LayoutInflater inflater;
-    AttendanceDatabase database;
+    private Context context;
+    private ArrayList<SubjectsList> arrayList;
+    private ArrayList<AttendanceList> attendanceObject;
+    private LayoutInflater inflater;
+    private AttendanceDatabase database;
 
     public OverallAttendanceAdapter(Context context, ArrayList<SubjectsList> arrayList) {
         this.context = context;

@@ -63,15 +63,15 @@ public class MainActivity extends AppCompatActivity {
     private int dayCode;
 
 
-    AttendanceDatabase database;
-    TimeTableDatabase timeTableDatabase;
-    TimeTableList timeTableList;
-    SubjectDatabase subjectDatabase;                            //add
-    String day;
-    Date date;
-    String activityName;
-    AttendanceAdapter exadapter;
-    AttendanceAdapter mainadapter;
+    private AttendanceDatabase database;
+    private TimeTableDatabase timeTableDatabase;
+    private TimeTableList timeTableList;
+    private SubjectDatabase subjectDatabase;                            //add
+    private String day;
+    private Date date;
+    private String activityName;
+    private AttendanceAdapter exadapter;
+    private AttendanceAdapter mainadapter;
     private Boolean exclViewOpen = false, attAllViewOpen = false;
 
 
@@ -242,16 +242,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void attendAll(View view) {
         //**************** Define the functionality here ***********//
+        database.addAllAttendance(arrayList,1,day);
+        mainadapter.notifyDataSetChanged();
         markedAtt();
     }
 
     public void bunkedAll(View view) {
         //**************** Define the functionality here ***********//
+        database.addAllAttendance(arrayList,0,day);
+        mainadapter.notifyDataSetChanged();
         markedAtt();
     }
 
     public void noClassAll(View view) {
         //**************** Define the functionality here ***********//
+        database.addAllAttendance(arrayList,-1,day);
+        mainadapter.notifyDataSetChanged();
         markedAtt();
     }
 

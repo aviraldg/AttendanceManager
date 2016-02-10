@@ -5,8 +5,8 @@ package dotinc.attendancemanager2.Objects;
  */
 public class SubjectsList {
 
-    int id;
-    String subjectName;
+    public int id;
+    public String subjectName;
 
     public SubjectsList(int id, String subjectName) {
         this.id = id;
