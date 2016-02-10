@@ -16,6 +16,7 @@ import dotinc.attendancemanager2.Fragements.WeeklySubjectsFragment;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.R;
+import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
 /**
@@ -25,15 +26,14 @@ import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 //Adapter of WeeklySubjectsActivity*******************//
 
 public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    Context context;
-    LayoutInflater inflater;
-    ArrayList<TimeTableList> arrayList;
-    ArrayList<SubjectsList> subjectsLists;
-    TimeTableDatabase database;
-    TimeTableList timeTableList;
-    int timetableFlag;
-    int view_timetable;
-    int pageNumber;
+    private Context context;
+    private LayoutInflater inflater;
+    private ArrayList<TimeTableList> arrayList;
+    private ArrayList<SubjectsList> subjectsLists;
+    private TimeTableDatabase database;
+    private TimeTableList timeTableList;
+    private int view_timetable;
+    private int pageNumber;
     private WeeklySubjectsFragment fragment;
 
     public TimeTableAdapter

@@ -37,10 +37,10 @@ public class SubjectsActivity extends AppCompatActivity {
     private LinearLayout emptyView;
     private CoordinatorLayout root;
     private boolean ifEmpty;
-    SubjectsAdapter adapter;
-    SubjectDatabase database;
-    SubjectsList subjectsList;
-    TimeTableDatabase timeTableDatabase;
+    private SubjectsAdapter adapter;
+    private SubjectDatabase database;
+    private SubjectsList subjectsList;
+    private TimeTableDatabase timeTableDatabase;
 
     private void instantiate() {
         addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
@@ -83,13 +83,6 @@ public class SubjectsActivity extends AppCompatActivity {
         instantiate();
         olderVersionDatabase();
 
-//        ScaleInAnimator animator = new ScaleInAnimator();
-//        animator.setAddDuration(500);
-//        animator.setRemoveDuration(500);
-//        DefaultItemAnimator animator = new DefaultItemAnimator();
-//        animator.setAddDuration(500);
-//        animator.setRemoveDuration(500);
-//        recyclerView.setItemAnimator(animator);
         recyclerView.setAdapter(adapter);
 
         addSubjects.setOnClickListener(new View.OnClickListener() {
@@ -112,12 +105,11 @@ public class SubjectsActivity extends AppCompatActivity {
                             arrayList.addAll(database.getAllSubjects());
                             setEmptyView(arrayList.size());
                             adapter.notifyDataSetChanged();
-//                            adapter.notifyItemInserted(arrayList.size());
-                        } else if (subjectName.length() == 0) {
-                            showSnackbar("Sbject cannot be empty");
-                        } else {
-                            showSnackbar("Subject already entered");
                         }
+                        else if (subjectName.length() == 0)
+                            showSnackbar("Subject cannot be empty");
+                        else
+                            showSnackbar("Subject already entered");
                     }
                 });
                 dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

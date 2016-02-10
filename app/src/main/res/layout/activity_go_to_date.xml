@@ -142,6 +142,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
+                        android:onClick="noClassAll"
                         android:text="No Class"
                         android:textAllCaps="false" />
 
@@ -151,6 +152,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
+                        android:onClick="bunkedAll"
                         android:text="Bunked All"
                         android:textAllCaps="false" />
 
@@ -160,6 +162,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
+                        android:onClick="attendAll"
                         android:text="Attended"
                         android:textAllCaps="false" />
 

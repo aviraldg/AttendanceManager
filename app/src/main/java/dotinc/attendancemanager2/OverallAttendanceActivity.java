@@ -19,8 +19,8 @@ public class OverallAttendanceActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Toolbar toolbar;
     private ArrayList<SubjectsList> arrayList;
-    SubjectDatabase database;
-    OverallAttendanceAdapter adapter;
+    private SubjectDatabase database;
+    private OverallAttendanceAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

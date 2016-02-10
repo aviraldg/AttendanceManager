@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import dotinc.attendancemanager2.Objects.AttendanceList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.R;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
+import dotinc.attendancemanager2.Utils.Helper;
 
 /**
  * Created by vellapanti on 21/1/16.
@@ -36,17 +38,17 @@ import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 
 public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    Context context;
-    ArrayList<TimeTableList> arrayList;
-    ArrayList<AttendanceList> attendanceObject;
-    LayoutInflater inflater;
-    AttendanceDatabase database;
-    AttendanceList attendanceList;
-    String myDate;
-    TimeTableList list;
-    String activityName;
-
-    int markerValue;
+    private Context context;
+    private ArrayList<TimeTableList> arrayList;
+    private ArrayList<AttendanceList> attendanceObject;
+    private LayoutInflater inflater;
+    private AttendanceDatabase database;
+    private AttendanceList attendanceList;
+    private String myDate;
+    private TimeTableList list;
+    private String activityName;
+    private int attendance_criteria;
+    private int markerValue;
     private int lastPosition = -1;
 
     public AttendanceAdapter(Context context, ArrayList<TimeTableList> arrayList, String myDate, String activityName) {
@@ -60,6 +62,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         attendanceObject = new ArrayList<>();
         list = new TimeTableList();
         markerValue = 2;
+        attendance_criteria = Integer.parseInt(Helper.getFromPref(context, Helper.ATTENDANCE_CRITERIA, String.valueOf(0)));
     }
 
     @Override
@@ -179,23 +182,6 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             }
         });
-//----------------this is to  redirect to the detailed analysis page--------------------//
-
-        viewHolder.subject.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-//                    Intent intent = new Intent(context, GraphActivity.class);
-//                    context.startActivity(intent);
-//                Intent intent = new Intent(context, DetailedAnalysisActivity.class);
-//                intent.putExtra("id", id);
-//                Log.d("option_a", String.valueOf(id));
-//                context.startActivity(intent);
-                return true;
-            }
-        });
-
-
-//---------------- **************************************************-------------------//
     }
 
     @Override
@@ -207,20 +193,25 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void classesNeeded(int attendedClass, int totalClass, float percentage, AttendanceViewHolder viewHolder) {
         int flag = 0;
         int originalAttended = attendedClass;
-        if (percentage >= 75)
+        if (percentage >= attendance_criteria){
             flag = 1;
+            viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark
+            ));
+        }
+
         else if (attendedClass == 0 && totalClass == 0)
             flag = 2;
-        while (percentage < 75) {
+        while (percentage < attendance_criteria) {
             flag = 3;
             attendedClass++;
             totalClass++;
+            viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.absentColor));
             percentage = ((float) attendedClass / (float) totalClass) * 100;
         }
         switch (flag) {
             case 1:
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
-                viewHolder.needClassDetail.setText("You are on track !");
+                viewHolder.needClassDetail.setText("You are on the track !");
                 break;
 
             case 2:
@@ -228,9 +219,13 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
 
             case 3:
+                int need = 0;
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
-                viewHolder.needClassDetail.setText("You need " + (attendedClass - originalAttended) +
-                        " more classes");
+                need = attendedClass - originalAttended;
+                if (need == 1)
+                    viewHolder.needClassDetail.setText(Html.fromHtml("Attend next <b><font color='#E64A19'>" + need + "</font></b> class"));
+                else
+                    viewHolder.needClassDetail.setText(Html.fromHtml("Attend next <b><font color='#E64A19'>" + need + "</font></b> classes"));
                 break;
         }
 

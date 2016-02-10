@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.Objects.AttendanceList;
+import dotinc.attendancemanager2.Objects.TimeTableList;
 
 /**
  * Created by vellapanti on 21/1/16.
@@ -72,6 +73,19 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
 //        Log.d("option_data", "ac:" + attendanceList.getAction() + "id:" + attendanceList.getId() +
 //                "dae:" + attendanceList.getDate() + "pos:" + attendanceList.getPosition());
         db.close();
+    }
+
+    public void addAllAttendance(ArrayList<TimeTableList> arrayList, int action, String myDate) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        for (int i = 0; i < arrayList.size(); i++) {
+            values.put(Subject_Id, arrayList.get(i).getId());
+            values.put(Action, action);
+            values.put(DATE, myDate);
+            values.put(POSITION, arrayList.get(i).getPosition());
+            database.insert(ATTENDANCE_TRACKER, null, values);
+        }
+        database.close();
     }
 
     public ArrayList<AttendanceList> getAllDates(int id) {
@@ -175,8 +189,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
 
     public boolean checkEmpty() {
         Boolean isEmpty;
-        SQLiteDatabase db = getReadableDatabase()
-                ;
+        SQLiteDatabase db = getReadableDatabase();
         String query = "select exists(select 1 from " + ATTENDANCE_TRACKER + ");";
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();

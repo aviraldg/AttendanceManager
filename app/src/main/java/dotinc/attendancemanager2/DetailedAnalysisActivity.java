@@ -1,6 +1,7 @@
 package dotinc.attendancemanager2;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,7 +41,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     private ArrayList<String> subjects;
     private ArrayList<SubjectsList> subjectsLists;
     private SubjectDatabase subjectDatabase;
-    ArrayList<AttendanceList> attendanceObject;
+    private ArrayList<AttendanceList> attendanceObject;
     private AttendanceDatabase attendancedb;
     private SimpleDateFormat formatter;
 
@@ -67,7 +71,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exampe);
+        setContentView(R.layout.activity_detailed_analysis);
 
         instantiate();
         addItemsToSpinner();
@@ -131,6 +135,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
 
     private void setUpCalendar() {
 
+
         caldroidFragment = new CaldroidFragment();
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
@@ -139,11 +144,37 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
         args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
         args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
         caldroidFragment.setArguments(args);
+        caldroidFragment.setMaxDate(new Date());
         setCustomResourceForDates();
+        customize();
         FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.display_root, caldroidFragment);
         t.commit();
 
+    }
+
+    private void customize() {
+        final CaldroidListener listener = new CaldroidListener() {
+            @Override
+            public void onSelectDate(Date date, View view) {
+
+            }
+
+            @Override
+            public void onCaldroidViewCreated() {
+                super.onCaldroidViewCreated();
+
+                Button leftButton = caldroidFragment.getLeftArrowButton();
+                Button rightButton = caldroidFragment.getRightArrowButton();
+                TextView textView = caldroidFragment.getMonthTitleTextView();
+
+                leftButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+                rightButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+                textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+                textView.setTypeface(null, Typeface.BOLD);
+            }
+        };
+        caldroidFragment.setCaldroidListener(listener);
     }
 
     @Override

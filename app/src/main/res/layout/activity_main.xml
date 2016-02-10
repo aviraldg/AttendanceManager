@@ -115,6 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
+                        android:onClick="noClassAll"
                         android:text="No Class"
                         android:textAllCaps="false" />
 
@@ -124,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
+                        android:onClick="bunkedAll"
                         android:text="Bunked All"
                         android:textAllCaps="false" />
 
@@ -133,9 +135,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
+                        android:onClick="attendAll"
                         android:text="Attended"
                         android:textAllCaps="false" />
-
                 </LinearLayout>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -145,7 +147,7 @@
             android:id="@+id/extra_class_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/white"
             android:visibility="invisible">
 
             <TextView
@@ -173,6 +175,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:onClick="addExtraClass"
         android:src="@mipmap/ic_add_white_36dp"
         app:borderWidth="0dp"
         app:fabSize="normal"

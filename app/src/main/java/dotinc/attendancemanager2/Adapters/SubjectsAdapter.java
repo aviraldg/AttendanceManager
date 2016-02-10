@@ -29,13 +29,13 @@ import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 //*********Adapter of Subjects activity************//
 
 public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    Context context;
-    ArrayList<SubjectsList> arrayList;
-    LayoutInflater inflater;
-    SubjectDatabase database;
+    private Context context;
+    private ArrayList<SubjectsList> arrayList;
+    private LayoutInflater inflater;
+    private SubjectDatabase database;
     private EditText subject;
-    TimeTableDatabase timeTableDatabase;
-    AttendanceDatabase attendanceDatabase;
+    private TimeTableDatabase timeTableDatabase;
+    private AttendanceDatabase attendanceDatabase;
 
     public SubjectsAdapter(Context context, ArrayList<SubjectsList> arrayList) {
         this.context = context;
@@ -102,6 +102,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 String subject = arrayList.get(position).getSubjectName();
                 database.deleteSubject(subject);
                 timeTableDatabase.deleteSubject(arrayList.get(position).getId());
+                attendanceDatabase.deleteSubjects(arrayList.get(position).getId());
                 arrayList.remove(position);
                 ((SubjectsActivity) context).setEmptyView(arrayList.size());
                 notifyDataSetChanged();

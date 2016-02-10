@@ -21,8 +21,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -41,11 +41,8 @@ public class GoToDateActivity extends AppCompatActivity {
 
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
-
     private FloatingActionButton fab;
-    private Button attendAll;
-    private Button bunkedAll;
-    private Button noClassAll;
+    private TextView dayName, month, day, year;
 
     private ArrayList<SubjectsList> subjectsName;
     private ArrayList<String> subjects;
@@ -54,13 +51,14 @@ public class GoToDateActivity extends AppCompatActivity {
     private ArrayList<TimeTableList> allSubjectsArrayList;      //add
     private ArrayList<TimeTableList> arrayList;
 
-    AttendanceDatabase database;
-    TimeTableDatabase timeTableDatabase;
-    TimeTableList timeTableList;
-    SubjectDatabase subjectDatabase;                            //add
-    String activityName;
-    String date;
-    private Boolean isViewopened = false;
+    private AttendanceDatabase database;
+    private AttendanceAdapter mainadapter;
+    private TimeTableDatabase timeTableDatabase;
+    private TimeTableList timeTableList;
+    private SubjectDatabase subjectDatabase;                            //add
+    private String activityName;
+    private String date;
+    private Boolean exclViewOpen = false, attAllViewOpen = false;
 
 
     void instantiate() {
@@ -80,11 +78,11 @@ public class GoToDateActivity extends AppCompatActivity {
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
 
+        dayName = (TextView) findViewById(R.id.day);
+        month = (TextView) findViewById(R.id.month);
+        day = (TextView) findViewById(R.id.date);
+        year = (TextView) findViewById(R.id.year);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        attendAll = (Button) findViewById(R.id.attend_all);
-        bunkedAll = (Button) findViewById(R.id.bunked_all);
-        noClassAll = (Button) findViewById(R.id.noclass_all);
-
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -107,6 +105,8 @@ public class GoToDateActivity extends AppCompatActivity {
         timeTableList.setDayCode(dayCode);
         arrayList = timeTableDatabase.getSubjects(timeTableList);
 
+        setUpHeader();
+
     }
 
     public void showSnackbar(String meesage) {
@@ -114,7 +114,7 @@ public class GoToDateActivity extends AppCompatActivity {
     }
 
     private void extraClass() {
-        timeTableList.setDayCode(dayCode);                //daycode
+        timeTableList.setDayCode(dayCode);
         arrayList = timeTableDatabase.getSubjects(timeTableList);
         allSubjectsArrayList = subjectDatabase.getAllSubjectsForExtra();
         for (int i = 0; i < arrayList.size(); i++) {
@@ -126,9 +126,17 @@ public class GoToDateActivity extends AppCompatActivity {
         exclRecyclerView.setAdapter(new AttendanceAdapter(this, allSubjectsArrayList, date, activityName));
     }
 
-//    private void setTitle(String dayName) {
-//        getSupportActionBar().setTitle(dayName);
-//    }
+    private void setTitle(String day) {
+        dayName.setText(day);
+    }
+
+    private void setUpHeader() {
+        String[] dates = date.split("-");
+        String months[] = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+        day.setText(dates[0]);
+        month.setText(months[Integer.parseInt(dates[1]) - 1]);
+        year.setText(dates[2]);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -185,69 +193,17 @@ public class GoToDateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_go_to_date);
         instantiate();
         extraClass();
-
-        recyclerView.setAdapter(new AttendanceAdapter(this, arrayList, date, activityName));
+        mainadapter = new AttendanceAdapter(this, arrayList, date, activityName);
+        recyclerView.setAdapter(mainadapter);
 
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    final View extraView = findViewById(R.id.extra_class_layout);
-                    Animator anim = null;
-                    int cx = extraView.getWidth();
-                    int cY = 0;
-
-                    if (!isViewopened) {
-                        int finalRadius = Math.max(extraView.getWidth(), extraView.getHeight() + 1000);
-
-                        anim = ViewAnimationUtils.createCircularReveal(extraView, cx, cY, 0, finalRadius);
-                        anim.setDuration(1000).setInterpolator(new DecelerateInterpolator(1));
-                        isViewopened = true;
-                        extraView.setVisibility(View.VISIBLE);
-                        anim.addListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                extraClassLayout.setBackgroundColor(getResources().getColor(R.color.backgroundColor));
-                            }
-                        });
-                        anim.start();
-                        fab.hide();
-
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                fab.setImageResource(R.mipmap.ic_done_white_36dp);
-                                fab.show();
-                            }
-                        }, 300);
-
-                    } else {
-                        int finalRadius = 0;
-                        anim = ViewAnimationUtils.createCircularReveal(extraView,
-                                cx, cY, extraView.getHeight() + 1000, finalRadius);
-                        anim.setDuration(500).setInterpolator(new DecelerateInterpolator(1));
-                        anim.addListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                extraView.setVisibility(View.INVISIBLE);
-
-                            }
-                        });
-                        anim.start();
-                        fab.hide();
-                        isViewopened = false;
-
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                fab.setImageResource(R.mipmap.ic_add_white_36dp);
-                                fab.show();
-                            }
-                        }, 300);
-                    }
+                    showExtraClass();
+                } else {
+                    //------------code for pre-lolipop of extra class------------//
                 }
             }
 
@@ -257,30 +213,46 @@ public class GoToDateActivity extends AppCompatActivity {
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    fullAttendance();
+                if (!exclViewOpen) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        if (!attAllViewOpen)
+                            markAllClass();
+                    } else {
+                        //------code for pre-lolipop here-------//
+                    }
                 }
                 return true;
             }
         });
+    }
 
+    public void attendAll(View view) {
+        //**************** Define the functionality here ***********//
+        database.addAllAttendance(arrayList, 1, date);
+        mainadapter.notifyDataSetChanged();
+        markedAtt();
+    }
 
-        attendAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                markedAtt();
+    public void bunkedAll(View view) {
+        //**************** Define the functionality here ***********//
+        database.addAllAttendance(arrayList, 0, date);
+        mainadapter.notifyDataSetChanged();
+        markedAtt();
+    }
 
-
-            }
-        });
+    public void noClassAll(View view) {
+        //**************** Define the functionality here ***********//
+        database.addAllAttendance(arrayList, -1, date);
+        mainadapter.notifyDataSetChanged();
+        markedAtt();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    void fullAttendance() {
+    private void markAllClass() {
 
         final View fullAttView = findViewById(R.id.full_att_layout);
         Animator anim = null;
+        attAllViewOpen = true;
 
         int cX = fullAttView.getWidth();
         int cY = 0;
@@ -290,31 +262,27 @@ public class GoToDateActivity extends AppCompatActivity {
         anim = ViewAnimationUtils.createCircularReveal(fullAttView, cX, cY, 0, finalRadius);
         anim.setDuration(500).setInterpolator(new DecelerateInterpolator(1));
         fullAttView.setVisibility(View.VISIBLE);
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-
-                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-                params.setAnchorId(View.NO_ID);
-                fab.setLayoutParams(params);
-                fab.setVisibility(View.GONE);
-            }
-        });
         anim.start();
+        fab.hide();
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fab.setImageResource(R.mipmap.ic_clear_white_36dp);
+                fab.show();
+            }
+        }, 300);
     }
-
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void markedAtt() {
         final View fullAttView = findViewById(R.id.full_att_layout);
 
         Animator anim = null;
+        attAllViewOpen = false;
 
         int cX = fullAttView.getWidth();
         int cY = 0;
-
         int maxRadius = 0;
 
         anim = ViewAnimationUtils.createCircularReveal(fullAttView, cX, cY, fullAttView.getWidth(), maxRadius);
@@ -324,13 +292,109 @@ public class GoToDateActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 fullAttView.setVisibility(View.GONE);
-                CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-                layoutParams.setAnchorId(R.id.appbar_layout);
-                fab.setLayoutParams(layoutParams);
-                fab.show();
             }
         });
         anim.start();
+        fab.hide();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fab.setImageResource(R.mipmap.ic_add_white_36dp);
+                fab.show();
+            }
+        }, 300);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void showExtraClass() {
+        final View extraView = findViewById(R.id.extra_class_layout);
+        Animator anim = null;
+        int cx = extraView.getWidth();
+        int cY = 0;
+        if (!attAllViewOpen) {
+            if (!exclViewOpen) {
+                int finalRadius = Math.max(extraView.getWidth(), extraView.getHeight() + 1000);
+
+                anim = ViewAnimationUtils.createCircularReveal(extraView, cx, cY, 0, finalRadius);
+                anim.setDuration(1000).setInterpolator(new DecelerateInterpolator(1));
+                exclViewOpen = true;
+                extraView.setVisibility(View.VISIBLE);
+                anim.start();
+                fab.hide();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        fab.setImageResource(R.mipmap.ic_done_white_36dp);
+                        fab.show();
+                    }
+                }, 300);
+
+            } else {
+                int finalRadius = 0;
+                anim = ViewAnimationUtils.createCircularReveal(extraView,
+                        cx, cY, extraView.getHeight() + 1000, finalRadius);
+                anim.setDuration(500).setInterpolator(new DecelerateInterpolator(1));
+                anim.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        extraView.setVisibility(View.INVISIBLE);
+
+                    }
+                });
+                anim.start();
+                fab.hide();
+                exclViewOpen = false;
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        fab.setImageResource(R.mipmap.ic_add_white_36dp);
+                        fab.show();
+                    }
+                }, 300);
+            }
+        } else {
+            markedAtt();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exclViewOpen) {
+            final View extraView = findViewById(R.id.extra_class_layout);
+            Animator anim = null;
+            int cx = extraView.getWidth();
+            int cY = 0;
+            int finalRadius = 0;
+            anim = ViewAnimationUtils.createCircularReveal(extraView,
+                    cx, cY, extraView.getHeight() + 1000, finalRadius);
+            anim.setDuration(500).setInterpolator(new DecelerateInterpolator(1));
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    extraView.setVisibility(View.INVISIBLE);
+
+                }
+            });
+            anim.start();
+            fab.hide();
+            exclViewOpen = false;
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    fab.setImageResource(R.mipmap.ic_add_white_36dp);
+                    fab.show();
+                }
+            }, 300);
+        } else if (attAllViewOpen) {
+            markedAtt();
+        } else
+            super.onBackPressed();
     }
 
 }
