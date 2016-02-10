@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import dotinc.attendancemanager2.DetailedAnalysisActivity;
 import dotinc.attendancemanager2.GoToDateActivity;
+//import dotinc.attendancemanager2.GraphActivity;
 import dotinc.attendancemanager2.MainActivity;
 import dotinc.attendancemanager2.Objects.AttendanceList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
@@ -183,11 +184,12 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         viewHolder.subject.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-                Intent intent = new Intent(context, DetailedAnalysisActivity.class);
-                intent.putExtra("id", id);
-                Log.d("option_a", String.valueOf(id));
-                context.startActivity(intent);
+//                    Intent intent = new Intent(context, GraphActivity.class);
+//                    context.startActivity(intent);
+//                Intent intent = new Intent(context, DetailedAnalysisActivity.class);
+//                intent.putExtra("id", id);
+//                Log.d("option_a", String.valueOf(id));
+//                context.startActivity(intent);
                 return true;
             }
         });
