@@ -148,7 +148,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         subjectsNameList = subjectDatabase.getAllSubjects();
         subjects.clear();
         for (int i = 0; i < subjectsNameList.size(); i++)
-            subjects.add(de.get(i).getSubjectName().toString());
+            subjects.add(subjectsNameList.get(i).getSubjectName().toString());
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(WeeklySubjectsActivity.this, android.R.layout.simple_list_item_1, subjects);
         subjects_view.setAdapter(arrayAdapter);

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dotinc.attendancemanager2.Exampe">
+    tools:context="dotinc.attendancemanager2.DetailedAnalysisActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_layout"
@@ -30,7 +30,7 @@
     <LinearLayout
         android:id="@+id/display_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/appbar_layout"
         android:orientation="vertical" />
 
