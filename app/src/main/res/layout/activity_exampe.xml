@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailedAnalysisActivity">
+    tools:context="dotinc.attendancemanager2.Exampe">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_layout"
@@ -33,4 +33,5 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/appbar_layout"
         android:orientation="vertical" />
+
 </RelativeLayout>

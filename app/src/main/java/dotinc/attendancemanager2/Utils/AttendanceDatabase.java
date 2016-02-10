@@ -31,7 +31,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String ATTENDANCE = "CREATE TABLE " + ATTENDANCE_TRACKER + "(" + Subject_Id + " INTEGER ,"
-                + Action + " INTEGER ," + DATE + " VARCHAR(50) ,"+ POSITION + " INTEGER);";
+                + Action + " INTEGER ," + DATE + " VARCHAR(50) ," + POSITION + " INTEGER);";
         db.execSQL(ATTENDANCE);
     }
 
@@ -150,6 +150,22 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
             Log.d("option", "cursor is null");
         }
         dbs.close();
+    }
+
+    public boolean checkEmpty() {
+        Boolean isEmpty;
+        SQLiteDatabase db = getReadableDatabase()
+                ;
+        String query = "select exists(select 1 from " + ATTENDANCE_TRACKER + ");";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        if (cursor.getInt(0) >= 1)
+            isEmpty = false;
+        else
+            isEmpty = true;
+        db.close();
+        cursor.close();
+        return isEmpty;
     }
 
     public ArrayList<AttendanceList> getMarker(TimeTableList list, String date) {

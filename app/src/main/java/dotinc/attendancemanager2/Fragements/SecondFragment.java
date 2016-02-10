@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +69,9 @@ public class SecondFragment extends Fragment {
         go_to_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getActivity(), R.style.DialogTheme, pickerListener, year, month, day).show();
+                DatePickerDialog dialog = new DatePickerDialog(getActivity(), R.style.DialogTheme, pickerListener, year, month, day);
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                dialog.show();
             }
         });
         overall_attendance.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +100,7 @@ public class SecondFragment extends Fragment {
             String day_selected = new SimpleDateFormat("EE").format(myDate);
             Intent intent = new Intent(getActivity(), GoToDateActivity.class);
             intent.putExtra("date", date);
+            Log.d("Options_date", date + "\n" + day_selected);
             intent.putExtra("day_name", day_selected);
             startActivity(intent);
         }

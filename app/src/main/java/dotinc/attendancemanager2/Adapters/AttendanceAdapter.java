@@ -16,9 +16,7 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import dotinc.attendancemanager2.DetailedAnalysisActivity;
 import dotinc.attendancemanager2.GoToDateActivity;
@@ -44,7 +42,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     AttendanceList attendanceList;
     String myDate;
     TimeTableList list;
-    String activityName ;
+    String activityName;
     private int lastPosition = -1;
 
     public AttendanceAdapter(Context context, ArrayList<TimeTableList> arrayList, String myDate, String activityName) {
@@ -59,7 +57,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 //        Date date = new Date();
 //        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 //        myDate = format.format(date);
-        Log.d("option_day_name",myDate);
+        Log.d("option_day_name", myDate);
         list = new TimeTableList();
     }
 
@@ -238,11 +236,12 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     }
 
-    private void showSnackBar(String message){
+    private void showSnackBar(String message) {
 
-        if(activityName.equals("MainActivity"))
+        if (activityName.equals("MainActivity")) {
             ((MainActivity) context).showSnackbar(message);
-        else
+            ((MainActivity) context).updateOverallPerc();
+        } else
             ((GoToDateActivity) context).showSnackbar(message);
     }
 
@@ -254,7 +253,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     private void addAttendance(int action, int position, String message) {
-        Log.d("option_mydate",myDate);
+        Log.d("option_mydate", myDate);
         attendanceList.setId(arrayList.get(position).getId());
         attendanceList.setPosition(position);
         attendanceList.setAction(action);
