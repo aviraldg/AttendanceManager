@@ -40,27 +40,28 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         String table_update = "ALTER TABLE " + ATTENDANCE_TRACKER + " ADD COLUMN " + POSITION + " INTEGER ";
         db.execSQL(table_update);
     }
-    public int setMarker(String myDate ,  int position){
-        int markerValue =2;
+
+    public int setMarker(String myDate, int position) {
+        int markerValue = 2;
         Log.d("option_marker_position", String.valueOf(position));
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "SELECT * FROM "+ ATTENDANCE_TRACKER + " WHERE "+DATE + " = '" + myDate + "' GROUP BY "+
-                POSITION ;
-        Cursor cursor = database.rawQuery(query,null);
-        if (cursor != null){
-            while (cursor.moveToNext()){
-                if (cursor.getInt(3)==position){
+        String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + DATE + " = '" + myDate + "' GROUP BY " +
+                POSITION;
+        Cursor cursor = database.rawQuery(query, null);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                if (cursor.getInt(3) == position) {
                     markerValue = cursor.getInt(1);
-                    Log.d("option_marker_toast","action"+cursor.getInt(1)+"pos"+cursor.getInt(3));
+                    Log.d("option_marker_toast", "action" + cursor.getInt(1) + "pos" + cursor.getInt(3));
                 }
 
             }
-        }
-        else {
-            Log.d("option_cursor","is null");
+        } else {
+            Log.d("option_cursor", "is null");
         }
         return markerValue;
     }
+
     public void addAttendance(AttendanceList attendanceList) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -77,7 +78,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
     public ArrayList<AttendanceList> getAllDates(int id) {
         ArrayList<AttendanceList> attendanceLists = new ArrayList<>();
         String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id +
-                " AND (" + Action + " =1 OR " + Action + "=0)";
+                " AND (" + Action + " =1 OR " + Action + " =0 OR " + Action + " =-1)";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
@@ -174,8 +175,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
 
     public boolean checkEmpty() {
         Boolean isEmpty;
-        SQLiteDatabase db = getReadableDatabase()
-                ;
+        SQLiteDatabase db = getReadableDatabase();
         String query = "select exists(select 1 from " + ATTENDANCE_TRACKER + ");";
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();

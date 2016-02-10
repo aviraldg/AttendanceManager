@@ -101,6 +101,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
 
         for (int i = 0; i < attendanceObject.size(); i++) {
             try {
+                Log.d("option_action", String.valueOf(attendanceObject.get(i).getAction()));
                 String date = attendanceObject.get(i).getDate();
                 greenDate = formatter.parse(date);
                 if (attendanceObject.get(i).getAction() == 1) {
@@ -111,15 +112,11 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
                     caldroidFragment.setBackgroundResourceForDate(R.color.absentColor,
                             greenDate);
                     caldroidFragment.setTextColorForDate(R.color.backgroundColor, greenDate);
-                } else {
-//--------------for no class , color not decided yet--------------------//
-//                    caldroidFragment.setBackgroundResourceForDate(R.color.absentColor,
-//                            greenDate);
-//                    caldroidFragment.setTextColorForDate(R.color.backgroundColor, greenDate);
+                } else if (attendanceObject.get(i).getAction() == -1) {
+                    caldroidFragment.setBackgroundResourceForDate(R.color.noClassColor, greenDate);
+                    caldroidFragment.setTextColorForDate(R.color.white, greenDate);
                 }
-//                Log.d("option_date",date);
-//                Log.d("option_date", String.valueOf(attendanceObject.get(i).getAction()));
-
+                Log.d("NoClass", String.valueOf(attendanceObject.get(i).getAction()));
             } catch (ParseException e) {
 
                 e.printStackTrace();
