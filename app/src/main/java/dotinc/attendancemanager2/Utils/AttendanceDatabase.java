@@ -5,8 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.Objects.AttendanceList;
@@ -24,8 +31,13 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
     public static final String DATE = "date";
     public static final String POSITION = "position";
 
+    public static String DB_FILEPATH;
+
     public AttendanceDatabase(Context context) {
         super(context, Database_Name, null, Database_Version);
+
+        final String packageName = context.getPackageName();
+        DB_FILEPATH = "/data/data"+packageName+"/databases/"+Database_Name+".db";
     }
 
     @Override
@@ -40,7 +52,66 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         String table_update = "ALTER TABLE " + ATTENDANCE_TRACKER + " ADD COLUMN " + POSITION + " INTEGER ";
         db.execSQL(table_update);
     }
+    public boolean importDatabase(String dbPath) throws IOException {
+        close();
+        File newDb = new File(dbPath);
+        File oldDb = new File(DB_FILEPATH);
+        if (newDb.exists()) {
+            copyFile(new FileInputStream(newDb), new FileOutputStream(oldDb));
+            getWritableDatabase().close();
+            return true;
+        }
+        return false;
+    }
 
+    private void copyFile(FileInputStream fromFile, FileOutputStream toFile) throws IOException {
+        FileChannel fromChannel = null;
+        FileChannel toChannel = null;
+        try {
+            fromChannel = fromFile.getChannel();
+            toChannel = toFile.getChannel();
+            fromChannel.transferTo(0, fromChannel.size(), toChannel);
+        } finally {
+            try {
+                if (fromChannel != null) {
+                    fromChannel.close();
+                }
+            } finally {
+                if (toChannel != null) {
+                    toChannel.close();
+                }
+            }
+        }
+    }
+
+    public void backupDatabase() throws IOException {
+
+        if (isSDCardWriteable()) {
+            String inFileName = DB_FILEPATH;
+            File dbFile = new File(inFileName);
+            FileInputStream fis = new FileInputStream(dbFile);
+
+            String outFileName = Environment.getExternalStorageDirectory() + "/syntaxionary";
+            OutputStream output = new FileOutputStream(outFileName);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            output.flush();
+            output.close();
+            fis.close();
+        }
+    }
+
+    private boolean isSDCardWriteable() {
+        boolean readCard = false;
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            readCard = true;
+        }
+        return readCard;
+    }
     public int setMarker(String myDate, int position) {
         int markerValue = 2;
         Log.d("option_marker_position", String.valueOf(position));
