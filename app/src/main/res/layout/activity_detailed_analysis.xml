@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/present_view"
                         android:padding="5dp"
-                        android:text="PRESENT"
+                        android:text="@string/present"
                         android:textSize="15sp" />
 
                     <TextView
@@ -96,7 +96,7 @@
                         android:layout_below="@+id/present_view"
                         android:layout_toRightOf="@+id/absent_view"
                         android:padding="5dp"
-                        android:text="ABSENT"
+                        android:text="@string/absent"
                         android:textSize="15sp" />
 
                     <TextView
@@ -105,7 +105,7 @@
                         android:layout_below="@+id/absent_view"
                         android:layout_toRightOf="@+id/no_class_view"
                         android:padding="5dp"
-                        android:text="NO CLASS"
+                        android:text="@string/noClass"
                         android:textSize="15sp" />
 
 

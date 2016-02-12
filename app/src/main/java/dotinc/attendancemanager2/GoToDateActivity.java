@@ -158,30 +158,30 @@ public class GoToDateActivity extends AppCompatActivity {
         switch (myDate) {
             case "Mon":
                 day_code = 1;
-                setTitle("Monday");
+                setTitle(R.string.monday);
                 break;
             case "Tue":
                 day_code = 2;
-                setTitle("Tuesday");
+                setTitle(R.string.tuesday);
                 break;
             case "Wed":
                 day_code = 3;
-                setTitle("Wednesday");
+                setTitle(R.string.wednesday);
                 break;
             case "Thu":
                 day_code = 4;
-                setTitle("Thursday");
+                setTitle(R.string.thursday);
                 break;
             case "Fri":
-                setTitle("Friday");
+                setTitle(R.string.friday);
                 day_code = 5;
                 break;
             case "Sat":
                 day_code = 6;
-                setTitle("Saturday");
+                setTitle(R.string.saturday);
                 break;
             case "Sun":
-                setTitle("Sunday");
+                setTitle(R.string.sunday);
                 break;
         }
         return day_code;
@@ -365,7 +365,7 @@ public class GoToDateActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (exclViewOpen) {
             final View extraView = findViewById(R.id.extra_class_layout);
-            Animator anim = null;
+            Animator anim ;
             int cx = extraView.getWidth();
             int cY = 0;
             int finalRadius = 0;

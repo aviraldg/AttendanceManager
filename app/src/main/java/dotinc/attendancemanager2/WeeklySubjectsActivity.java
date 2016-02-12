@@ -60,9 +60,9 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (view_timetable == 1)
-            getSupportActionBar().setTitle("Time Table");
+            getSupportActionBar().setTitle(R.string.timetable_activity);
         else
-            getSupportActionBar().setTitle("Weekly Subjects");
+            getSupportActionBar().setTitle(R.string.weekly_subjects);
 
         timetableFlag = intent.getIntExtra("timetableFlag", 0);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);

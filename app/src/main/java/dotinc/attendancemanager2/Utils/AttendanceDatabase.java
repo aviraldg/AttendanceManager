@@ -32,12 +32,13 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
     public static final String POSITION = "position";
 
     public static String DB_FILEPATH;
+    Context context;
 
     public AttendanceDatabase(Context context) {
         super(context, Database_Name, null, Database_Version);
-
+        this.context = context;
         final String packageName = context.getPackageName();
-        DB_FILEPATH = "/data/data"+packageName+"/databases/"+Database_Name+".db";
+        DB_FILEPATH = "/data/data/" + packageName + "/databases/" + Database_Name + ".db";
     }
 
     @Override
@@ -52,6 +53,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         String table_update = "ALTER TABLE " + ATTENDANCE_TRACKER + " ADD COLUMN " + POSITION + " INTEGER ";
         db.execSQL(table_update);
     }
+
     public boolean importDatabase(String dbPath) throws IOException {
         close();
         File newDb = new File(dbPath);
@@ -85,23 +87,44 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
     }
 
     public void backupDatabase() throws IOException {
+        final String inFileName = DB_FILEPATH;
+        File dbFile = new File(context.getFilesDir() + inFileName);
+        dbFile.getParentFile().mkdirs();
+        FileInputStream fis = new FileInputStream(dbFile);
 
-        if (isSDCardWriteable()) {
-            String inFileName = DB_FILEPATH;
-            File dbFile = new File(inFileName);
-            FileInputStream fis = new FileInputStream(dbFile);
+        String outFileName = Environment.getExternalStorageDirectory() + "/database_copy.db";
 
-            String outFileName = Environment.getExternalStorageDirectory() + "/syntaxionary";
-            OutputStream output = new FileOutputStream(outFileName);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = fis.read(buffer)) > 0) {
-                output.write(buffer, 0, length);
-            }
-            output.flush();
-            output.close();
-            fis.close();
+        // Open the empty db as the output stream
+        OutputStream output = new FileOutputStream(outFileName);
+
+        // Transfer bytes from the inputfile to the outputfile
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = fis.read(buffer)) > 0) {
+            output.write(buffer, 0, length);
         }
+
+        // Close the streams
+        output.flush();
+        output.close();
+        fis.close();
+
+
+//        if (isSDCardWriteable()) {
+//            String inFileName = DB_FILEPATH;
+//            File dbFile = new File(inFileName);
+//            FileInputStream fis = new FileInputStream(dbFile);
+//            String outFileName = Environment.getExternalStorageDirectory() + "/syntaxionary";
+//            OutputStream output = new FileOutputStream(outFileName);
+//            byte[] buffer = new byte[1024];
+//            int length;
+//            while ((length = fis.read(buffer)) > 0) {
+//                output.write(buffer, 0, length);
+//            }
+//            output.flush();
+//            output.close();
+//            fis.close();
+//        }
     }
 
     private boolean isSDCardWriteable() {
@@ -112,6 +135,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         }
         return readCard;
     }
+
     public int setMarker(String myDate, int position) {
         int markerValue = 2;
         Log.d("option_marker_position", String.valueOf(position));
@@ -223,6 +247,50 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         return totalClasses;
     }
 
+    public int totalDayWisePresent(int id, String myDate) {
+        int totalPresent = 0;
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "SELECT COUNT(" + Action + ") FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " +
+                id + " AND " + Action + " =1 " + " AND " + DATE + " = '" + myDate + "'";
+        Cursor cursor = database.rawQuery(query, null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext())
+                totalPresent = cursor.getInt(0);
+        } else
+            Log.d("option", "cursor is null");
+        return totalPresent;
+    }
+
+    public int totalDayWiseBunked(int id, String myDate) {
+        int totalBunked = 0;
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "SELECT COUNT(" + Action + ") FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " +
+                id + " AND " + Action + " =0 " + " AND " + DATE + " = '" + myDate + "'";
+        Cursor cursor = database.rawQuery(query, null);
+        if (cursor != null) {
+            while (cursor.moveToNext())
+                totalBunked = cursor.getInt(0);
+        } else
+            Log.d("option", "cursor is null");
+        return totalBunked;
+    }
+
+    public int totalDayWiseClasses(int id, String myDate) {
+        int totalClasses = 0;
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "SELECT COUNT(" + Action + ") FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " +
+                id + " AND (" + Action + " =1 OR " + Action + "=0)" + " AND " + DATE + " = '" + myDate + "'";
+        Cursor cursor = database.rawQuery(query, null);
+        if (cursor != null) {
+            while (cursor.moveToNext())
+                totalClasses = cursor.getInt(0);
+        } else
+            Log.d("option", "cursor is null");
+        return totalClasses;
+    }
+
+
     public void resetAttendance(int id, String date, int position) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id + " AND " +
@@ -237,7 +305,11 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         db.execSQL(query);
         db.close();
     }
-
+    public void deleteAllEntries(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.delete(ATTENDANCE_TRACKER,null,null);
+        db.close();
+    }
     public void toast() {
         SQLiteDatabase dbs = this.getWritableDatabase();
         String[] col = {Subject_Id, POSITION, Action, DATE};

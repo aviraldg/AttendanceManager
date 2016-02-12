@@ -119,7 +119,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 subject.setText(arrayList.get(position).getSubjectName());
                 final String old_subject = arrayList.get(position).getSubjectName();
                 builder.setView(v);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.option_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String subjectName = subject.getText().toString().trim();
@@ -131,7 +131,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             arrayList.addAll(database.getAllSubjects());
                             notifyDataSetChanged();
                         } else {
-                            ((SubjectsActivity) context).showSnackbar("Subject already entered");
+                            ((SubjectsActivity) context).showSnackbar(String.valueOf(R.string.subject_entry_same));
                         }
 
                     }

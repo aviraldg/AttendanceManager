@@ -71,7 +71,7 @@ public class ChooseAvatarActivity extends AppCompatActivity {
 
         user_male.startAnimation(imageAnimation);
         user_female.startAnimation(imageAnimation);
-        animateText("Choose your Avatar");
+        animateText(String.valueOf(R.string.chooseAvatar));
         setCharacterDelay(45);
     }
 
