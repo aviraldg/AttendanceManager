@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
@@ -46,6 +47,7 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
         final int id = arrayList.get(position).getId();
         int attendedClasses = database.totalPresent(id);
         int totalClasses = database.totalClasses(id);
+        viewHolder.checkMark.setVisibility(View.GONE);
 
         float percentage = ((float) attendedClasses / (float) totalClasses) * 100;
         classesNeeded(attendedClasses, totalClasses, percentage, viewHolder);
@@ -55,8 +57,8 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
         viewHolder.subject_percentage.setText(" " +
                 String.format("%.1f", percentage));
 
-        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right,null);
-        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left,null);
+        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, null);
+        viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, null);
     }
 
     @Override
@@ -103,6 +105,7 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
         private TextView subject_percentage;
         private TextView needClassDetail;
         private SwipeLayout swipeLayout;
+        private ImageView checkMark;
 
         public OverallViewHolder(View itemView) {
             super(itemView);
@@ -112,6 +115,7 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
             subject_percentage = (TextView) itemView.findViewById(R.id.sub_perc);
             needClassDetail = (TextView) itemView.findViewById(R.id.sub_detail);
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
+            checkMark = (ImageView) itemView.findViewById(R.id.check_mark);
         }
     }
 }

@@ -38,6 +38,8 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     private LinearLayout root;
     private Context context;
 
+    private TextView totClass, attClass, bunkedClass;
+
     private ArrayList<String> subjects;
     private ArrayList<SubjectsList> subjectsLists;
     private SubjectDatabase subjectDatabase;
@@ -65,6 +67,10 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
 
         for (int pos = 0; pos < subjectsLists.size(); pos++)
             subjects.add(subjectsLists.get(pos).getSubjectName());
+
+        totClass = (TextView) findViewById(R.id.tot_class);
+        attClass = (TextView) findViewById(R.id.att_class);
+        bunkedClass = (TextView) findViewById(R.id.bunk_class);
 
     }
 
@@ -101,6 +107,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
 
         for (int i = 0; i < attendanceObject.size(); i++) {
             try {
+                Log.d("option_action", String.valueOf(attendanceObject.get(i).getAction()));
                 String date = attendanceObject.get(i).getDate();
                 greenDate = formatter.parse(date);
                 if (attendanceObject.get(i).getAction() == 1) {
@@ -111,15 +118,11 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
                     caldroidFragment.setBackgroundResourceForDate(R.color.absentColor,
                             greenDate);
                     caldroidFragment.setTextColorForDate(R.color.backgroundColor, greenDate);
-                } else {
-//--------------for no class , color not decided yet--------------------//
-//                    caldroidFragment.setBackgroundResourceForDate(R.color.absentColor,
-//                            greenDate);
-//                    caldroidFragment.setTextColorForDate(R.color.backgroundColor, greenDate);
+                } else if (attendanceObject.get(i).getAction() == -1) {
+                    caldroidFragment.setBackgroundResourceForDate(R.color.noClassColor, greenDate);
+                    caldroidFragment.setTextColorForDate(R.color.white, greenDate);
                 }
-//                Log.d("option_date",date);
-//                Log.d("option_date", String.valueOf(attendanceObject.get(i).getAction()));
-
+                Log.d("NoClass", String.valueOf(attendanceObject.get(i).getAction()));
             } catch (ParseException e) {
 
                 e.printStackTrace();
@@ -131,6 +134,13 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     private void fetchFromDatabase(int id) {
         attendanceObject = attendancedb.getAllDates(id);
         setUpCalendar();
+        setUpText();
+    }
+
+    private void setUpText() {
+//        totClass.setText();
+//        attClass.setText();
+//        bunkedClass.setText();
     }
 
     private void setUpCalendar() {

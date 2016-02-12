@@ -162,7 +162,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
     public ArrayList<AttendanceList> getAllDates(int id) {
         ArrayList<AttendanceList> attendanceLists = new ArrayList<>();
         String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " + id +
-                " AND (" + Action + " =1 OR " + Action + "=0)";
+                " AND (" + Action + " =1 OR " + Action + " =0 OR " + Action + " =-1)";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 

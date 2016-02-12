@@ -10,4 +10,5 @@
     <color name="noClassColor">#FF9800</color>
     <color name="white">#fff</color>
     <color name="tickColor">#888888</color>
+    <color name="dividerColor">#dedede</color>
 </resources>

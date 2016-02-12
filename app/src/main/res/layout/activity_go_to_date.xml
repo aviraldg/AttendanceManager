@@ -37,44 +37,44 @@
                     android:id="@+id/day"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
                     android:text="Wednesday"
                     android:textColor="@color/white"
-                    android:gravity="center"
-                    android:textSize="25sp"
-                    android:padding="5dp"/>
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="24"
                     android:layout_below="@+id/month"
-                    android:textColor="@color/white"
+                    android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:textSize="65sp"
-                    android:layout_centerHorizontal="true"/>
+                    android:text="24"
+                    android:textColor="@color/white"
+                    android:textSize="65sp" />
 
                 <TextView
                     android:id="@+id/month"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/day"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
                     android:text="FEB"
                     android:textColor="@color/white"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:layout_below="@+id/day"
-                    android:layout_centerHorizontal="true" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/year"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/date"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
                     android:text="2016"
                     android:textColor="@color/white"
-                    android:gravity="center"
-                    android:textSize="20sp"
-                    android:layout_below="@+id/date"
-                    android:layout_centerHorizontal="true" />
+                    android:textSize="20sp" />
             </RelativeLayout>
 
             <android.support.v7.widget.Toolbar
@@ -97,10 +97,7 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/full_att_layout"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp" />
+            android:layout_below="@+id/full_att_layout" />
 
         <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -175,7 +172,7 @@
             android:id="@+id/extra_class_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/white"
             android:visibility="invisible">
 
             <TextView
@@ -192,8 +189,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/extra_class_text"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp" />
         </RelativeLayout>
     </RelativeLayout>
