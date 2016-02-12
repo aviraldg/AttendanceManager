@@ -38,6 +38,8 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     private LinearLayout root;
     private Context context;
 
+    private TextView totClass, attClass, bunkedClass;
+
     private ArrayList<String> subjects;
     private ArrayList<SubjectsList> subjectsLists;
     private SubjectDatabase subjectDatabase;
@@ -65,6 +67,10 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
 
         for (int pos = 0; pos < subjectsLists.size(); pos++)
             subjects.add(subjectsLists.get(pos).getSubjectName());
+
+        totClass = (TextView) findViewById(R.id.tot_class);
+        attClass = (TextView) findViewById(R.id.att_class);
+        bunkedClass = (TextView) findViewById(R.id.bunk_class);
 
     }
 
@@ -128,6 +134,13 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     private void fetchFromDatabase(int id) {
         attendanceObject = attendancedb.getAllDates(id);
         setUpCalendar();
+        setUpText();
+    }
+
+    private void setUpText() {
+//        totClass.setText();
+//        attClass.setText();
+//        bunkedClass.setText();
     }
 
     private void setUpCalendar() {

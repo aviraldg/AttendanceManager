@@ -24,7 +24,8 @@
         <activity android:name=".OverallAttendanceActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".Exampe" />
-        <activity android:name=".GraphActivity"></activity>
+        <activity android:name=".GraphActivity" />
+        <activity android:name=".ShowNameCardActivity"></activity>
     </application>
 
 </manifest>

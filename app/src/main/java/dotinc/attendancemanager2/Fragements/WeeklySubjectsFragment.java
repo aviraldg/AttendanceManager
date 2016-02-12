@@ -53,16 +53,9 @@ public class WeeklySubjectsFragment extends Fragment {
         database = new TimeTableDatabase(getActivity());
         timeTableList = new TimeTableList();
         timeTableList.setDayCode(pageNumber);
-        database.toast();
+        //database.toast();
         arrayList = database.getSubjects(timeTableList);
         adapter = new TimeTableAdapter(getActivity(), arrayList, timeTableList, WeeklySubjectsFragment.this, view_timetable, pageNumber);
         recyclerView.setAdapter(adapter);
-    }
-
-
-    public void updateView() {
-        arrayList.clear();
-        arrayList.addAll(database.getSubjects(timeTableList));
-        adapter.notifyDataSetChanged();
     }
 }

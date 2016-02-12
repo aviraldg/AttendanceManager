@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -242,21 +243,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void attendAll(View view) {
         //**************** Define the functionality here ***********//
-        database.addAllAttendance(arrayList,1,day);
+        database.addAllAttendance(arrayList, 1, day);
         mainadapter.notifyDataSetChanged();
         markedAtt();
     }
 
     public void bunkedAll(View view) {
         //**************** Define the functionality here ***********//
-        database.addAllAttendance(arrayList,0,day);
+        database.addAllAttendance(arrayList, 0, day);
         mainadapter.notifyDataSetChanged();
         markedAtt();
     }
 
     public void noClassAll(View view) {
         //**************** Define the functionality here ***********//
-        database.addAllAttendance(arrayList,-1,day);
+        database.addAllAttendance(arrayList, -1, day);
         mainadapter.notifyDataSetChanged();
         markedAtt();
     }
@@ -423,8 +424,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.clear:
                 Helper.clearData(context);
                 break;
-            case R.id.about_us:
-
+            case R.id.settings:
+                startActivity(new Intent(context, SettingsActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

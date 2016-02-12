@@ -8,8 +8,11 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -33,10 +36,11 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
     private Animation cardAnimation;
     private CoordinatorLayout root;
     private static int user_image_id, rangeBarValue;
+    private Boolean fromSettings;
+    private String userTransitionName;
 
 
     private void instantiate() {
-
         context = NameAndCriteriaActivity.this;
         userImage = (ImageView) findViewById(R.id.user_img);
         userName = (EditText) findViewById(R.id.user_name);
@@ -48,6 +52,7 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
         percCard = (CardView) findViewById(R.id.percentage_card);
         user_image_id = Integer.parseInt(Helper.getFromPref(context, Helper.USER_IMAGE_ID, String.valueOf(0)));
 
+        fromSettings = getIntent().getBooleanExtra("Settings", false);
         String name = Helper.getFromPref(context, Helper.USER_NAME, "");
         if (name.equals("") == false)
             userName.setText(name);
@@ -55,14 +60,19 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
         cardAnimation = AnimationUtils.loadAnimation(this, R.anim.expand_in);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            userImage.setTransitionName(getIntent().getStringExtra("transitionName"));
+            userTransitionName = getIntent().getStringExtra("transitionName");
+            userImage.setTransitionName(userTransitionName);
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setSharedElementExitTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_element_transition));
+        }
         setContentView(R.layout.activity_name_and_criteria);
+
 
         instantiate();
         setUserImage();
@@ -82,18 +92,28 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
                         animateCard(percCard);
                     }
                 } else if (percCard.getVisibility() == View.VISIBLE) {
-                    rangeBarValue = Integer.parseInt(Helper.getFromPref(context, Helper.ATTENDANCE_CRITERIA, String.valueOf(-1)));
+                    rangeBarValue = Integer.parseInt(Helper.getFromPref(context, Helper.ATTENDANCE_CRITERIA, String.valueOf(0)));
 
                     if (userName.getText().toString().equals("") && rangeBarValue == 0)
                         showSnackbar("Enter your name and criteria");
-                    if (userName.getText().toString().equals(""))
+                    else if (userName.getText().toString().equals(""))
                         showSnackbar("Enter your name");
                     else if (rangeBarValue == 0)
                         showSnackbar("Enter attendance criteria");
-                    else
-                        startActivity(new Intent(NameAndCriteriaActivity.this, SubjectsActivity.class));
+                    else {
+                        if (fromSettings)
+                            finish();
+                        else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                startSharedElement(new Intent(context, ShowNameCardActivity.class));
+                            } else
+                                startActivity(new Intent(NameAndCriteriaActivity.this, SubjectsActivity.class));
+                        }
+                    }
                 }
             }
+
+
         });
 
         attCriteria.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
@@ -103,6 +123,22 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
                 Helper.saveToPref(context, Helper.ATTENDANCE_CRITERIA, rightPinValue);
             }
         });
+    }
+
+    private void startSharedElement(Intent intent) {
+        View image = findViewById(R.id.user_img);
+        View name = findViewById(R.id.user_name);
+        View perc = findViewById(R.id.selected_perc);
+
+        userImage.setTransitionName("user_image_transition");
+
+        Pair<View, String> p1 = Pair.create(image, "user_image_transition");
+        Pair<View, String> p2 = Pair.create(name, "user_name_transition");
+        Pair<View, String> p3 = Pair.create(perc, "user_perc_transition");
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, p1, p2, p3);
+        startActivity(intent, options.toBundle());
+
     }
 
     private void setupRangeBar() {
@@ -143,5 +179,12 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
 
     private void showSnackbar(String message) {
         Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        userImage.setTransitionName(userTransitionName);
+        super.onBackPressed();
+        finishAfterTransition();
     }
 }

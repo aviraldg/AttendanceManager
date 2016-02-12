@@ -14,6 +14,7 @@ public class Helper {
     public static final String USER_NAME = "USER_NAME";
     public static final String USER_IMAGE_ID = "USER_IMAGE_ID";
     public static final String COMPLETED = "COMPLETED";
+    public static final String NEEDBREAK = "BREAK";
 
 
     public static void saveToPref(Context context, String key, String val) {

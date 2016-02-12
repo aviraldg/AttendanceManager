@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -36,16 +35,18 @@ public class SubjectsActivity extends AppCompatActivity {
     private EditText subject;
     private LinearLayout emptyView;
     private CoordinatorLayout root;
-    private boolean ifEmpty;
     private SubjectsAdapter adapter;
     private SubjectDatabase database;
     private SubjectsList subjectsList;
     private TimeTableDatabase timeTableDatabase;
+    private boolean ifEmpty, fromSettings;
 
     private void instantiate() {
         addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
         subjectText = (TextView) findViewById(R.id.subject_layout_title);
         view1 = findViewById(R.id.view1);
+
+        fromSettings = getIntent().getBooleanExtra("Settings", false);
         database = new SubjectDatabase(this);
         timeTableDatabase = new TimeTableDatabase(this);
         emptyView = (LinearLayout) findViewById(R.id.empty_view);
@@ -60,20 +61,20 @@ public class SubjectsActivity extends AppCompatActivity {
         adapter = new SubjectsAdapter(this, arrayList);
     }
 
-    public void olderVersionDatabase() {
-        ifEmpty = timeTableDatabase.checkEmpty();
-        if (ifEmpty == true){
-
-            Log.d("option_timedatabase", "is null");
-
-        }
-
-        else {
-            timeTableDatabase.addPosition();
-            timeTableDatabase.toast();
-            Log.d("option_timedatabase","not null");
-        }
-    }
+//    public void olderVersionDatabase() {
+//        ifEmpty = timeTableDatabase.checkEmpty();
+//        if (ifEmpty == true){
+//
+//            Log.d("option_timedatabase", "is null");
+//
+//        }
+//
+//        else {
+//            timeTableDatabase.addPosition();
+//            timeTableDatabase.toast();
+//            Log.d("option_timedatabase","not null");
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class SubjectsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subjects);
 
         instantiate();
-        olderVersionDatabase();
+        //olderVersionDatabase();
 
         recyclerView.setAdapter(adapter);
 
@@ -105,8 +106,7 @@ public class SubjectsActivity extends AppCompatActivity {
                             arrayList.addAll(database.getAllSubjects());
                             setEmptyView(arrayList.size());
                             adapter.notifyDataSetChanged();
-                        }
-                        else if (subjectName.length() == 0)
+                        } else if (subjectName.length() == 0)
                             showSnackbar("Subject cannot be empty");
                         else
                             showSnackbar("Subject already entered");
@@ -158,7 +158,9 @@ public class SubjectsActivity extends AppCompatActivity {
     }
 
     public void doneAddSubjects(View view) {
-        Intent intent = new Intent(SubjectsActivity.this, WeeklySubjectsActivity.class);
-        startActivity(intent);
+        if (fromSettings)
+            finish();
+        else
+            startActivity(new Intent(SubjectsActivity.this, WeeklySubjectsActivity.class));
     }
 }
