@@ -451,6 +451,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings:
                 startActivity(new Intent(context, SettingsActivity.class));
                 break;
+            case R.id.help:
+                startActivity(new Intent(context,HelpActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -124,7 +124,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
                         .putExtra("Settings", true));
                 break;
             case 3:
-                //startActivity(new Intent(this, Feedback.class));
+                //startActivity(new Intent(this, FeedbackActivity.class));
                 File app_direct = new File(Environment.getExternalStorageDirectory()+"/Attendance Manager");
                 if (!app_direct.exists())
                     app_direct.mkdir();

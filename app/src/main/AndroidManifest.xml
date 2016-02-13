@@ -27,7 +27,9 @@
         <activity android:name=".SettingsActivity" />
         \
         <activity android:name=".ShowNameCardActivity" />
-        <activity android:name=".ExtraClassActivity"></activity>
+        <activity android:name=".ExtraClassActivity" />
+        <activity android:name=".FeedbackActivity" />
+        <activity android:name=".HelpActivity"></activity>
     </application>
 
 </manifest>
