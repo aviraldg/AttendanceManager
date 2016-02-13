@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 
-import java.util.ArrayList;git
+import java.util.ArrayList;
 import dotinc.attendancemanager2.ExtraClassActivity;
 import dotinc.attendancemanager2.GoToDateActivity;
 import dotinc.attendancemanager2.MainActivity;
