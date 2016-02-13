@@ -2,7 +2,6 @@ package dotinc.attendancemanager2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -31,11 +30,6 @@ public class ShowNameCardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_element_transition));
-            //getWindow().
-        }
         setContentView(R.layout.activity_show_name_card);
 
         instantiate();
@@ -68,6 +62,6 @@ public class ShowNameCardActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finishAfterTransition();
+        //finishAfterTransition();
     }
 }

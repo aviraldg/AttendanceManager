@@ -3,7 +3,9 @@ package dotinc.attendancemanager2;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -227,13 +229,14 @@ public class MainActivity extends AppCompatActivity {
 
         fab.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public boolean onLongClick(final View view) {
                 if (!exclViewOpen) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         if (!attAllViewOpen)
                             markAllClass();
                     } else {
                         //------code for pre-lolipop-------//
+
                     }
                 }
                 return true;
