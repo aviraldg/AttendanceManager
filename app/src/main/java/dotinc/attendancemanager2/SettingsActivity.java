@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(R.string.settings_activity);
+        getSupportActionBar().setTitle(getResources().getString(R.string.settings_activity));
 
         context = SettingsActivity.this;
         bunkText = (TextView) findViewById(R.id.bunk_text);
@@ -89,11 +89,11 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         listView = (ListView) findViewById(R.id.settings_list);
 
         ArrayList<String> options = new ArrayList<>();
-        options.add(String.valueOf(R.string.edit_name_criteria));
-        options.add(String.valueOf(R.string.edit_subjects));
-        options.add(String.valueOf(R.string.edit_timetable));
-        options.add(String.valueOf(R.string.import_export));
-        options.add(String.valueOf(R.string.reset_attendance));
+        options.add(getResources().getString(R.string.edit_name_criteria));
+        options.add(getResources().getString(R.string.edit_subjects));
+        options.add(getResources().getString(R.string.edit_timetable));
+        options.add(getResources().getString(R.string.import_export));
+        options.add(getResources().getString(R.string.reset_attendance));
 
         ArrayList<Integer> icons = new ArrayList<Integer>();
         icons.add(R.mipmap.ic_edit_black_24dp);
@@ -136,19 +136,20 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
                 break;
             case 4:
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle(R.string.reset_attendance);
-                builder.setMessage(R.string.reset_attendance_message);
-                builder.setNegativeButton(R.string.option_no, new DialogInterface.OnClickListener() {
+                builder.setTitle(getResources().getString(R.string.reset_attendance));
+                builder.setMessage(getResources().getString(R.string.reset_attendance_message));
+                builder.setNegativeButton(getResources().getString(R.string.option_no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
                     }
                 });
-                builder.setPositiveButton(R.string.option_yes, new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getResources().getString(R.string.option_yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //database.deleteAllAttendance();
                         //database.close();
+                        database.deleteAllEntries();
                     }
                 });
                 builder.create().show();

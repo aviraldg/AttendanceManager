@@ -91,7 +91,7 @@ public class HeaderFragment extends Fragment {
         }
 
         if (attdb.checkEmpty())
-            overallPercTv.setText(R.string.noClasses);
+            overallPercTv.setText(getResources().getString(R.string.noClasses));
         else {
             overallPerc = (totalPresent / totalClasses) * 100;
             overallPercTv.setText("Overall: " + String.format("%.1f", overallPerc) + "%");

@@ -27,7 +27,7 @@
     <string name="edit_subjects">Edit subjects</string>
     <string name="edit_timetable">Edit timetable</string>
     <string name="import_export">Import and Export</string>
-    <string name="reset_attendance">Rest attendance</string>
+    <string name="reset_attendance">Reset attendance</string>
     <string name="reset_attendance_message">Do you wish to reset your attendance?</string>
     <string name="subject_blank">Subject cannot be empty</string>
     <string name="subject_entry_same">Subject already entered</string>

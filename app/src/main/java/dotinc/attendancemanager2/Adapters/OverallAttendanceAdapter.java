@@ -52,8 +52,8 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
         float percentage = ((float) attendedClasses / (float) totalClasses) * 100;
         classesNeeded(attendedClasses, totalClasses, percentage, viewHolder);
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
-        viewHolder.attended.setText(R.string.attended + ": " + attendedClasses);
-        viewHolder.total.setText(R.string.total + ": " + totalClasses);
+        viewHolder.attended.setText(context.getResources().getString(R.string.attended) + ": " + attendedClasses);
+        viewHolder.total.setText(context.getResources().getString(R.string.total) + ": " + totalClasses);
         viewHolder.subject_percentage.setText(" " +
                 String.format("%.1f", percentage));
 
@@ -82,7 +82,7 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
         switch (flag) {
             case 1:
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
-                viewHolder.needClassDetail.setText(R.string.on_track_message);
+                viewHolder.needClassDetail.setText(context.getResources().getString(R.string.on_track_message));
                 break;
 
             case 2:

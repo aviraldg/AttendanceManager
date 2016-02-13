@@ -135,7 +135,7 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/bunked_class"
+                        android:id="@+id/bunk_class"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/att_class"

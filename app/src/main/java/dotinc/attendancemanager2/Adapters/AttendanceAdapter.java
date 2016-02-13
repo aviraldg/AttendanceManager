@@ -138,8 +138,8 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
-        viewHolder.attended.setText(R.string.attended+": " + attendedClasses);
-        viewHolder.total.setText(R.string.total+": " + totalClasses);
+        viewHolder.attended.setText(context.getResources().getString(R.string.attended)+": " + attendedClasses);
+        viewHolder.total.setText(context.getResources().getString(R.string.total)+": " + totalClasses);
         viewHolder.subject_percentage.setText(" " +
                 String.format("%.1f", percentage));
 
@@ -148,7 +148,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         viewHolder.attendedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAttendance(1, position, String.valueOf(R.string.attended_message));
+                addAttendance(1, position,context.getResources().getString(R.string.attended_message));
                 markerValue = database.setMarker(myDate, position);
 
             }
@@ -157,7 +157,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         viewHolder.bunkedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAttendance(0, position, String.valueOf(R.string.bunked_message));
+                addAttendance(0, position, context.getResources().getString(R.string.bunked_message));
                 markerValue = database.setMarker(myDate, position);
 
 
@@ -167,7 +167,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         viewHolder.noClassbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAttendance(-1, position, String.valueOf(R.string.noclass_message));
+                addAttendance(-1, position,context.getResources().getString(R.string.noclass_message));
             }
         });
 
@@ -207,7 +207,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         switch (flag) {
             case 1:
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
-                viewHolder.needClassDetail.setText(R.string.on_track_message);
+                viewHolder.needClassDetail.setText(context.getResources().getString(R.string.on_track_message));
                 break;
 
             case 2:
@@ -242,7 +242,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         database.resetAttendance(id, myDate, position);
         viewHolder.resetbtn.setImageResource(R.mipmap.ic_restore_black_36dp);
         this.notifyDataSetChanged();
-        showSnackBar(String.valueOf(R.string.reset_attendance));
+        showSnackBar(context.getResources().getString(R.string.reset_attendance));
     }
 
     private void addAttendance(int action, int position, String message) {

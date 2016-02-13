@@ -107,12 +107,12 @@ public class SubjectsActivity extends AppCompatActivity {
                             setEmptyView(arrayList.size());
                             adapter.notifyDataSetChanged();
                         } else if (subjectName.length() == 0)
-                            showSnackbar(String.valueOf(R.string.subject_blank));
+                            showSnackbar(getResources().getString(R.string.subject_blank));
                         else
-                            showSnackbar(String.valueOf(R.string.subject_entry_same));
+                            showSnackbar(getResources().getString(R.string.subject_entry_same));
                     }
                 });
-                dialog.setNegativeButton(R.string.option_cancel, new DialogInterface.OnClickListener() {
+                dialog.setNegativeButton(getResources().getString(R.string.option_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

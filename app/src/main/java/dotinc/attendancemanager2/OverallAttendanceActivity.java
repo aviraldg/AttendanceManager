@@ -32,7 +32,7 @@ public class OverallAttendanceActivity extends AppCompatActivity {
     private void instantiate() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.overall_attendance_activity);
+        getSupportActionBar().setTitle(getResources().getString(R.string.overall_attendance_activity));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         database = new SubjectDatabase(this);
         arrayList = database.getAllSubjects();
