@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 
 import com.rey.material.widget.Switch;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.Adapters.SettingsAdapter;
@@ -30,13 +33,12 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     private Switch bunk_switch;
     private TextView bunkText;
     private AttendanceDatabase database;
-
     private void instantiate() {
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().setTitle(getResources().getString(R.string.settings_activity));
 
         context = SettingsActivity.this;
         bunkText = (TextView) findViewById(R.id.bunk_text);
@@ -87,11 +89,11 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         listView = (ListView) findViewById(R.id.settings_list);
 
         ArrayList<String> options = new ArrayList<>();
-        options.add("Edit name and criteria");
-        options.add("Edit Subjects");
-        options.add("Edit Timetable");
-        options.add("Import and Export");
-        options.add("Reset attendance");
+        options.add(getResources().getString(R.string.edit_name_criteria));
+        options.add(getResources().getString(R.string.edit_subjects));
+        options.add(getResources().getString(R.string.edit_timetable));
+        options.add(getResources().getString(R.string.import_export));
+        options.add(getResources().getString(R.string.reset_attendance));
 
         ArrayList<Integer> icons = new ArrayList<Integer>();
         icons.add(R.mipmap.ic_edit_black_24dp);
@@ -123,22 +125,31 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
                 break;
             case 3:
                 //startActivity(new Intent(this, Feedback.class));
+                File app_direct = new File(Environment.getExternalStorageDirectory()+"/Attendance Manager");
+                if (!app_direct.exists())
+                    app_direct.mkdir();
+                try {
+                    database.backupDatabase();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 4:
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Reset Attendance");
-                builder.setMessage("Do you wish to reset your attendance?");
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                builder.setTitle(getResources().getString(R.string.reset_attendance));
+                builder.setMessage(getResources().getString(R.string.reset_attendance_message));
+                builder.setNegativeButton(getResources().getString(R.string.option_no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
                     }
                 });
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getResources().getString(R.string.option_yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //database.deleteAllAttendance();
                         //database.close();
+                        database.deleteAllEntries();
                     }
                 });
                 builder.create().show();

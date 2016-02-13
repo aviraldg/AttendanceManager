@@ -100,7 +100,6 @@ public class SecondFragment extends Fragment {
             String day_selected = new SimpleDateFormat("EE").format(myDate);
             Intent intent = new Intent(getActivity(), GoToDateActivity.class);
             intent.putExtra("date", date);
-            Log.d("Options_date", date + "\n" + day_selected);
             intent.putExtra("day_name", day_selected);
             startActivity(intent);
         }

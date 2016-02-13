@@ -7,15 +7,12 @@ import android.content.SharedPreferences;
  * Created by ddvlslyr on 7/2/16.
  */
 public class Helper {
-
-
     public static final String FILENAME = "ATTENDANCE_MANAGER";
     public static final String ATTENDANCE_CRITERIA = "ATTENDANCE_CRITERIA";
     public static final String USER_NAME = "USER_NAME";
     public static final String USER_IMAGE_ID = "USER_IMAGE_ID";
     public static final String COMPLETED = "COMPLETED";
     public static final String NEEDBREAK = "BREAK";
-
 
     public static void saveToPref(Context context, String key, String val) {
         SharedPreferences preferences = context.getSharedPreferences(FILENAME, context.MODE_PRIVATE);

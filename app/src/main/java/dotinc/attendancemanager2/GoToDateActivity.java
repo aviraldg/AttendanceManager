@@ -109,8 +109,8 @@ public class GoToDateActivity extends AppCompatActivity {
 
     }
 
-    public void showSnackbar(String meesage) {
-        Snackbar.make(root, meesage, Snackbar.LENGTH_SHORT).show();
+    public void showSnackbar(String message) {
+        Snackbar.make(root, message, Snackbar.LENGTH_SHORT).show();
     }
 
     private void extraClass() {
@@ -158,30 +158,30 @@ public class GoToDateActivity extends AppCompatActivity {
         switch (myDate) {
             case "Mon":
                 day_code = 1;
-                setTitle("Monday");
+                setTitle(getResources().getString(R.string.monday));
                 break;
             case "Tue":
                 day_code = 2;
-                setTitle("Tuesday");
+                setTitle(getResources().getString(R.string.tuesday));
                 break;
             case "Wed":
                 day_code = 3;
-                setTitle("Wednesday");
+                setTitle(getResources().getString(R.string.wednesday));
                 break;
             case "Thu":
                 day_code = 4;
-                setTitle("Thursday");
+                setTitle(getResources().getString(R.string.thursday));
                 break;
             case "Fri":
-                setTitle("Friday");
+                setTitle(getResources().getString(R.string.friday));
                 day_code = 5;
                 break;
             case "Sat":
                 day_code = 6;
-                setTitle("Saturday");
+                setTitle(getResources().getString(R.string.saturday));
                 break;
             case "Sun":
-                setTitle("Sunday");
+                setTitle(getResources().getString(R.string.sunday));
                 break;
         }
         return day_code;
@@ -251,7 +251,7 @@ public class GoToDateActivity extends AppCompatActivity {
     private void markAllClass() {
 
         final View fullAttView = findViewById(R.id.full_att_layout);
-        Animator anim = null;
+        Animator anim ;
         attAllViewOpen = true;
 
         int cX = fullAttView.getWidth();
@@ -278,7 +278,7 @@ public class GoToDateActivity extends AppCompatActivity {
     private void markedAtt() {
         final View fullAttView = findViewById(R.id.full_att_layout);
 
-        Animator anim = null;
+        Animator anim ;
         attAllViewOpen = false;
 
         int cX = fullAttView.getWidth();
@@ -309,7 +309,7 @@ public class GoToDateActivity extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showExtraClass() {
         final View extraView = findViewById(R.id.extra_class_layout);
-        Animator anim = null;
+        Animator anim ;
         int cx = extraView.getWidth();
         int cY = 0;
         if (!attAllViewOpen) {
@@ -365,7 +365,7 @@ public class GoToDateActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (exclViewOpen) {
             final View extraView = findViewById(R.id.extra_class_layout);
-            Animator anim = null;
+            Animator anim ;
             int cx = extraView.getWidth();
             int cY = 0;
             int finalRadius = 0;

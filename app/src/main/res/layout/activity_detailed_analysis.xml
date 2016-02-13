@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#DEE5E5">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -87,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/present_view"
                         android:padding="5dp"
-                        android:text="PRESENT"
+                        android:text="@string/present"
                         android:textSize="15sp" />
 
                     <TextView
@@ -96,7 +97,7 @@
                         android:layout_below="@+id/present_view"
                         android:layout_toRightOf="@+id/absent_view"
                         android:padding="5dp"
-                        android:text="ABSENT"
+                        android:text="@string/absent"
                         android:textSize="15sp" />
 
                     <TextView
@@ -105,7 +106,7 @@
                         android:layout_below="@+id/absent_view"
                         android:layout_toRightOf="@+id/no_class_view"
                         android:padding="5dp"
-                        android:text="NO CLASS"
+                        android:text="@string/noClass"
                         android:textSize="15sp" />
 
 
@@ -135,7 +136,7 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/bunked_class"
+                        android:id="@+id/bunk_class"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/att_class"

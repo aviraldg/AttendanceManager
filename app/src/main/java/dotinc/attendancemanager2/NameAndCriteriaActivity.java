@@ -81,7 +81,7 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (nameCard.getVisibility() == View.VISIBLE && percCard.getVisibility() != View.VISIBLE) {
                     if (userName.getText().toString().trim().equals("")) {
-                        showSnackbar("Enter your name");
+                        showSnackbar(getResources().getString(R.string.enter_name));
                         userName.setText("");
                     } else {
                         Helper.saveToPref(context, Helper.USER_NAME, userName.getText().toString().trim());
@@ -91,11 +91,11 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
                     rangeBarValue = Integer.parseInt(Helper.getFromPref(context, Helper.ATTENDANCE_CRITERIA, String.valueOf(0)));
 
                     if (userName.getText().toString().equals("") && rangeBarValue == 0)
-                        showSnackbar("Enter your name and criteria");
+                        showSnackbar(getResources().getString(R.string.enter_name_criteria));
                     else if (userName.getText().toString().equals(""))
-                        showSnackbar("Enter your name");
+                        showSnackbar(getResources().getString(R.string.enter_name));
                     else if (rangeBarValue == 0)
-                        showSnackbar("Enter attendance criteria");
+                        showSnackbar(getResources().getString(R.string.enter_criteria));
                     else {
                         if (fromSettings)
                             finish();

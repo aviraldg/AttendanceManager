@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#DEE5E5"
     tools:context="dotinc.attendancemanager2.SettingsActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -21,8 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/appbar_layout"
-        android:clickable="true"
-        android:background="?attr/selectableItemBackground">
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true">
 
         <TextView
             android:id="@+id/bunk_text"

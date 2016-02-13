@@ -2,6 +2,7 @@ package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,6 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
 
     private Context context;
     private ArrayList<SubjectsList> arrayList;
-    private ArrayList<AttendanceList> attendanceObject;
     private LayoutInflater inflater;
     private AttendanceDatabase database;
 
@@ -52,8 +52,8 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
         float percentage = ((float) attendedClasses / (float) totalClasses) * 100;
         classesNeeded(attendedClasses, totalClasses, percentage, viewHolder);
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
-        viewHolder.attended.setText("Attended: " + attendedClasses);
-        viewHolder.total.setText("Total: " + totalClasses);
+        viewHolder.attended.setText(context.getResources().getString(R.string.attended) + ": " + attendedClasses);
+        viewHolder.total.setText(context.getResources().getString(R.string.total) + ": " + totalClasses);
         viewHolder.subject_percentage.setText(" " +
                 String.format("%.1f", percentage));
 
@@ -82,7 +82,7 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
         switch (flag) {
             case 1:
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
-                viewHolder.needClassDetail.setText("You are on track !");
+                viewHolder.needClassDetail.setText(context.getResources().getString(R.string.on_track_message));
                 break;
 
             case 2:
@@ -90,9 +90,15 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
                 break;
 
             case 3:
+
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
-                viewHolder.needClassDetail.setText("You need " + (attendedClass - originalAttended) +
-                        " more classes");
+                int need = 0;
+                need = attendedClass - originalAttended;
+
+                if (need == 1)
+                    viewHolder.needClassDetail.setText(Html.fromHtml("Attend next <b><font color='#E64A19'>" + need + "</font></b> class"));
+                else
+                    viewHolder.needClassDetail.setText(Html.fromHtml("Attend next <b><font color='#E64A19'>" + need + "</font></b> classes"));
                 break;
         }
 

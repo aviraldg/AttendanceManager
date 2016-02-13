@@ -103,11 +103,10 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     }
 
     private void setCustomResourceForDates() {
-        Date greenDate = new Date();
+        Date greenDate;
 
         for (int i = 0; i < attendanceObject.size(); i++) {
             try {
-                Log.d("option_action", String.valueOf(attendanceObject.get(i).getAction()));
                 String date = attendanceObject.get(i).getDate();
                 greenDate = formatter.parse(date);
                 if (attendanceObject.get(i).getAction() == 1) {
@@ -122,11 +121,9 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
                     caldroidFragment.setBackgroundResourceForDate(R.color.noClassColor, greenDate);
                     caldroidFragment.setTextColorForDate(R.color.white, greenDate);
                 }
-                Log.d("NoClass", String.valueOf(attendanceObject.get(i).getAction()));
             } catch (ParseException e) {
-
                 e.printStackTrace();
-                Log.d("option_da", e.toString());
+                Log.d("option_error_detailed", e.toString());
             }
         }
     }
@@ -134,13 +131,6 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     private void fetchFromDatabase(int id) {
         attendanceObject = attendancedb.getAllDates(id);
         setUpCalendar();
-        setUpText();
-    }
-
-    private void setUpText() {
-//        totClass.setText();
-//        attClass.setText();
-//        bunkedClass.setText();
     }
 
     private void setUpCalendar() {
@@ -167,7 +157,8 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
         final CaldroidListener listener = new CaldroidListener() {
             @Override
             public void onSelectDate(Date date, View view) {
-
+                //call the three methods totalDayWiseClasses, totalDayWiseAttended , totalDayWiseBunked
+                // pass two parameters subject id and date , date format should be 23/12/1995
             }
 
             @Override

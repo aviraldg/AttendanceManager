@@ -32,11 +32,10 @@ public class OverallAttendanceActivity extends AppCompatActivity {
     private void instantiate() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Overall Attendance");
+        getSupportActionBar().setTitle(getResources().getString(R.string.overall_attendance_activity));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         database = new SubjectDatabase(this);
         arrayList = database.getAllSubjects();
-        Log.d("option_subjects_over",arrayList.get(0).getSubjectName());
         recyclerView = (RecyclerView) findViewById(R.id.subjects);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
