@@ -98,6 +98,19 @@ public class SubjectDatabase extends SQLiteOpenHelper {
         return subjectName;
     }
 
+    public void addMultipleSubjects(ArrayList<String> subjects){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        for (int size=0;size<subjects.size();size++){
+            values.put(Subject_List,subjects.get(size));
+            database.insert(Subjects_Table,null,values);
+        }
+        database.close();
+
+
+
+    }
+
     public ArrayList<TimeTableList> getAllSubjectsForExtra() {
         ArrayList<TimeTableList> SubjectName = new ArrayList<>();
         String query = "SELECT * FROM " + Subjects_Table + " GROUP BY " + Subject_List;

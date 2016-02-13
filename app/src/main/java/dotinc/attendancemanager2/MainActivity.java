@@ -243,21 +243,26 @@ public class MainActivity extends AppCompatActivity {
                         builder.setPositiveButton("Attended all", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                attendAll(view);
+                                database.addAllAttendance(arrayList, 1, day);
+                                mainadapter.notifyDataSetChanged();
                             }
                         });
                         builder.setNegativeButton("Bunked all", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                bunkedAll(view);
+                                database.addAllAttendance(arrayList, 0, day);
+                                mainadapter.notifyDataSetChanged();
                             }
                         });
-                        builder.setNegativeButton("No class", new DialogInterface.OnClickListener() {
+                        builder.setNeutralButton("No class", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                noClassAll(view);
+                                database.addAllAttendance(arrayList, -1, day);
+                                mainadapter.notifyDataSetChanged();
                             }
                         });
+                        builder.create().show();
+
                     }
                 }
                 return true;

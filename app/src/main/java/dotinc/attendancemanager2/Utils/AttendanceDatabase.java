@@ -136,12 +136,12 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         return readCard;
     }
 
-    public int setMarker(String myDate, int position) {
+    public int setMarker(String myDate, int position, int subjectId) {
         int markerValue = 2;
         Log.d("option_marker_position", String.valueOf(position));
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + DATE + " = '" + myDate + "' GROUP BY " +
-                POSITION;
+        String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + DATE + " = '" + myDate + "' AND "
+                + Subject_Id + " = " + subjectId + " GROUP BY " + POSITION;
         Cursor cursor = database.rawQuery(query, null);
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -305,11 +305,13 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         db.execSQL(query);
         db.close();
     }
-    public void deleteAllEntries(){
-        SQLiteDatabase db=this.getWritableDatabase();
-        db.delete(ATTENDANCE_TRACKER,null,null);
+
+    public void deleteAllEntries() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(ATTENDANCE_TRACKER, null, null);
         db.close();
     }
+
     public void toast() {
         SQLiteDatabase dbs = this.getWritableDatabase();
         String[] col = {Subject_Id, POSITION, Action, DATE};

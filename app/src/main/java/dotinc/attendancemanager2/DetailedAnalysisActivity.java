@@ -169,9 +169,9 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
                 Button rightButton = caldroidFragment.getRightArrowButton();
                 TextView textView = caldroidFragment.getMonthTitleTextView();
 
-                leftButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
-                rightButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
-                textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+//                leftButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+//                rightButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+//                textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
                 textView.setTypeface(null, Typeface.BOLD);
             }
         };

@@ -11,4 +11,5 @@
     <color name="white">#fff</color>
     <color name="tickColor">#888888</color>
     <color name="dividerColor">#dedede</color>
+    <color name="black">#000</color>
 </resources>

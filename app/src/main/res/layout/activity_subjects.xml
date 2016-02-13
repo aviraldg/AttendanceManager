@@ -47,17 +47,25 @@
             android:layout_below="@+id/subject_layout_title"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:layout_marginTop="10dp"
             android:background="@color/white" />
 
+        <TextView
+            android:id="@+id/swipe_help_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view1"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/subject_del_help"
+            android:textColor="@color/white" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/subjects"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/view1"
+            android:layout_below="@+id/swipe_help_text"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="10dp" />
 
         <LinearLayout
             android:id="@+id/empty_view"
@@ -86,6 +94,116 @@
                 android:textSize="20sp"
                 android:textStyle="italic" />
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/add_multiple_subjects"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="invisible">
+
+            <RelativeLayout
+                android:id="@+id/text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EEEEEE">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:padding="5dp"
+                    android:text="Add subjects"
+                    android:textSize="25sp" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:onClick="addEditText"
+                    android:padding="10dp"
+                    android:src="@mipmap/ic_add_white_24dp"
+                    android:tint="#929292" />
+
+                <ImageView
+                    android:id="@+id/removeEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toLeftOf="@+id/imageView"
+                    android:layout_toStartOf="@+id/imageView"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:onClick="removeEditText"
+                    android:padding="10dp"
+                    android:src="@mipmap/ic_delete_black_24dp"
+                    android:tint="#929292"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/help"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toLeftOf="@+id/removeEdit"
+                    android:layout_toStartOf="@+id/removeEdit"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:onClick="showHelp"
+                    android:padding="10dp"
+                    android:src="@mipmap/ic_help_outline_white_24dp"
+                    android:tint="#929292"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/help_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text"
+                android:layout_margin="10dp"
+                android:background="@drawable/item_border"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/add_sub_help"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/help_text">
+
+                <LinearLayout
+                    android:id="@+id/subjects_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:orientation="vertical" />
+            </ScrollView>
+
+        </RelativeLayout>
+
+
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton

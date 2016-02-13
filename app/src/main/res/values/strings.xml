@@ -62,4 +62,7 @@
     <string name="sunday">Sunday</string>
 
 
+    <string name="add_sub_help">Click \'+\' to add subjects and delete icon to remove from last.</string>
+    <string name="subject_del_help">Swipe RIGHT to delete and LEFT to edit.</string>
+
 </resources>

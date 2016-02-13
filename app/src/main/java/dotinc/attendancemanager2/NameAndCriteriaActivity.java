@@ -12,7 +12,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.transition.TransitionInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -68,9 +67,6 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setSharedElementExitTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_element_transition));
-        }
         setContentView(R.layout.activity_name_and_criteria);
 
 
@@ -185,6 +181,9 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
     public void onBackPressed() {
         userImage.setTransitionName(userTransitionName);
         super.onBackPressed();
-        finishAfterTransition();
+    }
+
+    private void addText(TextView... views){
+
     }
 }
