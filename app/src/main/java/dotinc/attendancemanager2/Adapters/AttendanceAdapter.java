@@ -21,6 +21,7 @@ import com.daimajia.swipe.SwipeLayout;
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.DetailedAnalysisActivity;
+import dotinc.attendancemanager2.ExtraClassActivity;
 import dotinc.attendancemanager2.GoToDateActivity;
 //import dotinc.attendancemanager2.GraphActivity;
 import dotinc.attendancemanager2.MainActivity;
@@ -234,7 +235,10 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             ((MainActivity) context).showSnackbar(message);
             ((MainActivity) context).updateOverallPerc();
-        } else
+        }
+        else if (activityName.equals("ExtraClassActivity"))
+            ((ExtraClassActivity) context).showSnackbar(message);
+        else
             ((GoToDateActivity) context).showSnackbar(message);
     }
 
