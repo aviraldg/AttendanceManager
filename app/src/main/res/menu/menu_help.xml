@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/send"
+        android:id="@+id/help"
         android:icon="@mipmap/ic_feedback_white_36dp"
         android:orderInCategory="100"
         android:title="Send"

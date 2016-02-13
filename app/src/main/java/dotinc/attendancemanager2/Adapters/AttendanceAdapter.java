@@ -1,10 +1,12 @@
 package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
+import android.location.LocationManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.daimajia.swipe.SwipeLayout;
 
 import java.util.ArrayList;
+
 import dotinc.attendancemanager2.ExtraClassActivity;
 import dotinc.attendancemanager2.GoToDateActivity;
 import dotinc.attendancemanager2.MainActivity;
@@ -78,7 +81,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         list.setId(id);
         attendanceList.setDate(myDate);
-        markerValue = database.setMarker(myDate, position,id);
+        markerValue = database.setMarker(myDate, position, id);
         if (markerValue == 1) {
             viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
             viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -147,7 +150,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public void onClick(View v) {
                 addAttendance(1, position, context.getResources().getString(R.string.attended_message));
-                markerValue = database.setMarker(myDate, position,id);
+                markerValue = database.setMarker(myDate, position, id);
 
             }
         });
@@ -156,7 +159,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public void onClick(View v) {
                 addAttendance(0, position, context.getResources().getString(R.string.bunked_message));
-                markerValue = database.setMarker(myDate, position,id);
+                markerValue = database.setMarker(myDate, position, id);
 
 
             }
@@ -183,14 +186,34 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return arrayList.size();
     }
 
+    private int freeBunks(int attendedClass, int totalClass, float percentage){
+        int originalAttended = attendedClass;
+        int freeBunks = 0;
+        while (percentage>attendance_criteria){
+            totalClass++;
+            freeBunks++;
+            percentage = ((float) attendedClass / (float) totalClass) * 100;
+        }
 
+        return freeBunks;
+    }
     private void classesNeeded(int attendedClass, int totalClass, float percentage, AttendanceViewHolder viewHolder) {
+        int needBreak = Integer.parseInt(Helper.getFromPref(context, Helper.NEEDBREAK, String.valueOf(0)));
+        Log.d("option_need", String.valueOf(needBreak));
         int flag = 0;
+        int freeBunks=0;
         int originalAttended = attendedClass;
         if (percentage >= attendance_criteria) {
-            flag = 1;
-            viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark
-            ));
+            if (needBreak==1){
+                freeBunks = freeBunks(attendedClass,totalClass,percentage);
+                if (freeBunks==0)
+                    flag=5;
+                else
+                    flag =4;
+            }
+            else
+                flag = 1;
+
         } else if (attendedClass == 0 && totalClass == 0)
             flag = 2;
         while (percentage < attendance_criteria) {
@@ -203,6 +226,8 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         switch (flag) {
             case 1:
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
+                viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark
+                ));
                 viewHolder.needClassDetail.setText(context.getResources().getString(R.string.on_track_message));
                 break;
 
@@ -219,6 +244,12 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 else
                     viewHolder.needClassDetail.setText(Html.fromHtml("Attend next <b><font color='#E64A19'>" + need + "</font></b> classes"));
                 break;
+            case 4:
+                viewHolder.needClassDetail.setText("You have "+freeBunks+" Bunks");
+                break;
+            case 5:
+
+                viewHolder.needClassDetail.setText("You have no free bunks");
         }
 
     }
@@ -230,8 +261,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             ((MainActivity) context).showSnackbar(message);
             ((MainActivity) context).updateOverallPerc();
-        }
-        else if (activityName.equals("ExtraClassActivity"))
+        } else if (activityName.equals("ExtraClassActivity"))
             ((ExtraClassActivity) context).showSnackbar(message);
         else
             ((GoToDateActivity) context).showSnackbar(message);

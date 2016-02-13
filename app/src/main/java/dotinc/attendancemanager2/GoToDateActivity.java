@@ -3,7 +3,10 @@ package dotinc.attendancemanager2;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,6 +70,7 @@ public class GoToDateActivity extends AppCompatActivity {
         Intent intent = getIntent();
         day_name = intent.getStringExtra("day_name");
         date = intent.getStringExtra("date");
+        Log.d("option_goto",date);
         activityName = "GoToDateActivity";
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -219,6 +224,30 @@ public class GoToDateActivity extends AppCompatActivity {
                             markAllClass();
                     } else {
                         //------code for pre-lolipop here-------//
+                        AlertDialog.Builder builder = new AlertDialog.Builder(GoToDateActivity.this);
+                        builder.setTitle("Attended all the subjects?");
+                        builder.setPositiveButton("Attended all", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                database.addAllAttendance(arrayList, 1, date);
+                                mainadapter.notifyDataSetChanged();
+                            }
+                        });
+                        builder.setNegativeButton("Bunked all", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                database.addAllAttendance(arrayList, 0, date);
+                                mainadapter.notifyDataSetChanged();
+                            }
+                        });
+                        builder.setNeutralButton("No class", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                database.addAllAttendance(arrayList, -1, date);
+                                mainadapter.notifyDataSetChanged();
+                            }
+                        });
+                        builder.create().show();
                     }
                 }
                 return true;

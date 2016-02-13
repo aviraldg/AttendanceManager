@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 setTitle(getResources().getString(R.string.saturday));
                 break;
             case "Sun":
+                day_code=7;
                 setTitle(getResources().getString(R.string.sunday));
                 break;
         }

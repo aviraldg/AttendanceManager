@@ -2,6 +2,7 @@ package dotinc.attendancemanager2;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +47,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     private ArrayList<AttendanceList> attendanceObject;
     private AttendanceDatabase attendancedb;
     private SimpleDateFormat formatter;
-
+    private int subId;
     private CaldroidFragment caldroidFragment;
 
 
@@ -64,7 +65,9 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
         subjectsLists = subjectDatabase.getAllSubjects();
         formatter = new SimpleDateFormat("dd-MM-yyyy");
         subjects = new ArrayList<>();
-
+        totClass= (TextView) findViewById(R.id.tot_class);
+        bunkedClass= (TextView) findViewById(R.id.bunk_class);
+        attClass= (TextView) findViewById(R.id.att_class);
         for (int pos = 0; pos < subjectsLists.size(); pos++)
             subjects.add(subjectsLists.get(pos).getSubjectName());
 
@@ -93,6 +96,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapter, View v,
                                        int position, long id) {
                 fetchFromDatabase(subjectsLists.get(position).getId());
+                subId=subjectsLists.get(position).getId();
             }
 
             @Override
@@ -159,6 +163,14 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
             public void onSelectDate(Date date, View view) {
                 //call the three methods totalDayWiseClasses, totalDayWiseAttended , totalDayWiseBunked
                 // pass two parameters subject id and date , date format should be 23/12/1995
+                String myDate = formatter.format(date);
+                Log.d("option_id", String.valueOf(subId));
+                Log.d("option_date_cal",myDate);
+                totClass.setText("Total classes:"+attendancedb.totalDayWiseClasses(subId,myDate));
+                attClass.setText("Attended classes:"+attendancedb.totalDayWisePresent(subId, myDate));
+                bunkedClass.setText("Bunked classes:"+attendancedb.totalDayWiseBunked(subId, myDate));
+
+
             }
 
             @Override

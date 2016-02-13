@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="dotinc.attendancemanager2.HelpActivity">
     <include
-        android:id="@+id/app_bar"
+        android:id="@+id/toolbar"
         layout="@layout/action_bar" />
 
 </RelativeLayout>

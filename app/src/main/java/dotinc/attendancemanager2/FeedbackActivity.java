@@ -29,9 +29,9 @@ public class FeedbackActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("FeedBack");
 
         title = (EditText) findViewById(R.id.feedtitle);
-        title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/josefin_sans-bold.ttf"));
+//        title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/josefin_sans-bold.ttf"));
         message = (EditText) findViewById(R.id.feedmsg);
-        message.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/josefin_sans_regular.ttf"));
+  //      message.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/josefin_sans_regular.ttf"));
 
         textTitle = (TextInputLayout) findViewById(R.id.textTitle);
         textMessage = (TextInputLayout) findViewById(R.id.textMsg);
@@ -58,7 +58,7 @@ public class FeedbackActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.send) {
+        if (id == R.id.help) {
 
             String sub = title.getText().toString();
             String msg = message.getText().toString();

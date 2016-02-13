@@ -20,8 +20,8 @@ public class HelpActivity extends AppCompatActivity {
     private void instantiate() {
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
     }
@@ -30,14 +30,14 @@ public class HelpActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_feedback, menu);
+        getMenuInflater().inflate(R.menu.menu_help, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id =item.getItemId();
-        if(id==R.id.feedback){
+        if(id==R.id.help){
             Intent intent = new Intent(HelpActivity.this,FeedbackActivity.class);
             startActivity(intent);
         }
