@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 
-import java.util.ArrayList;
-
+import java.util.ArrayList;git
+import dotinc.attendancemanager2.ExtraClassActivity;
 import dotinc.attendancemanager2.GoToDateActivity;
 import dotinc.attendancemanager2.MainActivity;
 import dotinc.attendancemanager2.Objects.AttendanceList;
@@ -230,7 +230,10 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             ((MainActivity) context).showSnackbar(message);
             ((MainActivity) context).updateOverallPerc();
-        } else
+        }
+        else if (activityName.equals("ExtraClassActivity"))
+            ((ExtraClassActivity) context).showSnackbar(message);
+        else
             ((GoToDateActivity) context).showSnackbar(message);
     }
 

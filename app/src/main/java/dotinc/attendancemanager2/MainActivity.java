@@ -221,6 +221,8 @@ public class MainActivity extends AppCompatActivity {
                     showExtraClass();
                 } else {
                     //------------code for pre-lolipop for extra class------------//
+                    Intent intent = new Intent(MainActivity.this,ExtraClassActivity.class);
+                    startActivity(intent);
                 }
             }
 
