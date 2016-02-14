@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
@@ -82,8 +81,8 @@ public class SubjectDatabase extends SQLiteOpenHelper {
         return SubjectName;
     }
 
-    public ArrayList<String> getAllSubjectName(){
-        ArrayList<String> subjectName =  new ArrayList<>();
+    public ArrayList<String> getAllSubjectName() {
+        ArrayList<String> subjectName = new ArrayList<>();
         String query = "SELECT * FROM " + Subjects_Table;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -98,15 +97,14 @@ public class SubjectDatabase extends SQLiteOpenHelper {
         return subjectName;
     }
 
-    public void addMultipleSubjects(ArrayList<String> subjects){
+    public void addMultipleSubjects(ArrayList<String> subjects) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        for (int size=0;size<subjects.size();size++){
-            values.put(Subject_List,subjects.get(size));
-            database.insert(Subjects_Table,null,values);
+        for (int size = 0; size < subjects.size(); size++) {
+            values.put(Subject_List, subjects.get(size));
+            database.insert(Subjects_Table, null, values);
         }
         database.close();
-
 
 
     }
@@ -129,6 +127,14 @@ public class SubjectDatabase extends SQLiteOpenHelper {
         }
         db.close();
         return SubjectName;
+    }
+
+    public boolean exportData() {
+        return Helper.exportDatabase(Subject_Name_Databse);
+    }
+
+    public boolean importData() {
+        return Helper.importDatabase(Subject_Name_Databse);
     }
 
 //    public void toast() {

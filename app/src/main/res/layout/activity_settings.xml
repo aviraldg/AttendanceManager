@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DEE5E5"
+    android:background="@color/backgroundColor"
     tools:context="dotinc.attendancemanager2.SettingsActivity">
 
     <android.support.design.widget.AppBarLayout

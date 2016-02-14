@@ -8,12 +8,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import dotinc.attendancemanager2.Adapters.AttendanceAdapter;
+import dotinc.attendancemanager2.Adapters.MainPageAdapter;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
@@ -31,7 +30,7 @@ public class ExtraClassActivity extends AppCompatActivity {
     private TimeTableList timeTableList;
     private SubjectDatabase subjectDatabase;
 
-    private AttendanceAdapter exadapter;
+    private MainPageAdapter exadapter;
     private ArrayList<TimeTableList> arrayList;
     private ArrayList<TimeTableList> allSubjectsArrayList;
 
@@ -113,7 +112,7 @@ public class ExtraClassActivity extends AppCompatActivity {
                     allSubjectsArrayList.remove(j);
             }
         }
-        exadapter = new AttendanceAdapter(this, allSubjectsArrayList, day, "ExtraClassActivity");
+        exadapter = new MainPageAdapter(this, allSubjectsArrayList, day, "ExtraClassActivity");
         recyclerView.setAdapter(exadapter);
     }
     public void showSnackbar(String message) {

@@ -37,7 +37,7 @@ import dotinc.attendancemanager2.Utils.Helper;
 
 //**********Adapter of MainActivity**************//
 
-public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private ArrayList<TimeTableList> arrayList;
@@ -52,7 +52,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private int markerValue;
     private int lastPosition = -1;
 
-    public AttendanceAdapter(Context context, ArrayList<TimeTableList> arrayList, String myDate, String activityName) {
+    public MainPageAdapter(Context context, ArrayList<TimeTableList> arrayList, String myDate, String activityName) {
         this.context = context;
         this.arrayList = arrayList;
         this.myDate = myDate;

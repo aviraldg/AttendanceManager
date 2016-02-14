@@ -103,7 +103,7 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                 startSharedElement(new Intent(context, ShowNameCardActivity.class));
                             } else
-                                startActivity(new Intent(NameAndCriteriaActivity.this, SubjectsActivity.class));
+                                startActivity(new Intent(NameAndCriteriaActivity.this, ShowNameCardActivity.class));
                         }
                     }
                 }
@@ -183,7 +183,7 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    private void addText(TextView... views){
+    private void addText(TextView... views) {
 
     }
 }

@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import dotinc.attendancemanager2.Adapters.AttendanceAdapter;
+import dotinc.attendancemanager2.Adapters.MainPageAdapter;
 import dotinc.attendancemanager2.Adapters.MainViewPagerAdapter;
 import dotinc.attendancemanager2.Fragements.HeaderFragment;
 import dotinc.attendancemanager2.Fragements.SecondFragment;
@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
     private String day;
     private Date date;
     private String activityName;
-    private AttendanceAdapter exadapter;
-    private AttendanceAdapter mainadapter;
+    private MainPageAdapter exadapter;
+    private MainPageAdapter mainadapter;
     private Boolean exclViewOpen = false, attAllViewOpen = false;
 
 
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                     allSubjectsArrayList.remove(j);
             }
         }
-        exadapter = new AttendanceAdapter(this, allSubjectsArrayList, day, activityName);
+        exadapter = new MainPageAdapter(this, allSubjectsArrayList, day, activityName);
         exclRecyclerView.setAdapter(exadapter);
     }
 
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
 
         instantiate();
         extraClass();
-        mainadapter = new AttendanceAdapter(this, arrayList, day, activityName);
+        mainadapter = new MainPageAdapter(this, arrayList, day, activityName);
         recyclerView.setAdapter(mainadapter);
         pager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager(), pageList));
 

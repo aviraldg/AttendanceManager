@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,7 +29,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import dotinc.attendancemanager2.Adapters.AttendanceAdapter;
+import dotinc.attendancemanager2.Adapters.MainPageAdapter;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
@@ -56,7 +55,7 @@ public class GoToDateActivity extends AppCompatActivity {
     private ArrayList<TimeTableList> arrayList;
 
     private AttendanceDatabase database;
-    private AttendanceAdapter mainadapter;
+    private MainPageAdapter mainadapter;
     private TimeTableDatabase timeTableDatabase;
     private TimeTableList timeTableList;
     private SubjectDatabase subjectDatabase;                            //add
@@ -128,7 +127,7 @@ public class GoToDateActivity extends AppCompatActivity {
                     allSubjectsArrayList.remove(j);
             }
         }
-        exclRecyclerView.setAdapter(new AttendanceAdapter(this, allSubjectsArrayList, date, activityName));
+        exclRecyclerView.setAdapter(new MainPageAdapter(this, allSubjectsArrayList, date, activityName));
     }
 
     private void setTitle(String day) {
@@ -186,6 +185,7 @@ public class GoToDateActivity extends AppCompatActivity {
                 setTitle(getResources().getString(R.string.saturday));
                 break;
             case "Sun":
+                day_code=7;
                 setTitle(getResources().getString(R.string.sunday));
                 break;
         }
@@ -198,7 +198,7 @@ public class GoToDateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_go_to_date);
         instantiate();
         extraClass();
-        mainadapter = new AttendanceAdapter(this, arrayList, date, activityName);
+        mainadapter = new MainPageAdapter(this, arrayList, date, activityName);
         recyclerView.setAdapter(mainadapter);
 
 
