@@ -1,7 +1,6 @@
 package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
-import android.location.LocationManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.ExtraClassActivity;
@@ -141,9 +141,14 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
         viewHolder.attended.setText(context.getResources().getString(R.string.attended) + ": " + attendedClasses);
         viewHolder.total.setText(context.getResources().getString(R.string.total) + ": " + totalClasses);
-        viewHolder.subject_percentage.setText(" " +
-                String.format("%.1f", percentage));
 
+        if (!Float.isNaN(percentage)) {
+            String perc = String.format("%.1f", percentage);
+            BigDecimal decimal = new BigDecimal(perc);
+            viewHolder.subject_percentage.setText(" " + decimal.stripTrailingZeros().toPlainString());
+        } else {
+            viewHolder.subject_percentage.setText("0");
+        }
         setAnimation(viewHolder.swipeLayout, position);
 
         viewHolder.attendedbtn.setOnClickListener(new View.OnClickListener() {
@@ -186,10 +191,10 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return arrayList.size();
     }
 
-    private int freeBunks(int attendedClass, int totalClass, float percentage){
+    private int freeBunks(int attendedClass, int totalClass, float percentage) {
         int originalAttended = attendedClass;
         int freeBunks = 0;
-        while (percentage>attendance_criteria){
+        while (percentage > attendance_criteria) {
             totalClass++;
             freeBunks++;
             percentage = ((float) attendedClass / (float) totalClass) * 100;
@@ -197,21 +202,21 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         return freeBunks;
     }
+
     private void classesNeeded(int attendedClass, int totalClass, float percentage, AttendanceViewHolder viewHolder) {
         int needBreak = Integer.parseInt(Helper.getFromPref(context, Helper.NEEDBREAK, String.valueOf(0)));
         Log.d("option_need", String.valueOf(needBreak));
         int flag = 0;
-        int freeBunks=0;
+        int freeBunks = 0;
         int originalAttended = attendedClass;
         if (percentage >= attendance_criteria) {
-            if (needBreak==1){
-                freeBunks = freeBunks(attendedClass,totalClass,percentage);
-                if (freeBunks==0)
-                    flag=5;
+            if (needBreak == 1) {
+                freeBunks = freeBunks(attendedClass, totalClass, percentage);
+                if (freeBunks == 0)
+                    flag = 5;
                 else
-                    flag =4;
-            }
-            else
+                    flag = 4;
+            } else
                 flag = 1;
 
         } else if (attendedClass == 0 && totalClass == 0)
@@ -245,7 +250,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     viewHolder.needClassDetail.setText(Html.fromHtml("Attend next <b><font color='#E64A19'>" + need + "</font></b> classes"));
                 break;
             case 4:
-                viewHolder.needClassDetail.setText("You have "+freeBunks+" Bunks");
+                viewHolder.needClassDetail.setText("You have " + freeBunks + " Bunks");
                 break;
             case 5:
 
@@ -269,7 +274,6 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private void resetAttendance(int id, AttendanceViewHolder viewHolder, int position) {
         database.resetAttendance(id, myDate, position);
-        viewHolder.resetbtn.setImageResource(R.mipmap.ic_restore_black_36dp);
         this.notifyDataSetChanged();
         showSnackBar(context.getResources().getString(R.string.reset_attendance));
     }

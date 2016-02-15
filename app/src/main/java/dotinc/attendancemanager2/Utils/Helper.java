@@ -69,6 +69,7 @@ public class Helper {
     }
 
     public static boolean importDatabase(String dbName) {
+
         try {
             File sd = Environment.getExternalStorageDirectory();
             File data = Environment.getDataDirectory();
