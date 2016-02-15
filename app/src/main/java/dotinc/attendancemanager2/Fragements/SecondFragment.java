@@ -1,10 +1,13 @@
 package dotinc.attendancemanager2.Fragements;
 
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +32,7 @@ public class SecondFragment extends Fragment {
     private ImageButton viewTimeTable;
     private ImageButton go_to_date;
     private ImageButton overall_attendance;
+    private FragmentActivity fragmentActivity;
     int year, month, day;
     SimpleDateFormat formatter;
     Date myDate;
@@ -38,6 +42,11 @@ public class SecondFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        fragmentActivity=(FragmentActivity) activity;
+        super.onAttach(activity);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,9 +78,22 @@ public class SecondFragment extends Fragment {
         go_to_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog dialog = new DatePickerDialog(getActivity(), R.style.DialogTheme, pickerListener, year, month, day);
-                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-                dialog.show();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    DatePickerDialog dialog = new DatePickerDialog(getActivity(), R.style.DialogTheme, pickerListener, year, month, day);
+                    dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                    dialog.show();
+                }
+                else{
+                    Calendar calendar = Calendar.getInstance();
+                    com.wdullaer.materialdatetimepicker.date.DatePickerDialog dpd = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance(
+                            (com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener) getActivity(),
+                            calendar.get(Calendar.YEAR),
+                            calendar.get(Calendar.MONTH),
+                            calendar.get(Calendar.DAY_OF_MONTH)
+                    );
+                    dpd.show(getActivity().getFragmentManager(),"sdaasd");
+                }
+
             }
         });
         overall_attendance.setOnClickListener(new View.OnClickListener() {
