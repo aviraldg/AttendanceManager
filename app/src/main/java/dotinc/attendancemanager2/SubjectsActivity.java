@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -75,12 +76,13 @@ public class SubjectsActivity extends AppCompatActivity {
         removeImage = (ImageView) findViewById(R.id.removeEdit);
         subjectsList = new SubjectsList();
         arrayList = database.getAllSubjects();
-        setEmptyView(arrayList.size());
-        getPreviousSubjects();
         recyclerView = (RecyclerView) findViewById(R.id.subjects);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new SubjectsAdapter(this, arrayList);
+        setEmptyView(arrayList.size());
+        getPreviousSubjects();
+
 
     }
 
@@ -216,13 +218,13 @@ public class SubjectsActivity extends AppCompatActivity {
                                     InputMethodManager.HIDE_NOT_ALWAYS);
                             addSubjectslayout.setVisibility(View.INVISIBLE);
                             addSubjects.setImageResource(R.mipmap.ic_add_white_36dp);
-                            addSubjects.setBackgroundTintList(getResources().getColorStateList(R.color.white));
-                            addSubjects.setRippleColor(getResources().getColor(R.color.backgroundColor));
-                            addSubjects.setImageTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+                            addSubjects.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+                            addSubjects.setRippleColor(getResources().getColor(R.color.colorPrimary));
+                            addSubjects.setImageTintList(getResources().getColorStateList(R.color.white));
                             addSubjects.show();
                             isVisible = false;
                             arrayList.clear();
-                            done.setVisibility(View.VISIBLE);
+                            setEmptyView(arrayList.size());
                             arrayList.addAll(database.getAllSubjects());
                             setEmptyView(arrayList.size());
                             adapter.notifyDataSetChanged();
@@ -295,12 +297,28 @@ public class SubjectsActivity extends AppCompatActivity {
             view1.setVisibility(View.GONE);
             done.setVisibility(View.GONE);
             swipeHelpText.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                addSubjects.setImageResource(R.mipmap.ic_add_white_36dp);
+                addSubjects.setBackgroundTintList(getResources().getColorStateList(R.color.white));
+                addSubjects.setRippleColor(getResources().getColor(R.color.backgroundColor));
+                addSubjects.setImageTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+                addSubjects.show();
+            }
         } else {
             emptyView.setVisibility(View.GONE);
             subjectText.setVisibility(View.VISIBLE);
             view1.setVisibility(View.VISIBLE);
             done.setVisibility(View.VISIBLE);
             swipeHelpText.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                addSubjects.setImageResource(R.mipmap.ic_add_white_36dp);
+                addSubjects.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+                addSubjects.setRippleColor(getResources().getColor(R.color.colorPrimary));
+                addSubjects.setImageTintList(getResources().getColorStateList(R.color.white));
+                addSubjects.show();
+            }
         }
 
     }
@@ -367,7 +385,7 @@ public class SubjectsActivity extends AppCompatActivity {
                 addSubjects.setRippleColor(getResources().getColor(R.color.backgroundColor));
                 addSubjects.setImageTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
                 addSubjects.show();
-                done.setVisibility(View.VISIBLE);
+                setEmptyView(arrayList.size());
                 isVisible = false;
             }
         });

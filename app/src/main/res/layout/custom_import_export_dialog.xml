@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/import_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/circle_background"
+        android:padding="20dp"
+        android:src="@mipmap/ic_arrow_downward_white_36dp" />
+
+    <ImageButton
+        android:id="@+id/export"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/circle_background"
+        android:padding="20dp"
+        android:src="@mipmap/ic_arrow_upward_white_36dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/export"
+        android:layout_alignStart="@+id/export"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="Export\nto SD Card"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/import_data"
+        android:layout_alignStart="@+id/import_data"
+        android:layout_below="@+id/import_data"
+        android:gravity="center"
+        android:text="Import\nfrom SD Card"
+        android:textSize="15sp" />
+</RelativeLayout>

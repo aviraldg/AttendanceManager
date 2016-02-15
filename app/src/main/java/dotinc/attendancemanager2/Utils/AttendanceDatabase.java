@@ -5,15 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
 import android.util.Log;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.Objects.AttendanceList;
@@ -52,88 +45,6 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         String table_update = "ALTER TABLE " + ATTENDANCE_TRACKER + " ADD COLUMN " + POSITION + " INTEGER ";
         db.execSQL(table_update);
-    }
-
-    public boolean importDatabase(String dbPath) throws IOException {
-        close();
-        File newDb = new File(dbPath);
-        File oldDb = new File(DB_FILEPATH);
-        if (newDb.exists()) {
-            copyFile(new FileInputStream(newDb), new FileOutputStream(oldDb));
-            getWritableDatabase().close();
-            return true;
-        }
-        return false;
-    }
-
-    private void copyFile(FileInputStream fromFile, FileOutputStream toFile) throws IOException {
-        FileChannel fromChannel = null;
-        FileChannel toChannel = null;
-        try {
-            fromChannel = fromFile.getChannel();
-            toChannel = toFile.getChannel();
-            fromChannel.transferTo(0, fromChannel.size(), toChannel);
-        } finally {
-            try {
-                if (fromChannel != null) {
-                    fromChannel.close();
-                }
-            } finally {
-                if (toChannel != null) {
-                    toChannel.close();
-                }
-            }
-        }
-    }
-
-    public void backupDatabase() throws IOException {
-        final String inFileName = DB_FILEPATH;
-        File dbFile = new File(context.getFilesDir() + inFileName);
-        dbFile.getParentFile().mkdirs();
-        FileInputStream fis = new FileInputStream(dbFile);
-
-        String outFileName = Environment.getExternalStorageDirectory() + "/database_copy.db";
-
-        // Open the empty db as the output stream
-        OutputStream output = new FileOutputStream(outFileName);
-
-        // Transfer bytes from the inputfile to the outputfile
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = fis.read(buffer)) > 0) {
-            output.write(buffer, 0, length);
-        }
-
-        // Close the streams
-        output.flush();
-        output.close();
-        fis.close();
-
-
-//        if (isSDCardWriteable()) {
-//            String inFileName = DB_FILEPATH;
-//            File dbFile = new File(inFileName);
-//            FileInputStream fis = new FileInputStream(dbFile);
-//            String outFileName = Environment.getExternalStorageDirectory() + "/syntaxionary";
-//            OutputStream output = new FileOutputStream(outFileName);
-//            byte[] buffer = new byte[1024];
-//            int length;
-//            while ((length = fis.read(buffer)) > 0) {
-//                output.write(buffer, 0, length);
-//            }
-//            output.flush();
-//            output.close();
-//            fis.close();
-//        }
-    }
-
-    private boolean isSDCardWriteable() {
-        boolean readCard = false;
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            readCard = true;
-        }
-        return readCard;
     }
 
     public int setMarker(String myDate, int position, int subjectId) {
@@ -347,5 +258,11 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         return isEmpty;
     }
 
+    public boolean exportData() {
+        return Helper.exportDatabase(Database_Name);
+    }
 
+    public boolean importData() {
+        return Helper.importDatabase(Database_Name);
+    }
 }

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="50dp"
         android:background="#fff"
         card_view:cardCornerRadius="4dp">
 
@@ -51,21 +51,88 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_name"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="10dp"
                 android:text="Attendance Criteria"
                 android:textSize="15sp"
                 android:transitionName="user_perc_transition" />
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_below="@+id/user_perc"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp" />
         </RelativeLayout>
-
     </android.support.v7.widget.CardView>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/name_card">
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/check_data_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progress_bar"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Checking for any saved data..."
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="italic" />
+
+        <ImageView
+            android:id="@+id/restore_image"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_below="@+id/check_data_text"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="15dp"
+            android:src="@mipmap/ic_cloud_download_white_36dp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/import_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/restore_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_border"
+            android:gravity="center"
+            android:onClick="importToDatabase"
+            android:padding="10dp"
+            android:text="Import"
+            android:textAllCaps="true"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/border"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_above="@+id/fresh_start"
+            android:background="#fff"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/fresh_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/white"
+            android:gravity="center"
+            android:onClick="freshStart"
+            android:padding="15dp"
+            android:text="Fresh Start"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 </RelativeLayout>

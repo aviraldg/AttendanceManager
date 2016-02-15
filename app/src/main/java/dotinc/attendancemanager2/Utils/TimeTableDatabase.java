@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 
 /**
@@ -25,6 +24,7 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
     public static final String TimeTable_Table = "timetable";
     public static final String POSITION = "position";
     Context context;
+
     public TimeTableDatabase(Context context) {
         super(context, TimeTable_Database_Name, null, Database_Version);
         this.context = context;
@@ -43,24 +43,24 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         db.execSQL(table_update);
     }
 
-//    public void toast() {
-//        SQLiteDatabase dbs = this.getWritableDatabase();
-//        String[] col = {Subject_Id, POSITION, Day_Code, Subjects_Selected};
-//        Cursor cur = dbs.query(TimeTable_Table, col, null, null, null, null, null);
-//        if (cur != null) {
-//            while (cur.moveToNext()) {
-//                int id = cur.getInt(0);
-//                int pos = cur.getInt(1);
-//                int dc = cur.getInt(2);
-//                String subject = cur.getString(3);
-//                Toast.makeText(context,"id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos,Toast.LENGTH_LONG).show();
-//                Log.d("option_database_toast", "id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos);
-//            }
-//        } else {
-//            Log.d("option", "cursor is null");
-//        }
-//        dbs.close();
-//    }
+    public void toast() {
+        SQLiteDatabase dbs = this.getWritableDatabase();
+        String[] col = {Subject_Id, POSITION, Day_Code, Subjects_Selected};
+        Cursor cur = dbs.query(TimeTable_Table, col, null, null, null, null, null);
+        if (cur != null) {
+            while (cur.moveToNext()) {
+                int id = cur.getInt(0);
+                int pos = cur.getInt(1);
+                int dc = cur.getInt(2);
+                String subject = cur.getString(3);
+                Toast.makeText(context,"id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos,Toast.LENGTH_LONG).show();
+                Log.d("option_database_toast", "id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos);
+            }
+        } else {
+            Log.d("option", "cursor is null");
+        }
+        dbs.close();
+    }
 
     public void addTimeTable(TimeTableList list) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -85,13 +85,13 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
                 for (int dayCode = 1; dayCode < 7; dayCode++) {
                     position = 0;
                     while (cursor.getInt(1) == dayCode) {
-                        Toast.makeText(context,"position:"+position,Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "position:" + position, Toast.LENGTH_LONG).show();
                         cursor.moveToNext();
                         position++;
                         updateQuery = "UPDATE " + TimeTable_Table + " SET " + POSITION + " = " + position;
                         database.execSQL(updateQuery);
                         Log.d("option_quer", updateQuery);
-                        Toast.makeText(context,updateQuery,Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, updateQuery, Toast.LENGTH_LONG).show();
                         if (cursor.isAfterLast())
                             break;
                     }
@@ -158,5 +158,13 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         String query = "UPDATE " + TimeTable_Table + " SET " + Subjects_Selected + " = '" + new_subject + "' WHERE " + Subjects_Selected + " = '" + old_subject + "'";
         db.execSQL(query);
         db.close();
+    }
+
+    public boolean exportData() {
+        return Helper.exportDatabase(TimeTable_Database_Name);
+    }
+
+    public boolean importData() {
+        return Helper.importDatabase(TimeTable_Database_Name);
     }
 }

@@ -64,8 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/swipe_help_text"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:background="@color/backgroundColor" />
 
         <LinearLayout
             android:id="@+id/empty_view"
@@ -106,7 +106,7 @@
                 android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#EEEEEE">
+                android:background="@color/colorPrimary">
 
                 <TextView
                     android:id="@+id/textView"
@@ -115,6 +115,7 @@
                     android:layout_margin="16dp"
                     android:padding="5dp"
                     android:text="Add subjects"
+                    android:textColor="@color/white"
                     android:textSize="25sp" />
 
                 <ImageView
@@ -131,7 +132,7 @@
                     android:onClick="addEditText"
                     android:padding="10dp"
                     android:src="@mipmap/ic_add_white_24dp"
-                    android:tint="#929292" />
+                    android:tint="@color/white" />
 
                 <ImageView
                     android:id="@+id/removeEdit"
@@ -146,7 +147,7 @@
                     android:onClick="removeEditText"
                     android:padding="10dp"
                     android:src="@mipmap/ic_delete_black_24dp"
-                    android:tint="#929292"
+                    android:tint="@color/white"
                     android:visibility="gone" />
 
                 <ImageView
@@ -162,7 +163,7 @@
                     android:onClick="showHelp"
                     android:padding="10dp"
                     android:src="@mipmap/ic_help_outline_white_24dp"
-                    android:tint="#929292"
+                    android:tint="@color/white"
                     android:visibility="visible" />
 
             </RelativeLayout>
