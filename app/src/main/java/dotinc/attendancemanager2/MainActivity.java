@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         activityName = "MainActivity";
 
         date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("d-M-yyyy");
         day = format.format(date);
 
 

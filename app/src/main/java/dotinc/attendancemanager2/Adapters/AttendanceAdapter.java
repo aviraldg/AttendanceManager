@@ -195,7 +195,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             percentage = ((float) attendedClass / (float) totalClass) * 100;
         }
 
-        return freeBunks;
+        return freeBunks-1;
     }
     private void classesNeeded(int attendedClass, int totalClass, float percentage, AttendanceViewHolder viewHolder) {
         int needBreak = Integer.parseInt(Helper.getFromPref(context, Helper.NEEDBREAK, String.valueOf(0)));
@@ -204,6 +204,8 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         int freeBunks=0;
         int originalAttended = attendedClass;
         if (percentage >= attendance_criteria) {
+            viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark
+            ));
             if (needBreak==1){
                 freeBunks = freeBunks(attendedClass,totalClass,percentage);
                 if (freeBunks==0)
@@ -236,7 +238,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 break;
 
             case 3:
-                int need = 0;
+                int need ;
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
                 need = attendedClass - originalAttended;
                 if (need == 1)
@@ -248,7 +250,6 @@ public class AttendanceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 viewHolder.needClassDetail.setText("You have "+freeBunks+" Bunks");
                 break;
             case 5:
-
                 viewHolder.needClassDetail.setText("You have no free bunks");
         }
 

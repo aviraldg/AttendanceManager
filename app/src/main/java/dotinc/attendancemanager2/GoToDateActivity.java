@@ -209,6 +209,8 @@ public class GoToDateActivity extends AppCompatActivity {
                     showExtraClass();
                 } else {
                     //------------code for pre-lolipop of extra class------------//
+                    Intent intent = new Intent(GoToDateActivity.this,ExtraClassActivity.class);
+                    startActivity(intent);
                 }
             }
 
