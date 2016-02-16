@@ -1,6 +1,7 @@
 package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -84,10 +84,13 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         markerValue = database.setMarker(myDate, position, id);
         if (markerValue == 1) {
             viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
-            viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimary));
+            viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.attendedColor));
         } else if (markerValue == 0) {
-            viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
+            viewHolder.check_mark.setImageResource(R.mipmap.ic_cancel_black_36dp);
             viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.absentColor));
+        } else if (markerValue == -1) {
+            viewHolder.check_mark.setImageResource(R.mipmap.ic_remove_circle_black_36dp);
+            viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.noClassColor));
         } else {
             viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
             viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.backgroundColor));
@@ -139,8 +142,18 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
+        viewHolder.subject.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.OXYGEN_BOLD));
         viewHolder.attended.setText(context.getResources().getString(R.string.attended) + ": " + attendedClasses);
+        viewHolder.attended.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.OXYGEN_REGULAR));
         viewHolder.total.setText(context.getResources().getString(R.string.total) + ": " + totalClasses);
+        viewHolder.total.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.OXYGEN_REGULAR));
+        viewHolder.needClassDetail.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        viewHolder.subject_percentage.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_BOLD));
+
+        viewHolder.attendedbtn.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        viewHolder.bunkedbtn.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        viewHolder.noClassbtn.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        viewHolder.resetbtn.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_REGULAR));
 
         if (!Float.isNaN(percentage)) {
             String perc = String.format("%.1f", percentage);
@@ -225,14 +238,15 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             flag = 3;
             attendedClass++;
             totalClass++;
-            viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.absentColor));
+            //viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.absentColor));
+            viewHolder.subject_percentage.setTextColor(ContextCompat.getColor(context, R.color.absentColor));
             percentage = ((float) attendedClass / (float) totalClass) * 100;
         }
         switch (flag) {
             case 1:
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
-                viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark
-                ));
+                //viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.attendedColor));
+                viewHolder.subject_percentage.setTextColor(ContextCompat.getColor(context, R.color.attendedColor));
                 viewHolder.needClassDetail.setText(context.getResources().getString(R.string.on_track_message));
                 break;
 
@@ -306,10 +320,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView subject_percentage;
         private TextView needClassDetail;
         private SwipeLayout swipeLayout;
-        private ImageButton attendedbtn;
-        private ImageButton bunkedbtn;
-        private ImageButton noClassbtn;
-        private ImageButton resetbtn;
+        private TextView attendedbtn, bunkedbtn, noClassbtn, resetbtn;
         private ImageView check_mark;
         private CardView cardView;
 
@@ -321,10 +332,10 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             subject_percentage = (TextView) itemView.findViewById(R.id.sub_perc);
             needClassDetail = (TextView) itemView.findViewById(R.id.sub_detail);
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
-            attendedbtn = (ImageButton) itemView.findViewById(R.id.attended_class);
-            bunkedbtn = (ImageButton) itemView.findViewById(R.id.bunk_class);
-            noClassbtn = (ImageButton) itemView.findViewById(R.id.no_class);
-            resetbtn = (ImageButton) itemView.findViewById(R.id.reset_attendance);
+            attendedbtn = (TextView) itemView.findViewById(R.id.attended_class);
+            bunkedbtn = (TextView) itemView.findViewById(R.id.bunk_class);
+            noClassbtn = (TextView) itemView.findViewById(R.id.no_class);
+            resetbtn = (TextView) itemView.findViewById(R.id.reset_attendance);
             check_mark = (ImageView) itemView.findViewById(R.id.check_mark);
             cardView = (CardView) itemView.findViewById(R.id.root_card);
         }

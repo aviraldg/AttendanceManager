@@ -1,6 +1,7 @@
 package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -11,12 +12,13 @@ import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import dotinc.attendancemanager2.Objects.AttendanceList;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.R;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
+import dotinc.attendancemanager2.Utils.Helper;
 
 /**
  * Created by vellapanti on 8/2/16.
@@ -49,13 +51,24 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
         int totalClasses = database.totalClasses(id);
         viewHolder.checkMark.setVisibility(View.GONE);
 
+        viewHolder.subject.setText(arrayList.get(position).getSubjectName());
+        viewHolder.subject.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.OXYGEN_BOLD));
+        viewHolder.attended.setText(context.getResources().getString(R.string.attended) + ": " + attendedClasses);
+        viewHolder.attended.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.OXYGEN_REGULAR));
+        viewHolder.total.setText(context.getResources().getString(R.string.total) + ": " + totalClasses);
+        viewHolder.total.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.OXYGEN_REGULAR));
+        viewHolder.needClassDetail.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        viewHolder.subject_percentage.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_BOLD));
+
         float percentage = ((float) attendedClasses / (float) totalClasses) * 100;
         classesNeeded(attendedClasses, totalClasses, percentage, viewHolder);
-        viewHolder.subject.setText(arrayList.get(position).getSubjectName());
-        viewHolder.attended.setText(context.getResources().getString(R.string.attended) + ": " + attendedClasses);
-        viewHolder.total.setText(context.getResources().getString(R.string.total) + ": " + totalClasses);
-        viewHolder.subject_percentage.setText(" " +
-                String.format("%.1f", percentage));
+        if (!Float.isNaN(percentage)) {
+            String perc = String.format("%.1f", percentage);
+            BigDecimal decimal = new BigDecimal(perc);
+            viewHolder.subject_percentage.setText(" " + decimal.stripTrailingZeros().toPlainString());
+        } else {
+            viewHolder.subject_percentage.setText("0");
+        }
 
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, null);
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, null);

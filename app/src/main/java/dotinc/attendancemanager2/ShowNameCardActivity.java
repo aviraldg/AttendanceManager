@@ -3,6 +3,7 @@ package dotinc.attendancemanager2;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -26,22 +27,35 @@ public class ShowNameCardActivity extends AppCompatActivity {
     private TextView userName, userPerc;
     private ProgressBar progressBar;
     private TextView savedDataText, importData, freshStart, orText;
+    private Typeface oxyBold, oxyReg, josefinBold, josefinReg;
     private SubjectDatabase subjectDatabase;
     private AttendanceDatabase attendanceDatabase;
     private TimeTableDatabase timeTableDatabase;
 
     private void instantiate() {
         context = ShowNameCardActivity.this;
+
+        oxyBold = Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD);
+        oxyReg = Typeface.createFromAsset(getAssets(), Helper.OXYGEN_REGULAR);
+        josefinBold = Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_BOLD);
+        josefinReg = Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR);
+
         userImage = (ImageView) findViewById(R.id.user_img);
         userName = (TextView) findViewById(R.id.user_name);
+        userName.setTypeface(josefinBold);
         userPerc = (TextView) findViewById(R.id.user_perc);
+        userPerc.setTypeface(josefinReg);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, PorterDuff.Mode.MULTIPLY);
         savedDataText = (TextView) findViewById(R.id.check_data_text);
+        savedDataText.setTypeface(oxyReg);
         importData = (TextView) findViewById(R.id.import_data);
+        importData.setTypeface(oxyBold);
         restoreImage = (ImageView) findViewById(R.id.restore_image);
         freshStart = (TextView) findViewById(R.id.fresh_start);
+        freshStart.setTypeface(oxyBold);
         orText = (TextView) findViewById(R.id.or_text);
+        orText.setTypeface(oxyReg);
 
         subjectDatabase = new SubjectDatabase(context);
         attendanceDatabase = new AttendanceDatabase(context);

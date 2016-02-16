@@ -2,6 +2,7 @@ package dotinc.attendancemanager2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,11 +30,12 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
     private ImageView userImage;
     private EditText userName;
     private RangeBar attCriteria;
-    private TextView selectedPerc;
+    private TextView selectedPerc, nameQuery, attQuery;
     private FloatingActionButton fab;
     private CardView nameCard, percCard;
     private Animation cardAnimation;
     private CoordinatorLayout root;
+    private Typeface oxBold, josefin;
     private static int user_image_id, rangeBarValue;
     private Boolean fromSettings;
     private String userTransitionName;
@@ -41,11 +43,21 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
 
     private void instantiate() {
         context = NameAndCriteriaActivity.this;
+
+        oxBold = Typeface.createFromAsset(getAssets(), Helper.OXYGEN_REGULAR);
+        josefin = Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_BOLD);
         userImage = (ImageView) findViewById(R.id.user_img);
         userName = (EditText) findViewById(R.id.user_name);
+        userName.setTypeface(josefin);
         attCriteria = (RangeBar) findViewById(R.id.rangebar);
         selectedPerc = (TextView) findViewById(R.id.selected_perc);
+        selectedPerc.setTypeface(josefin);
+        nameQuery = (TextView) findViewById(R.id.query_text);
+        nameQuery.setTypeface(oxBold);
+        attQuery = (TextView) findViewById(R.id.attendance_query);
+        attQuery.setTypeface(oxBold);
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.hide();
         root = (CoordinatorLayout) findViewById(R.id.root);
         nameCard = (CardView) findViewById(R.id.name_card);
         percCard = (CardView) findViewById(R.id.percentage_card);
@@ -57,6 +69,13 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
             userName.setText(name);
 
         cardAnimation = AnimationUtils.loadAnimation(this, R.anim.expand_in);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                fab.show();
+            }
+        }, 500);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             userTransitionName = getIntent().getStringExtra("transitionName");
@@ -179,11 +198,8 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        userImage.setTransitionName(userTransitionName);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            userImage.setTransitionName(userTransitionName);
         super.onBackPressed();
-    }
-
-    private void addText(TextView... views) {
-
     }
 }

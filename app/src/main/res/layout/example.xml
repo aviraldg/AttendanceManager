@@ -1,72 +1,27 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/bottom_wrapper"
-    android:layout_width="240dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_wrapper1"
+    android:layout_width="80dp"
     android:layout_height="match_parent"
-    android:background="#f7f9f7">
+    android:background="#fafafa"
+    android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/no_class"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/bunk_class"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:gravity="center"
-        android:padding="5dp"
-        android:src="@mipmap/ic_remove_circle_black_36dp"
-        android:tint="@color/colorPrimaryDark" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/bunk_class"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:gravity="center"
-        android:padding="5dp"
-        android:src="@mipmap/ic_cancel_black_36dp"
-        android:tint="@color/colorPrimaryDark" />
+        <TextView
+            android:id="@+id/reset_attendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:drawablePadding="5dp"
+            android:drawableTop="@mipmap/ic_restore_black_36dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Reset"
+            android:textSize="15sp" />
 
-    <ImageButton
-        android:id="@+id/attended_class"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/bunk_class"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:gravity="center"
-        android:padding="5dp"
-        android:src="@mipmap/ic_check_circle_black_36dp"
-        android:tint="@color/colorPrimaryDark" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView6"
-        android:layout_toLeftOf="@+id/bunk_class"
-        android:layout_toStartOf="@+id/bunk_class"
-        android:text="No Class"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bunk_class"
-        android:layout_centerHorizontal="true"
-        android:text="Miss"
-        android:textSize="15sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView6"
-        android:layout_alignBottom="@+id/textView6"
-        android:layout_alignLeft="@+id/attended_class"
-        android:layout_alignStart="@+id/attended_class"
-        android:text="Attend"
-        android:textSize="15sp" />
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

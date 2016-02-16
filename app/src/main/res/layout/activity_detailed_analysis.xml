@@ -84,6 +84,7 @@
                         android:background="@color/noClassColor" />
 
                     <TextView
+                        android:id="@+id/present_view_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/present_view"
@@ -92,6 +93,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/absent_view_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/present_view"
@@ -101,6 +103,7 @@
                         android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/no_class_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/absent_view"

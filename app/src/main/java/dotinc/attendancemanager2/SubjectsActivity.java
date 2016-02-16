@@ -6,8 +6,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -31,6 +33,7 @@ import java.util.Set;
 
 import dotinc.attendancemanager2.Adapters.SubjectsAdapter;
 import dotinc.attendancemanager2.Objects.SubjectsList;
+import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
@@ -39,6 +42,7 @@ public class SubjectsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FloatingActionButton addSubjects;
     private TextView subjectText, swipeHelpText;
+    private TextView multHelpText, multSubtitle;
     private LinearLayout edittextLayout, helpText;
     private View view1;
     private ImageView done, removeImage;
@@ -50,17 +54,31 @@ public class SubjectsActivity extends AppCompatActivity {
     private SubjectDatabase database;
     private SubjectsList subjectsList;
     private TimeTableDatabase timeTableDatabase;
+    private Typeface oxyBold, josefinBold, josefinReg;
 
     private ArrayList<EditText> editTexts;
     private ArrayList<String> subjectName, prevSubjects;
     private boolean isVisible, fromSettings;
 
     private void instantiate() {
+
+        oxyBold = Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD);
+        josefinBold = Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_BOLD);
+        josefinReg = Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR);
+
         addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
+        addSubjects.hide();
         subjectText = (TextView) findViewById(R.id.subject_layout_title);
+        subjectText.setTypeface(oxyBold);
         swipeHelpText = (TextView) findViewById(R.id.swipe_help_text);
+        swipeHelpText.setTypeface(josefinReg);
         helpText = (LinearLayout) findViewById(R.id.help_text);
         view1 = findViewById(R.id.view1);
+
+        multSubtitle = (TextView) findViewById(R.id.titleView);
+        multSubtitle.setTypeface(oxyBold);
+        multHelpText = (TextView) findViewById(R.id.mul_sub_help);
+        multHelpText.setTypeface(josefinReg);
 
         fromSettings = getIntent().getBooleanExtra("Settings", false);
         database = new SubjectDatabase(this);
@@ -86,28 +104,12 @@ public class SubjectsActivity extends AppCompatActivity {
 
     }
 
-//    public void olderVersionDatabase() {
-//        ifEmpty = timeTableDatabase.checkEmpty();
-//        if (ifEmpty == true){
-//
-//            Log.d("option_timedatabase", "is null");
-//
-//        }
-//
-//        else {
-//            timeTableDatabase.addPosition();
-//            timeTableDatabase.toast();
-//            Log.d("option_timedatabase","not null");
-//        }
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subjects);
 
         instantiate();
-        //olderVersionDatabase();
 
         recyclerView.setAdapter(adapter);
 
@@ -122,6 +124,7 @@ public class SubjectsActivity extends AppCompatActivity {
                     LayoutInflater inflater = getLayoutInflater();
                     View view = inflater.inflate(R.layout.add_subject, null);
                     subject = (EditText) view.findViewById(R.id.subject_name);
+                    subject.setTypeface(josefinBold);
 
                     dialog.setView(view);
                     dialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -256,6 +259,7 @@ public class SubjectsActivity extends AppCompatActivity {
         layoutParams.setMargins(16, 15, 16, 15);
         ed.setLayoutParams(layoutParams);
         ed.requestFocus();
+        ed.setTypeface(josefinBold);
         edittextLayout.addView(ed);
         editTexts.add(ed);
         if (removeImage.getVisibility() == View.GONE)
@@ -303,7 +307,12 @@ public class SubjectsActivity extends AppCompatActivity {
                 addSubjects.setBackgroundTintList(getResources().getColorStateList(R.color.white));
                 addSubjects.setRippleColor(getResources().getColor(R.color.backgroundColor));
                 addSubjects.setImageTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
-                addSubjects.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        addSubjects.show();
+                    }
+                }, 500);
             }
         } else {
             emptyView.setVisibility(View.GONE);
@@ -317,7 +326,12 @@ public class SubjectsActivity extends AppCompatActivity {
                 addSubjects.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
                 addSubjects.setRippleColor(getResources().getColor(R.color.colorPrimary));
                 addSubjects.setImageTintList(getResources().getColorStateList(R.color.white));
-                addSubjects.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        addSubjects.show();
+                    }
+                }, 500);
             }
         }
 

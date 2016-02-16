@@ -144,7 +144,7 @@
             android:id="@+id/extra_class_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/backgroundColor"
             android:visibility="invisible">
 
             <TextView
@@ -153,15 +153,24 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:padding="10dp"
                 android:text="Extra Class"
-                android:textSize="20sp" />
+                android:textSize="22sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/extra_class_text"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:background="#929292" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/extra_class_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/extra_class_text"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="8dp" />
         </RelativeLayout>
     </RelativeLayout>
 

@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private CoordinatorLayout root;
     private RelativeLayout extraClassLayout;
     private AppBarLayout appBarLayout;
+    private TextView extraClassText, fullAttText;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ViewPager pager;
     private ArrayList<Fragment> pageList;
@@ -84,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         context = MainActivity.this;
+
+        extraClassText = (TextView) findViewById(R.id.extra_class_text);
+        extraClassText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+        fullAttText = (TextView) findViewById(R.id.full_att_text);
+        fullAttText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+
 
         extraClassLayout = (RelativeLayout) findViewById(R.id.extra_class_layout);
         activityName = "MainActivity";
@@ -183,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                 setTitle(getResources().getString(R.string.saturday));
                 break;
             case "Sun":
-                day_code=7;
+                day_code = 7;
                 setTitle(getResources().getString(R.string.sunday));
                 break;
         }
@@ -222,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                     showExtraClass();
                 } else {
                     //------------code for pre-lolipop for extra class------------//
-                    Intent intent = new Intent(MainActivity.this,ExtraClassActivity.class);
+                    Intent intent = new Intent(MainActivity.this, ExtraClassActivity.class);
                     startActivity(intent);
                 }
             }
@@ -323,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
     private void markedAtt() {
         final View fullAttView = findViewById(R.id.full_att_layout);
 
-        Animator anim ;
+        Animator anim;
         attAllViewOpen = false;
 
         int cX = fullAttView.getWidth();
@@ -354,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showExtraClass() {
         final View extraView = findViewById(R.id.extra_class_layout);
-        Animator anim ;
+        Animator anim;
         int cx = extraView.getWidth();
         int cY = 0;
         if (!attAllViewOpen) {
@@ -410,7 +419,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (exclViewOpen) {
             final View extraView = findViewById(R.id.extra_class_layout);
-            Animator anim ;
+            Animator anim;
             int cx = extraView.getWidth();
             int cY = 0;
             int finalRadius = 0;
@@ -458,8 +467,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(context, SettingsActivity.class));
                 break;
             case R.id.help:
-                startActivity(new Intent(context,HelpActivity.class));
+                startActivity(new Intent(context, HelpActivity.class));
                 break;
+            case R.id.about_us:
+                startActivity(new Intent(context, AboutUsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

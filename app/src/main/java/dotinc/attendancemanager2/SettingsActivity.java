@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -51,16 +52,15 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.settings_activity));
-
         context = SettingsActivity.this;
         root = (RelativeLayout) findViewById(R.id.root);
         bunkText = (TextView) findViewById(R.id.bunk_text);
+        bunkText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
         bunkText.setText("Need a Break?");
         progressDialog = new ProgressDialog(context);
         attendanceDb = new AttendanceDatabase(context);
         timetableDb = new TimeTableDatabase(context);
         subjectDb = new SubjectDatabase(context);
-        //bunkText.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/oxygen-regular.ttf"));
 
         bunk_switch = (Switch) findViewById(R.id.onOff);
         if (Integer.parseInt(Helper.getFromPref(context, Helper.NEEDBREAK, String.valueOf(-1))) == 1) {
@@ -79,9 +79,32 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         bunk_switch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(Switch view, boolean checked) {
-                if (checked)
-                    Helper.saveToPref(context, Helper.NEEDBREAK, String.valueOf(1));
-                else
+                if (checked) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    View dialaogView = LayoutInflater.from(context).inflate(R.layout.custom_need_break, null);
+                    builder.setView(dialaogView);
+                    builder.setCancelable(false);
+
+                    TextView textView = (TextView) dialaogView.findViewById(R.id.need_break_help);
+                    textView.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_REGULAR));
+                    textView.setText(getResources().getString(R.string.need_break_text));
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            bunk_switch.setChecked(false);
+                            dialogInterface.dismiss();
+                        }
+                    });
+
+                    builder.setPositiveButton("Yes, Please!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Helper.saveToPref(context, Helper.NEEDBREAK, String.valueOf(1));
+                            bunk_switch.setChecked(true);
+                        }
+                    });
+                    builder.create().show();
+                } else
                     Helper.saveToPref(context, Helper.NEEDBREAK, String.valueOf(0));
             }
         });
@@ -174,6 +197,10 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         builder1.setView(dialogView);
         ImageButton importBtn = (ImageButton) dialogView.findViewById(R.id.import_data);
         ImageButton exportBtn = (ImageButton) dialogView.findViewById(R.id.export);
+        TextView exportText = (TextView) dialogView.findViewById(R.id.export_text);
+        exportText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        TextView importText = (TextView) dialogView.findViewById(R.id.import_text);
+        importText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
 
         final AlertDialog dialog = builder1.show();
         importBtn.setOnClickListener(new View.OnClickListener() {

@@ -22,7 +22,7 @@
             android:padding="8dp"
             android:text="Weekly Subjects"
             android:textColor="@color/white"
-            android:textSize="25sp" />
+            android:textSize="22sp" />
 
         <View
             android:id="@+id/view1"
@@ -41,6 +41,7 @@
             android:layout_below="@+id/view1"
             android:gravity="center"
             android:padding="5dp"
+            android:textSize="15sp"
             android:text="@string/timetable_del_help"
             android:textColor="@color/white" />
 
@@ -63,8 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/help_text"
-            android:background="@color/white"
             android:layout_gravity="center_horizontal"
+            android:background="@color/white"
             app:tabGravity="fill"
             app:tabIndicatorColor="@color/colorPrimaryDark"
             app:tabIndicatorHeight="2dp"

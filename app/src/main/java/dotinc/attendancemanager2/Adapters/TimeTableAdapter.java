@@ -1,6 +1,7 @@
 package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,7 @@ import dotinc.attendancemanager2.Fragements.WeeklySubjectsFragment;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.R;
-import dotinc.attendancemanager2.Utils.AttendanceDatabase;
+import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
 /**
@@ -62,6 +63,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         final TimeTableViewHolder viewHolder = (TimeTableViewHolder) holder;
 
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
+        viewHolder.subject.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_BOLD));
 
         viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
         if (view_timetable == 0) {

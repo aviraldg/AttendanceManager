@@ -9,7 +9,7 @@
         android:layout_height="60dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="45dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:src="@mipmap/ic_account_circle_white_36dp"
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="55dp"
         android:layout_toRightOf="@+id/user_img"
         android:text="Michell"
         android:textColor="#fff"
@@ -39,28 +39,19 @@
         android:textSize="15sp"
         android:transitionName="Overall_perc_transition" />
 
-    <ImageButton
-        android:id="@+id/det_anl_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/name_text"
-        android:layout_marginRight="16dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="5dp"
-        android:src="@mipmap/ic_equalizer_white_36dp" />
-
     <TextView
+        android:id="@+id/time_table_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/det_anl_btn"
-        android:layout_alignEnd="@+id/det_anl_btn"
-        android:layout_alignLeft="@+id/det_anl_btn"
-        android:layout_alignRight="@+id/det_anl_btn"
-        android:layout_alignStart="@+id/det_anl_btn"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/user_img"
+        android:layout_marginRight="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:drawableTop="@mipmap/ic_date_range_white_36dp"
         android:gravity="center"
-        android:text="Analysis"
+        android:padding="5dp"
+        android:text="Timetable"
         android:textColor="#fff"
-        android:textSize="12sp" />
+        android:textSize="13sp" />
 </RelativeLayout>
