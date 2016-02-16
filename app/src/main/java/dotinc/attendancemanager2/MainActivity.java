@@ -30,8 +30,10 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import dotinc.attendancemanager2.Adapters.MainPageAdapter;
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         activityName = "MainActivity";
 
         date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("d-M-yyyy");
         day = format.format(date);
 
 

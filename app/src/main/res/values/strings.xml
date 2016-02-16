@@ -68,4 +68,26 @@
     <string name="timetable_del_help">Swipe RIGHT on subject to delete.</string>
     <string name="need_break_text">Get the number of classes you can miss freely.\nYou need a break right?\nNote: This works only when your attendance is greater than criteria.</string>
 
+    
+    
+    <string name="setting_up_timetable">•Click on the \'+\' button.\n
+                                        •Select the subjects which you have on that day.\n
+                                        •You can add multiple subjects in one day.
+    </string>
+    <string name="adding_attendance">•Swipe left on any subject to add your attendance.\n
+                                     •Swipe right to undo your attendance for that day.
+    </string>
+
+    <string name="adding_extraClasses">•Click on the \'+\' button .\n
+                                       •All the subjects which are not on that day are displayed.
+    </string>
+    <string name="shortcut_add_attendance">•Hold on the \'+\'button and add your attendance.
+    </string>
+    <string name="detailed_analysis">•Select the subject to view day wise analytics.\n
+                                     •select a date to get detailed analytics for the subject on that day itself.
+
+
+    </string>
+>>>>>>> origin/master
+
 </resources>

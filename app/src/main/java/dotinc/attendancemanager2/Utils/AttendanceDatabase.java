@@ -234,7 +234,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
                 int dc = cur.getInt(2);
                 String subject = cur.getString(3);
 
-                Log.d("option_database", "id:" + String.valueOf(id) + " " + "date:" + subject + "  " + "act:" + dc + "pos:" + pos);
+                Log.d("option_date_cal", "id:" + String.valueOf(id) + " " + "date:" + subject + "  " + "act:" + dc + "pos:" + pos);
             }
         } else {
             Log.d("option", "cursor is null");

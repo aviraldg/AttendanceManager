@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GoToDateOldActivity">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/action_bar"/>
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:mcv_showOtherDates="true"/>
+
+</RelativeLayout>

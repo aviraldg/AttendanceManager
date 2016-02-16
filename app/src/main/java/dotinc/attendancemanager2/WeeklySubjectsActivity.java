@@ -169,7 +169,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         arrayList = database.getSubjects(timeTableList);
         timeTableList.setPosition(arrayList.size());
         database.addTimeTable(timeTableList);
-        database.toast();
+        //database.toast();
 
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(pageNumber - 1);

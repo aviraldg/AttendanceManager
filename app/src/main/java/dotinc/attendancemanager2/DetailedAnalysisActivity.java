@@ -63,7 +63,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
         subjectDatabase = new SubjectDatabase(context);
         attendancedb = new AttendanceDatabase(context);
         subjectsLists = subjectDatabase.getAllSubjects();
-        formatter = new SimpleDateFormat("dd-MM-yyyy");
+        formatter = new SimpleDateFormat("d-M-yyyy");
         subjects = new ArrayList<>();
         totClass = (TextView) findViewById(R.id.tot_class);
         totClass.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
@@ -176,10 +176,20 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
                 // pass two parameters subject id and date , date format should be 23/12/1995
                 String myDate = formatter.format(date);
                 Log.d("option_id", String.valueOf(subId));
+<<<<<<< HEAD
                 Log.d("option_date_cal", myDate);
                 totClass.setText("Total classes:" + attendancedb.totalDayWiseClasses(subId, myDate));
                 attClass.setText("Attended classes:" + attendancedb.totalDayWisePresent(subId, myDate));
                 bunkedClass.setText("Bunked classes:" + attendancedb.totalDayWiseBunked(subId, myDate));
+=======
+                Log.d("option_date_cal",myDate);
+                attendancedb.toast();
+                totClass.setText("Total classes:"+attendancedb.totalDayWiseClasses(subId,myDate));
+                attClass.setText("Attended classes:"+attendancedb.totalDayWisePresent(subId, myDate));
+                bunkedClass.setText("Bunked classes:"+attendancedb.totalDayWiseBunked(subId, myDate));
+
+
+>>>>>>> origin/master
             }
 
             @Override

@@ -71,7 +71,10 @@ public class GoToDateActivity extends AppCompatActivity {
         Intent intent = getIntent();
         day_name = intent.getStringExtra("day_name");
         date = intent.getStringExtra("date");
+<<<<<<< HEAD
         Log.d("option_goto", date);
+=======
+>>>>>>> origin/master
         activityName = "GoToDateActivity";
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -221,6 +224,8 @@ public class GoToDateActivity extends AppCompatActivity {
                     showExtraClass();
                 } else {
                     //------------code for pre-lolipop of extra class------------//
+                    Intent intent = new Intent(GoToDateActivity.this,ExtraClassActivity.class);
+                    startActivity(intent);
                 }
             }
 
