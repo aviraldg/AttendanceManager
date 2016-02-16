@@ -86,21 +86,6 @@ public class SubjectsActivity extends AppCompatActivity {
 
     }
 
-//    public void olderVersionDatabase() {
-//        ifEmpty = timeTableDatabase.checkEmpty();
-//        if (ifEmpty == true){
-//
-//            Log.d("option_timedatabase", "is null");
-//
-//        }
-//
-//        else {
-//            timeTableDatabase.addPosition();
-//            timeTableDatabase.toast();
-//            Log.d("option_timedatabase","not null");
-//        }
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

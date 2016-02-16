@@ -14,22 +14,24 @@
         <activity android:name=".WeeklySubjectsActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".NameAndCriteriaActivity" />
-        <activity android:name=".ChooseAvatarActivity">
+        <activity android:name=".ChooseAvatarActivity" />
+        <activity android:name=".DetailedAnalysisActivity" />
+        <activity android:name=".GoToDateActivity" />
+        <activity android:name=".OverallAttendanceActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ShowNameCardActivity" />
+        <activity android:name=".ExtraClassActivity" />
+        <activity android:name=".FeedbackActivity" />
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".StartScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailedAnalysisActivity" />
-        <activity android:name=".GoToDateActivity" />
-        <activity android:name=".OverallAttendanceActivity" />
-        <activity android:name=".SettingsActivity" />
-        \
-        <activity android:name=".ShowNameCardActivity" />
-        <activity android:name=".ExtraClassActivity" />
-        <activity android:name=".FeedbackActivity" />
-        <activity android:name=".HelpActivity"></activity>
+        <activity android:name=".GoToDateOldActivity" />
+        <activity android:name=".PredictorActivity"></activity>
     </application>
 
 </manifest>

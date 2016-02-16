@@ -25,8 +25,10 @@ public class ShowNameCardActivity extends AppCompatActivity {
     private ImageView userImage, restoreImage;
     private TextView userName, userPerc;
     private ProgressBar progressBar;
-    private View border;
-    private TextView savedDataText, importData, freshStart;
+    private TextView savedDataText, importData, freshStart, orText;
+    private SubjectDatabase subjectDatabase;
+    private AttendanceDatabase attendanceDatabase;
+    private TimeTableDatabase timeTableDatabase;
 
     private void instantiate() {
         context = ShowNameCardActivity.this;
@@ -39,7 +41,12 @@ public class ShowNameCardActivity extends AppCompatActivity {
         importData = (TextView) findViewById(R.id.import_data);
         restoreImage = (ImageView) findViewById(R.id.restore_image);
         freshStart = (TextView) findViewById(R.id.fresh_start);
-        border = findViewById(R.id.border);
+        orText = (TextView) findViewById(R.id.or_text);
+
+        subjectDatabase = new SubjectDatabase(context);
+        attendanceDatabase = new AttendanceDatabase(context);
+        timeTableDatabase = new TimeTableDatabase(context);
+        subjectDatabase.getAllSubjects();
     }
 
     @Override
@@ -97,19 +104,19 @@ public class ShowNameCardActivity extends AppCompatActivity {
     }
 
     private void importDatabase() {
-        SubjectDatabase subjectDatabase = new SubjectDatabase(context);
-        AttendanceDatabase attendanceDatabase = new AttendanceDatabase(context);
-        TimeTableDatabase timeTableDatabase = new TimeTableDatabase(context);
         subjectDatabase.importData();
         attendanceDatabase.importData();
         timeTableDatabase.importData();
+        subjectDatabase.close();
+        attendanceDatabase.close();
+        timeTableDatabase.close();
     }
 
     public void importToDatabase(View view) {
         importData.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         freshStart.setVisibility(View.GONE);
-        border.setVisibility(View.GONE);
+        orText.setVisibility(View.GONE);
         savedDataText.setText("Importing data...");
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -130,6 +137,6 @@ public class ShowNameCardActivity extends AppCompatActivity {
         importData.setVisibility(View.VISIBLE);
         freshStart.setVisibility(View.VISIBLE);
         restoreImage.setVisibility(View.VISIBLE);
-        border.setVisibility(View.VISIBLE);
+        orText.setVisibility(View.VISIBLE);
     }
 }

@@ -69,7 +69,6 @@ public class GoToDateActivity extends AppCompatActivity {
         Intent intent = getIntent();
         day_name = intent.getStringExtra("day_name");
         date = intent.getStringExtra("date");
-        Log.d("option_goto",date);
         activityName = "GoToDateActivity";
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

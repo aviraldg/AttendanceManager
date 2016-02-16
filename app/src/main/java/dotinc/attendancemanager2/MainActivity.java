@@ -28,8 +28,10 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import dotinc.attendancemanager2.Adapters.MainPageAdapter;
@@ -222,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                     showExtraClass();
                 } else {
                     //------------code for pre-lolipop for extra class------------//
-                    Intent intent = new Intent(MainActivity.this,ExtraClassActivity.class);
+                    Intent intent = new Intent(MainActivity.this, ExtraClassActivity.class);
                     startActivity(intent);
                 }
             }

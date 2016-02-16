@@ -33,10 +33,6 @@ public class ChooseAvatarActivity extends AppCompatActivity {
     void instantiate() {
         context = ChooseAvatarActivity.this;
 
-        if (Helper.getFromPref(context, Helper.COMPLETED, "").matches("completed")) {
-            startActivity(new Intent(context, MainActivity.class));
-            finish();
-        }
         mHandler = new Handler();
         avatarText = (TextView) findViewById(R.id.select_avatar_text);
         orText = (TextView) findViewById(R.id.or_text);

@@ -4,6 +4,7 @@ package dotinc.attendancemanager2.Fragements;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import dotinc.attendancemanager2.GoToDateActivity;
+import dotinc.attendancemanager2.GoToDateOldActivity;
+import dotinc.attendancemanager2.MainActivity;
 import dotinc.attendancemanager2.OverallAttendanceActivity;
+import dotinc.attendancemanager2.PredictorActivity;
 import dotinc.attendancemanager2.R;
 import dotinc.attendancemanager2.WeeklySubjectsActivity;
 
@@ -32,6 +36,7 @@ public class SecondFragment extends Fragment {
     private ImageButton viewTimeTable;
     private ImageButton go_to_date;
     private ImageButton overall_attendance;
+    private ImageButton predictor;
     private FragmentActivity fragmentActivity;
     int year, month, day;
     SimpleDateFormat formatter;
@@ -55,11 +60,12 @@ public class SecondFragment extends Fragment {
         viewTimeTable = (ImageButton) view.findViewById(R.id.view_timetable);
         go_to_date = (ImageButton) view.findViewById(R.id.go_to_date);
         overall_attendance = (ImageButton) view.findViewById(R.id.complete_attendance);
+        predictor= (ImageButton) view.findViewById(R.id.predictor);
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        formatter = new SimpleDateFormat("dd-MM-yyyy");
+        formatter = new SimpleDateFormat("d-M-yyyy");
         return view;
     }
 
@@ -82,16 +88,10 @@ public class SecondFragment extends Fragment {
                     DatePickerDialog dialog = new DatePickerDialog(getActivity(), R.style.DialogTheme, pickerListener, year, month, day);
                     dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                     dialog.show();
-                }
+                    }
                 else{
-                    Calendar calendar = Calendar.getInstance();
-                    com.wdullaer.materialdatetimepicker.date.DatePickerDialog dpd = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance(
-                            (com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener) getActivity(),
-                            calendar.get(Calendar.YEAR),
-                            calendar.get(Calendar.MONTH),
-                            calendar.get(Calendar.DAY_OF_MONTH)
-                    );
-                    dpd.show(getActivity().getFragmentManager(),"sdaasd");
+                    Intent intent = new Intent(getActivity(), GoToDateOldActivity.class);
+                    startActivity(intent);
                 }
 
             }
@@ -100,6 +100,13 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), OverallAttendanceActivity.class);
+                startActivity(intent);
+            }
+        });
+        predictor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PredictorActivity.class);
                 startActivity(intent);
             }
         });

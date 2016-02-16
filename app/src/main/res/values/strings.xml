@@ -66,5 +66,25 @@
     <string name="add_sub_help">Click \'+\' to add subjects and delete icon to remove from last.</string>
     <string name="subject_del_help">Swipe RIGHT to delete or LEFT to edit.</string>
     <string name="timetable_del_help">Swipe RIGHT to delete.</string>
+    
+    
+    <string name="setting_up_timetable">•Click on the \'+\' button.\n
+                                        •Select the subjects which you have on that day.\n
+                                        •You can add multiple subjects in one day.
+    </string>
+    <string name="adding_attendance">•Swipe left on any subject to add your attendance.\n
+                                     •Swipe right to undo your attendance for that day.
+    </string>
+
+    <string name="adding_extraClasses">•Click on the \'+\' button .\n
+                                       •All the subjects which are not on that day are displayed.
+    </string>
+    <string name="shortcut_add_attendance">•Hold on the \'+\'button and add your attendance.
+    </string>
+    <string name="detailed_analysis">•Select the subject to view day wise analytics.\n
+                                     •select a date to get detailed analytics for the subject on that day itself.
+
+
+    </string>
 
 </resources>

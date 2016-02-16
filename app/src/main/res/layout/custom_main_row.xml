@@ -8,8 +8,7 @@
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
     card_view:cardBackgroundColor="#fff"
-    card_view:cardCornerRadius="4dp"
-    card_view:contentPadding="5dp">
+    card_view:cardCornerRadius="4dp">
 
 
     <com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,170 +20,223 @@
         swipe:leftEdgeSwipeOffset="0dp"
         swipe:rightEdgeSwipeOffset="0dp">
 
-        <LinearLayout
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/bottom_wrapper"
             android:layout_width="240dp"
             android:layout_height="match_parent"
-            android:background="#f7f9f7"
-            android:weightSum="3">
+            android:background="#fafafa">
 
             <ImageButton
                 android:id="@+id/no_class"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/bunk_class"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="10dp"
-                android:src="@mipmap/ic_insert_emoticon_black_36dp"
+                android:src="@mipmap/ic_remove_circle_black_36dp"
                 android:tint="@color/colorPrimaryDark" />
 
             <ImageButton
                 android:id="@+id/bunk_class"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="10dp"
-                android:src="@mipmap/ic_highlight_off_black_36dp"
+                android:src="@mipmap/ic_cancel_black_36dp"
                 android:tint="@color/colorPrimaryDark" />
 
             <ImageButton
                 android:id="@+id/attended_class"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/bunk_class"
                 android:layout_weight="1"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="10dp"
                 android:src="@mipmap/ic_check_circle_black_36dp"
                 android:tint="@color/colorPrimaryDark" />
-        </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/no_class"
+                android:layout_toLeftOf="@+id/bunk_class"
+                android:layout_toStartOf="@+id/bunk_class"
+                android:text="No Class"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bunk_class"
+                android:layout_centerHorizontal="true"
+                android:text="Miss"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/textView6"
+                android:layout_alignBottom="@+id/textView6"
+                android:layout_alignLeft="@+id/attended_class"
+                android:layout_alignStart="@+id/attended_class"
+                android:text="Attend"
+                android:textSize="15sp" />
+        </RelativeLayout>
 
 
-        <LinearLayout
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/bottom_wrapper1"
             android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:background="#f7f9f7"
-            android:weightSum="1">
+            android:background="#fafafa">
 
             <ImageButton
                 android:id="@+id/reset_attendance"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:gravity="center"
+                android:padding="5dp"
                 android:src="@mipmap/ic_restore_black_36dp"
                 android:tint="@color/colorPrimaryDark" />
-        </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/reset_attendance"
+                android:layout_centerHorizontal="true"
+                android:text="Reset"
+                android:textSize="15sp" />
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:weightSum="8">
-
+            android:background="@color/white">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/container"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:weightSum="11">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/subject_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
+                        android:layout_marginLeft="5dp"
                         android:padding="5dp"
-                        android:text="Algorithms"
-                        android:textSize="25sp" />
+                        android:text="Compiler Design"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
 
-                    <ImageView
-                        android:id="@+id/check_mark"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@+id/subject_name"
-                        android:layout_toRightOf="@+id/subject_name"
-                        android:src="@mipmap/ic_check_circle_black_36dp"
-                        android:tint="@color/iconTintColor"
-                        android:visibility="visible" />
-                </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
+                        <TextView
+                            android:id="@+id/attended"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:padding="5dp"
+                            android:text="Attended: 5"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:padding="5dp"
+                            android:text="Total: 10"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp">
+                    android:layout_height="match_parent"
+                    android:layout_weight="8">
 
-                    <TextView
-                        android:id="@+id/attended"
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:text="Attended: 100"
-                        android:textSize="15sp" />
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/custom_perc_background" />
 
                     <TextView
-                        android:id="@+id/total"
+                        android:id="@+id/sub_perc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_toEndOf="@+id/attended"
-                        android:layout_toRightOf="@+id/attended"
-                        android:gravity="end"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="5dp"
-                        android:text="Total: 200"
-                        android:textSize="15sp" />
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text="88.8"
+                        android:textSize="30sp" />
+
                 </RelativeLayout>
+            </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/container">
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="#dedede" />
+
+                <ImageView
+                    android:id="@+id/check_mark"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignEnd="@+id/view1"
+                    android:layout_alignRight="@+id/view1"
+                    android:layout_centerVertical="true"
+                    android:padding="2dp"
+                    android:src="@mipmap/ic_check_circle_black_36dp"
+                    android:tint="#727272" />
 
                 <TextView
                     android:id="@+id/sub_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:text="You need 5 more classes"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:background="@drawable/item_border">
-
-                <TextView
-                    android:id="@+id/sub_perc"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:gravity="center"
-                    android:text="75"
-                    android:textSize="25sp" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view1"
+                    android:layout_toLeftOf="@+id/check_mark"
+                    android:padding="10dp"
+                    android:text="You need 3 more class"
+                    android:textSize="18sp" />
             </RelativeLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </com.daimajia.swipe.SwipeLayout>
 </android.support.v7.widget.CardView>

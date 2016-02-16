@@ -123,7 +123,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:padding="5dp"
-                        android:text="Total Classes: 3"
+                        android:text="Total Classes:"
                         android:textSize="18sp" />
 
                     <TextView
@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tot_class"
                         android:layout_centerHorizontal="true"
-                        android:text="Attendded: 1"
+                        android:text="Attendded:"
                         android:textSize="15sp" />
 
                     <TextView
@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/att_class"
                         android:layout_centerHorizontal="true"
-                        android:text="Bunked: 2"
+                        android:text="Bunked:"
                         android:textSize="15sp" />
                 </RelativeLayout>
 
