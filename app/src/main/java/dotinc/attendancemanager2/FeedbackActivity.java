@@ -26,8 +26,8 @@ public class FeedbackActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("FeedBack");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         title = (EditText) findViewById(R.id.feedtitle);
         title.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_BOLD));
@@ -61,7 +61,7 @@ public class FeedbackActivity extends AppCompatActivity {
         if (id == android.R.id.home)
             finish();
 
-        else if (id == R.id.help) {
+        else if (id == R.id.feedback) {
 
             String sub = title.getText().toString();
             String msg = message.getText().toString();

@@ -133,7 +133,7 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:onClick="attendAll"
-                        android:text="Attended"
+                        android:text="Attended All"
                         android:textAllCaps="false" />
                 </LinearLayout>
             </RelativeLayout>

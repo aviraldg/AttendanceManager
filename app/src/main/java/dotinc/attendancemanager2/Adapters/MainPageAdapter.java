@@ -3,14 +3,11 @@ package dotinc.attendancemanager2.Adapters;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,7 +45,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private String activityName;
     private int attendance_criteria;
     private int markerValue;
-    private int lastPosition = -1;
+    private int prevPosition = 0;
 
     public MainPageAdapter(Context context, ArrayList<TimeTableList> arrayList, String myDate, String activityName) {
         this.context = context;
@@ -76,6 +73,14 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final AttendanceViewHolder viewHolder = (AttendanceViewHolder) holder;
         final int id = arrayList.get(position).getId();
+
+        if (position >= prevPosition) {
+            Helper.animateCard(viewHolder, true);
+        } else {
+            Helper.animateCard(viewHolder, false);
+        }
+        prevPosition = position;
+
 
         list.setId(id);
         attendanceList.setDate(myDate);
@@ -159,7 +164,6 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         } else {
             viewHolder.subject_percentage.setText("0");
         }
-        setAnimation(viewHolder.swipeLayout, position);
 
         viewHolder.attendedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,14 +303,14 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    private void setAnimation(View viewToAnimate, int position) {
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
-    }
+//    private void setAnimation(View viewToAnimate, int position) {
+//        // If the bound view wasn't previously displayed on screen, it's animated
+//        if (position > lastPosition) {
+//            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+//            viewToAnimate.startAnimation(animation);
+//            lastPosition = position;
+//        }
+//    }
 
     static class AttendanceViewHolder extends RecyclerView.ViewHolder {
         private TextView subject;

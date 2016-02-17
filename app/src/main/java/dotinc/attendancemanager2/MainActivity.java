@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -212,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
             totalPresent += database.totalPresent(id);
             totalClasses += database.totalClasses(id);
         }
-        headerFragment.setOverallPerc(totalPresent,totalClasses);
+        headerFragment.setOverallPerc(totalPresent, totalClasses);
     }
 
     @Override
@@ -330,6 +332,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 fab.setImageResource(R.mipmap.ic_clear_white_36dp);
+                fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grey)));
                 fab.show();
             }
         }, 300);
@@ -361,6 +364,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimaryDark)));
                 fab.setImageResource(R.mipmap.ic_add_white_36dp);
                 fab.show();
             }
