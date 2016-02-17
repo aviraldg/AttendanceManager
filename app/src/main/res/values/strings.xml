@@ -91,4 +91,18 @@
     </string>
     <string name="predictor">•You can predict your percentage by entering  number of classes attended or number of classes bunked.
     </string>
+
+
+    <string-array name="viewpager_title">
+        <item>Confused on how to manage your attendance?</item>
+        <item>Becoming tedious tracking day-to-day attendance</item>
+        <item>asdjhasdaid</item>
+    </string-array>
+
+    <string-array name="viewpager_desc">
+        <item>Sit back and chill.\nLet\'\s do that for you!</item>
+        <item>Take a look at Detailed Analysis</item>
+        <item>djkhljdahdauidaud</item>
+    </string-array>
+
 </resources>
