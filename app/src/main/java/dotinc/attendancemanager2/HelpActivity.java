@@ -2,9 +2,9 @@ package dotinc.attendancemanager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -78,7 +78,10 @@ public class HelpActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.help) {
+
+        if (id == android.R.id.home)
+            finish();
+        else if (id == R.id.help) {
             if (id == android.R.id.home)
                 finish();
             else if (id == R.id.help) {

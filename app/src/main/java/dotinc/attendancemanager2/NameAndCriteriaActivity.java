@@ -68,7 +68,7 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
         if (name.equals("") == false)
             userName.setText(name);
 
-        cardAnimation = AnimationUtils.loadAnimation(this, R.anim.expand_in);
+        cardAnimation = AnimationUtils.loadAnimation(this, R.anim.bottom_to_up);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -188,9 +188,8 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
                 cardView.setVisibility(View.VISIBLE);
                 cardView.startAnimation(cardAnimation);
             }
-        }, 300);
+        }, 100);
     }
-
 
     private void showSnackbar(String message) {
         Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();

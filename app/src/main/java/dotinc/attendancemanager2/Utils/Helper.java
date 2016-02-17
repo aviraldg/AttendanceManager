@@ -1,8 +1,10 @@
 package dotinc.attendancemanager2.Utils;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.support.v7.widget.RecyclerView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -97,5 +99,15 @@ public class Helper {
             return false;
         }
         return true;
+    }
+
+
+    public static void animateCard(RecyclerView.ViewHolder viewHolder, Boolean state) {
+        ObjectAnimator animatorTranslateY = ObjectAnimator.ofFloat(viewHolder.itemView,
+                "translationY", state == true ? 300 : -300, 0);
+        animatorTranslateY.setDuration(500);
+        animatorTranslateY.start();
+
+
     }
 }
