@@ -1,6 +1,5 @@
 package dotinc.attendancemanager2.Adapters;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.R;
-import dotinc.attendancemanager2.Utils.Helper;
 
 /**
  * Created by vellapanti on 16/2/16.
@@ -31,7 +29,7 @@ public class HelpAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.custom_helper,parent, false);
+        View view = inflater.inflate(R.layout.custom_helper, parent, false);
         HelperViewHolder viewHolder = new HelperViewHolder(view);
         return viewHolder;
     }
@@ -51,10 +49,11 @@ public class HelpAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     static class HelperViewHolder extends RecyclerView.ViewHolder {
         TextView topic;
         TextView description;
+
         public HelperViewHolder(View itemView) {
             super(itemView);
-            topic= (TextView) itemView.findViewById(R.id.topic);
-            description= (TextView) itemView.findViewById(R.id.description);
+            topic = (TextView) itemView.findViewById(R.id.topic);
+            description = (TextView) itemView.findViewById(R.id.description);
 
         }
     }

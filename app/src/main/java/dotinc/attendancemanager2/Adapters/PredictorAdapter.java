@@ -6,10 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.daimajia.swipe.SwipeLayout;
 
 import java.util.ArrayList;
 
@@ -37,7 +34,6 @@ public class PredictorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.subjects = subjects;
         inflater = LayoutInflater.from(context);
         database = new AttendanceDatabase(context);
-        Log.d("option_pred_attormiss", String.valueOf(attendedOrMiss));
     }
 
     @Override
@@ -63,7 +59,7 @@ public class PredictorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             totalClasses = totalClasses + attendedOrMiss;
             percentage = ((float) attendedClasses / (float) totalClasses) * 100;
             viewHolder.predictedPerc.setText("" + percentage);
-        } else{
+        } else {
             totalClasses = totalClasses + attendedOrMiss;
             percentage = ((float) attendedClasses / (float) totalClasses) * 100;
             viewHolder.predictedPerc.setText("" + percentage);

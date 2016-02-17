@@ -24,14 +24,11 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
     public static final String DATE = "date";
     public static final String POSITION = "position";
 
-    public static String DB_FILEPATH;
     Context context;
 
     public AttendanceDatabase(Context context) {
         super(context, Database_Name, null, Database_Version);
         this.context = context;
-        final String packageName = context.getPackageName();
-        DB_FILEPATH = "/data/data/" + packageName + "/databases/" + Database_Name + ".db";
     }
 
     @Override
@@ -49,7 +46,6 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
 
     public int setMarker(String myDate, int position, int subjectId) {
         int markerValue = 2;
-        Log.d("option_marker_position", String.valueOf(position));
         SQLiteDatabase database = this.getWritableDatabase();
         String query = "SELECT * FROM " + ATTENDANCE_TRACKER + " WHERE " + DATE + " = '" + myDate + "' AND "
                 + Subject_Id + " = " + subjectId + " GROUP BY " + POSITION;
@@ -58,9 +54,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
             while (cursor.moveToNext()) {
                 if (cursor.getInt(3) == position) {
                     markerValue = cursor.getInt(1);
-                    Log.d("option_marker_toast", "action" + cursor.getInt(1) + "pos" + cursor.getInt(3));
                 }
-
             }
         } else {
             Log.d("option_cursor", "is null");
@@ -76,8 +70,6 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         values.put(DATE, attendanceList.getDate());
         values.put(POSITION, attendanceList.getPosition());
         db.insert(ATTENDANCE_TRACKER, null, values);
-//        Log.d("option_data", "ac:" + attendanceList.getAction() + "id:" + attendanceList.getId() +
-//                "dae:" + attendanceList.getDate() + "pos:" + attendanceList.getPosition());
         db.close();
     }
 

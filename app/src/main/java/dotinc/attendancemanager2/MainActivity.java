@@ -22,7 +22,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -205,7 +204,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateOverallPerc() {
-        headerFragment.setOverallPerc();
+        double totalPresent = 0, totalClasses = 0;
+        subjectsName = subjectDatabase.getAllSubjects();
+
+        for (int pos = 0; pos < subjectsName.size(); pos++) {
+            int id = subjectsName.get(pos).getId();
+            totalPresent += database.totalPresent(id);
+            totalClasses += database.totalClasses(id);
+        }
+        headerFragment.setOverallPerc(totalPresent,totalClasses);
     }
 
     @Override

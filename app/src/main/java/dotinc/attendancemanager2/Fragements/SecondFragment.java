@@ -1,14 +1,12 @@
 package dotinc.attendancemanager2.Fragements;
 
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,6 @@ import java.util.Date;
 import dotinc.attendancemanager2.DetailedAnalysisActivity;
 import dotinc.attendancemanager2.GoToDateActivity;
 import dotinc.attendancemanager2.GoToDateOldActivity;
-import dotinc.attendancemanager2.MainActivity;
 import dotinc.attendancemanager2.OverallAttendanceActivity;
 import dotinc.attendancemanager2.PredictorActivity;
 import dotinc.attendancemanager2.R;
@@ -45,7 +42,6 @@ public class SecondFragment extends Fragment {
     public SecondFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -87,8 +83,7 @@ public class SecondFragment extends Fragment {
                     DatePickerDialog dialog = new DatePickerDialog(getActivity(), R.style.DialogTheme, pickerListener, year, month, day);
                     dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                     dialog.show();
-                    }
-                else{
+                } else {
                     Intent intent = new Intent(getActivity(), GoToDateOldActivity.class);
                     startActivity(intent);
                 }
