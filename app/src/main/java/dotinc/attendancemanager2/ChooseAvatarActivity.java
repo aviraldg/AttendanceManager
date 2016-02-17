@@ -3,6 +3,7 @@ package dotinc.attendancemanager2;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,7 @@ public class ChooseAvatarActivity extends AppCompatActivity {
     private Animation imageAnimation;
     private TextView avatarText, orText;
     private Context context;
+    private Typeface type;
 
     private Handler mHandler;
     private CharSequence mText;
@@ -34,8 +36,11 @@ public class ChooseAvatarActivity extends AppCompatActivity {
         context = ChooseAvatarActivity.this;
 
         mHandler = new Handler();
+        type = Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD);
         avatarText = (TextView) findViewById(R.id.select_avatar_text);
+        avatarText.setTypeface(type);
         orText = (TextView) findViewById(R.id.or_text);
+        orText.setTypeface(type);
         user_male = (ImageView) findViewById(R.id.user_male);
         user_female = (ImageView) findViewById(R.id.user_female);
         imageAnimation = AnimationUtils.loadAnimation(context, R.anim.expand_in);

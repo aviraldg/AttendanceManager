@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private CoordinatorLayout root;
     private RelativeLayout extraClassLayout;
     private AppBarLayout appBarLayout;
+    private TextView extraClassText, fullAttText;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ViewPager pager;
     private ArrayList<Fragment> pageList;
@@ -85,6 +88,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         context = MainActivity.this;
+
+        extraClassText = (TextView) findViewById(R.id.extra_class_text);
+        extraClassText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+        fullAttText = (TextView) findViewById(R.id.full_att_text);
+        fullAttText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+
 
         extraClassLayout = (RelativeLayout) findViewById(R.id.extra_class_layout);
         activityName = "MainActivity";
@@ -460,6 +469,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.help:
                 startActivity(new Intent(context, HelpActivity.class));
                 break;
+            case R.id.about_us:
+                startActivity(new Intent(context, AboutUsActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

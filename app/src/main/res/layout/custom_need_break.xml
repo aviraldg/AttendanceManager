@@ -5,13 +5,12 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/subject_name"
+    <TextView
+        android:id="@+id/need_break_help"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/item_border"
-        android:hint="Enter Subject"
         android:padding="10dp"
-        android:layout_margin="5dp"
+        android:text="This is an example of need help"
         android:textSize="20sp" />
+
 </LinearLayout>

@@ -80,8 +80,7 @@
             android:gravity="center"
             android:text="Checking for any saved data..."
             android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="italic" />
+            android:textSize="18sp" />
 
         <ImageView
             android:id="@+id/restore_image"

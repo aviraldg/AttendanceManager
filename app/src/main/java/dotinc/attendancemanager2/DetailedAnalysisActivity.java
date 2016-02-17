@@ -2,7 +2,6 @@ package dotinc.attendancemanager2;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +29,7 @@ import dotinc.attendancemanager2.Adapters.CustomSpinnerAdapter;
 import dotinc.attendancemanager2.Objects.AttendanceList;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
+import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 
 public class DetailedAnalysisActivity extends AppCompatActivity {
@@ -39,7 +39,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
     private LinearLayout root;
     private Context context;
 
-    private TextView totClass, attClass, bunkedClass;
+    private TextView totClass, attClass, bunkedClass, presentView, absentView, noClassView;
 
     private ArrayList<String> subjects;
     private ArrayList<SubjectsList> subjectsLists;
@@ -65,9 +65,20 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
         subjectsLists = subjectDatabase.getAllSubjects();
         formatter = new SimpleDateFormat("d-M-yyyy");
         subjects = new ArrayList<>();
-        totClass= (TextView) findViewById(R.id.tot_class);
-        bunkedClass= (TextView) findViewById(R.id.bunk_class);
-        attClass= (TextView) findViewById(R.id.att_class);
+        totClass = (TextView) findViewById(R.id.tot_class);
+        totClass.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        bunkedClass = (TextView) findViewById(R.id.bunk_class);
+        bunkedClass.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        attClass = (TextView) findViewById(R.id.att_class);
+        attClass.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        presentView = (TextView) findViewById(R.id.present_view_text);
+        presentView.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+        absentView = (TextView) findViewById(R.id.absent_view_text);
+        absentView.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+        noClassView = (TextView) findViewById(R.id.no_class_text);
+        noClassView.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+
+
         for (int pos = 0; pos < subjectsLists.size(); pos++)
             subjects.add(subjectsLists.get(pos).getSubjectName());
 
@@ -96,7 +107,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapter, View v,
                                        int position, long id) {
                 fetchFromDatabase(subjectsLists.get(position).getId());
-                subId=subjectsLists.get(position).getId();
+                subId = subjectsLists.get(position).getId();
             }
 
             @Override
@@ -161,16 +172,11 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
         final CaldroidListener listener = new CaldroidListener() {
             @Override
             public void onSelectDate(Date date, View view) {
-                //call the three methods totalDayWiseClasses, totalDayWiseAttended , totalDayWiseBunked
-                // pass two parameters subject id and date , date format should be 23/12/1995
                 String myDate = formatter.format(date);
-                Log.d("option_id", String.valueOf(subId));
-                Log.d("option_date_cal",myDate);
-                attendancedb.toast();
-                totClass.setText("Total classes:"+attendancedb.totalDayWiseClasses(subId,myDate));
-                attClass.setText("Attended classes:"+attendancedb.totalDayWisePresent(subId, myDate));
-                bunkedClass.setText("Bunked classes:"+attendancedb.totalDayWiseBunked(subId, myDate));
 
+                totClass.setText("Total classes:" + attendancedb.totalDayWiseClasses(subId, myDate));
+                attClass.setText("Attended classes:" + attendancedb.totalDayWisePresent(subId, myDate));
+                bunkedClass.setText("Bunked classes:" + attendancedb.totalDayWiseBunked(subId, myDate));
 
             }
 
@@ -182,10 +188,12 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
                 Button rightButton = caldroidFragment.getRightArrowButton();
                 TextView textView = caldroidFragment.getMonthTitleTextView();
 
-//                leftButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
-//                rightButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
-//                textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
-                textView.setTypeface(null, Typeface.BOLD);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    leftButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+                    rightButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
+                    textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+                }
+                textView.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
             }
         };
         caldroidFragment.setCaldroidListener(listener);

@@ -21,6 +21,12 @@ public class Helper {
     public static final String NEEDBREAK = "BREAK";
     public static final String PACKAGENAME = "dotinc.attendancemanager2";
 
+
+    public static final String OXYGEN_BOLD = "fonts/oxygen-bold.ttf";
+    public static final String OXYGEN_REGULAR = "fonts/oxygen-regular.ttf";
+    public static final String JOSEFIN_SANS_REGULAR = "fonts/josefin_sans_regular.ttf";
+    public static final String JOSEFIN_SANS_BOLD = "fonts/josefin_sans-bold.ttf";
+
     public static void saveToPref(Context context, String key, String val) {
         SharedPreferences preferences = context.getSharedPreferences(FILENAME, context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

@@ -17,7 +17,7 @@
     <string name="undo">Undo</string>
 
 
-    <string name="chooseAvatar">Select your Avatar</string>
+    <string name="chooseAvatar">Choose your Avatar</string>
 
     <string name="enter_name">Enter your name</string>
     <string name="enter_criteria">Enter attendance criteria</string>
@@ -65,7 +65,9 @@
 
     <string name="add_sub_help">Click \'+\' to add subjects and delete icon to remove from last.</string>
     <string name="subject_del_help">Swipe RIGHT to delete or LEFT to edit.</string>
-    <string name="timetable_del_help">Swipe RIGHT to delete.</string>
+    <string name="timetable_del_help">Swipe RIGHT on subject to delete.</string>
+    <string name="need_break_text">Get the number of classes you can miss freely.\nYou need a break right?\nNote: This works only when your attendance is greater than criteria.</string>
+
     
     
     <string name="setting_up_timetable">•Click on the \'+\' button.\n

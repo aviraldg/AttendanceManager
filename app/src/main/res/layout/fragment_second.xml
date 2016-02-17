@@ -1,111 +1,93 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="192dp"
     android:background="@drawable/drawer_background"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:weightSum="4">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <ImageButton
-        android:id="@+id/go_to_date"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="60dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="5dp"
-        android:src="@mipmap/ic_today_white_36dp" />
+        <TextView
+            android:id="@+id/go_to_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="55dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:drawableBottom="@mipmap/ic_today_white_36dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Go to Date"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/go_to_date"
-        android:layout_alignLeft="@+id/go_to_date"
-        android:layout_alignRight="@+id/go_to_date"
-        android:layout_alignStart="@+id/go_to_date"
-        android:layout_alignTop="@+id/view_timetable"
-        android:layout_marginTop="17dp"
-        android:gravity="center"
-        android:text="Date"
-        android:textColor="#fff"
-        android:textSize="12sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <ImageButton
-        android:id="@+id/view_timetable"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="35dp"
-        android:layout_toRightOf="@+id/go_to_date"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="5dp"
-        android:src="@mipmap/ic_date_range_white_36dp" />
+        <TextView
+            android:id="@+id/detailed_analysis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="30dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:drawableTop="@mipmap/ic_equalizer_white_36dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Detailed\nAnalysis"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+    </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/view_timetable"
-        android:layout_alignStart="@+id/view_timetable"
-        android:layout_alignTop="@+id/textView3"
-        android:gravity="center"
-        android:text="Timetable"
-        android:textColor="#fff"
-        android:textSize="12sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
+        <TextView
+            android:id="@+id/complete_attendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="55dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:drawableBottom="@mipmap/ic_assignment_white_36dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Overall"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
 
-    <ImageButton
-        android:id="@+id/complete_attendance"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="60dp"
-        android:layout_toRightOf="@id/view_timetable"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="5dp"
-        android:src="@mipmap/ic_assignment_white_36dp" />
+    </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/complete_attendance"
-        android:layout_alignLeft="@+id/complete_attendance"
-        android:layout_alignRight="@+id/complete_attendance"
-        android:layout_alignStart="@+id/complete_attendance"
-        android:layout_alignTop="@+id/textView2"
-        android:gravity="center"
-        android:text="Overall"
-        android:textColor="#fff"
-        android:textSize="12sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    <ImageButton
-        android:id="@+id/predictor"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="35dp"
-        android:layout_toRightOf="@+id/complete_attendance"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:padding="5dp"
-        android:src="@mipmap/ic_alarm_white_36dp" />
+        <TextView
+            android:id="@+id/predictor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:drawableTop="@mipmap/ic_today_white_36dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Predictor"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/reminders"
-        android:layout_alignLeft="@+id/reminders"
-        android:layout_alignRight="@+id/reminders"
-        android:layout_alignStart="@+id/reminders"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="Alarms"
-        android:textColor="#fff"
-        android:textSize="12sp" />
-
-
-</RelativeLayout>
+</LinearLayout>

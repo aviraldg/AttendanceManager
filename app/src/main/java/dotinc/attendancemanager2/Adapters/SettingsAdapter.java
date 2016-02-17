@@ -1,6 +1,7 @@
 package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.R;
+import dotinc.attendancemanager2.Utils.Helper;
 
 /**
  * Created by ddvlslyr on 12/2/16.
@@ -41,6 +43,7 @@ public class SettingsAdapter extends ArrayAdapter<String> {
         ImageView icon = (ImageView) convertView.findViewById(R.id.sett_icon);
 
         name.setText("" + options.get(position));
+        name.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.OXYGEN_REGULAR));
         icon.setImageResource(icons.get(position));
         return convertView;
     }

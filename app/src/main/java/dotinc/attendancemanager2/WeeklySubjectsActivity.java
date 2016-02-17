@@ -3,8 +3,10 @@ package dotinc.attendancemanager2;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -33,14 +35,16 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
     private Context context;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private TextView title;
+    private TextView title, helpText;
     private FloatingActionButton fab;
-    private String[] tabTitles;
+    private View view1;
 
+    private String[] tabTitles;
     private ArrayList<Fragment> fragments;
     private ArrayList<TimeTableList> arrayList;
     private ArrayList<SubjectsList> subjectsNameList;
     private ArrayList<String> subjects;
+    private Typeface oxyBold, josefinReg;
 
     private SubjectDatabase subjectDatabase;
     private TimeTableDatabase database;
@@ -52,13 +56,24 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
     private CoordinatorLayout main_layout;
     void instantiate() {
         context = WeeklySubjectsActivity.this;
+        oxyBold = Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD);
+        josefinReg = Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR);
         Intent intent = getIntent();
         view_timetable = intent.getIntExtra("view_timetable", 0);
         fromSettings = intent.getBooleanExtra("Settings", false);
         title = (TextView) findViewById(R.id.page_title);
-        if (view_timetable == 1)
+        title.setTypeface(oxyBold);
+        helpText = (TextView) findViewById(R.id.help_text);
+        helpText.setTypeface(josefinReg);
+        fab = (FloatingActionButton) findViewById(R.id.add_subjects);
+        fab.hide();
+        view1 = findViewById(R.id.view1);
+
+        if (view_timetable == 1) {
             title.setText(getResources().getString(R.string.timetable_activity));
-        else
+            helpText.setVisibility(View.GONE);
+            view1.setVisibility(View.GONE);
+        } else
             title.setText(getResources().getString(R.string.weekly_subjects));
 
         timetableFlag = intent.getIntExtra("timetableFlag", 0);
@@ -93,7 +108,14 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         instantiate();
         if (view_timetable == 1)
             fab.setVisibility(View.INVISIBLE);
-
+        else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    fab.show();
+                }
+            }, 500);
+        }
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,11 +125,11 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
     }
 
     public void doneAddTimetable(View view) {
-        if (view_timetable != 1)
-            Helper.saveToPref(context, Helper.COMPLETED, "completed");
-        if (fromSettings)
+        if (fromSettings || view_timetable == 1)
             finish();
         else {
+            if (view_timetable != 1)
+                Helper.saveToPref(context, Helper.COMPLETED, "completed");
             startActivity(new Intent(WeeklySubjectsActivity.this,
                     MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
             finish();

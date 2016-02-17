@@ -3,31 +3,31 @@ package dotinc.attendancemanager2.Fragements;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import dotinc.attendancemanager2.DetailedAnalysisActivity;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.R;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
+import dotinc.attendancemanager2.WeeklySubjectsActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HeaderFragment extends Fragment {
 
-    private ImageButton detailedAnalysis;
+    private TextView timetable;
     private TextView userName, overallPercTv;
     private ImageView userImage;
 
@@ -40,9 +40,12 @@ public class HeaderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_header, container, false);
-        detailedAnalysis = (ImageButton) view.findViewById(R.id.det_anl_btn);
+        timetable = (TextView) view.findViewById(R.id.time_table_btn);
+        timetable.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), Helper.JOSEFIN_SANS_REGULAR));
         userName = (TextView) view.findViewById(R.id.name_text);
+        userName.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), Helper.JOSEFIN_SANS_BOLD));
         overallPercTv = (TextView) view.findViewById(R.id.overall_perc);
+        overallPercTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), Helper.JOSEFIN_SANS_REGULAR));
         userImage = (ImageView) view.findViewById(R.id.user_img);
         return view;
     }
@@ -55,10 +58,12 @@ public class HeaderFragment extends Fragment {
         setUserImage(getActivity());
         setUserName(getActivity());
         setOverallPerc();
-        detailedAnalysis.setOnClickListener(new View.OnClickListener() {
+        timetable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), DetailedAnalysisActivity.class));
+                Intent intent = new Intent(getActivity(), WeeklySubjectsActivity.class);
+                intent.putExtra("view_timetable", 1);
+                startActivity(intent);
             }
         });
     }

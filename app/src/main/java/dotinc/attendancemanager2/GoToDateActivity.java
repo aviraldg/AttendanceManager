@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +34,7 @@ import dotinc.attendancemanager2.Adapters.MainPageAdapter;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
+import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
@@ -45,7 +47,7 @@ public class GoToDateActivity extends AppCompatActivity {
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private FloatingActionButton fab;
-    private TextView dayName, month, day, year;
+    private TextView dayName, month, day, year, extraClassText, fullAttText;
 
     private ArrayList<SubjectsList> subjectsName;
     private ArrayList<String> subjects;
@@ -76,15 +78,24 @@ public class GoToDateActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        extraClassText = (TextView) findViewById(R.id.extra_class_text);
+        extraClassText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+        fullAttText = (TextView) findViewById(R.id.full_att_text);
+        fullAttText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+
         extraClassLayout = (RelativeLayout) findViewById(R.id.extra_class_layout);
         root = (CoordinatorLayout) findViewById(R.id.root);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
 
         dayName = (TextView) findViewById(R.id.day);
+        dayName.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
         month = (TextView) findViewById(R.id.month);
+        month.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_REGULAR));
         day = (TextView) findViewById(R.id.date);
+        day.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
         year = (TextView) findViewById(R.id.year);
+        year.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_REGULAR));
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -184,7 +195,7 @@ public class GoToDateActivity extends AppCompatActivity {
                 setTitle(getResources().getString(R.string.saturday));
                 break;
             case "Sun":
-                day_code=7;
+                day_code = 7;
                 setTitle(getResources().getString(R.string.sunday));
                 break;
         }
@@ -197,6 +208,7 @@ public class GoToDateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_go_to_date);
         instantiate();
         extraClass();
+
         mainadapter = new MainPageAdapter(this, arrayList, date, activityName);
         recyclerView.setAdapter(mainadapter);
 
@@ -281,7 +293,7 @@ public class GoToDateActivity extends AppCompatActivity {
     private void markAllClass() {
 
         final View fullAttView = findViewById(R.id.full_att_layout);
-        Animator anim ;
+        Animator anim;
         attAllViewOpen = true;
 
         int cX = fullAttView.getWidth();
@@ -308,7 +320,7 @@ public class GoToDateActivity extends AppCompatActivity {
     private void markedAtt() {
         final View fullAttView = findViewById(R.id.full_att_layout);
 
-        Animator anim ;
+        Animator anim;
         attAllViewOpen = false;
 
         int cX = fullAttView.getWidth();
@@ -339,7 +351,7 @@ public class GoToDateActivity extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showExtraClass() {
         final View extraView = findViewById(R.id.extra_class_layout);
-        Animator anim ;
+        Animator anim;
         int cx = extraView.getWidth();
         int cY = 0;
         if (!attAllViewOpen) {
@@ -395,7 +407,7 @@ public class GoToDateActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (exclViewOpen) {
             final View extraView = findViewById(R.id.extra_class_layout);
-            Animator anim ;
+            Animator anim;
             int cx = extraView.getWidth();
             int cY = 0;
             int finalRadius = 0;

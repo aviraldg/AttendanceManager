@@ -2,6 +2,7 @@ package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.R;
 import dotinc.attendancemanager2.SubjectsActivity;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
+import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
@@ -57,6 +59,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         SubjectsViewHolder viewHolder = (SubjectsViewHolder) holder;
         viewHolder.subName.setText(arrayList.get(position).getSubjectName());
+        viewHolder.subName.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_BOLD));
 
         viewHolder.swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, viewHolder.swipeLayout.findViewById(R.id.right_swipe));
@@ -116,6 +119,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 View v = inflater.inflate(R.layout.add_subject, null);
                 subject = (EditText) v.findViewById(R.id.subject_name);
+                subject.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_BOLD));
                 subject.setText(arrayList.get(position).getSubjectName());
                 final String old_subject = arrayList.get(position).getSubjectName();
                 builder.setView(v);

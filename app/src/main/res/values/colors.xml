@@ -5,9 +5,10 @@
     <color name="colorAccent">#388E3C</color>
     <color name="backgroundColor">#dedede</color>
     <color name="iconTintColor">#777</color>
-    <color name="absentColor">#D32F2F</color>
+    <color name="absentColor">#E64A19</color>
     <color name="emptyIconTintColor">#999</color>
-    <color name="noClassColor">#FF9800</color>
+    <color name="noClassColor">#FFA000</color>
+    <color name="attendedColor">#8BC34A</color>
     <color name="white">#fff</color>
     <color name="tickColor">#888888</color>
     <color name="dividerColor">#dedede</color>

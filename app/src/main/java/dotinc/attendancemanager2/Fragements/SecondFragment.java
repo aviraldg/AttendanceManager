@@ -4,40 +4,39 @@ package dotinc.attendancemanager2.Fragements;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.media.Image;
-import android.os.Build;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.os.Build;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import dotinc.attendancemanager2.DetailedAnalysisActivity;
 import dotinc.attendancemanager2.GoToDateActivity;
 import dotinc.attendancemanager2.GoToDateOldActivity;
 import dotinc.attendancemanager2.MainActivity;
 import dotinc.attendancemanager2.OverallAttendanceActivity;
 import dotinc.attendancemanager2.PredictorActivity;
 import dotinc.attendancemanager2.R;
-import dotinc.attendancemanager2.WeeklySubjectsActivity;
+import dotinc.attendancemanager2.Utils.Helper;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SecondFragment extends Fragment {
-    private ImageButton viewTimeTable;
-    private ImageButton go_to_date;
-    private ImageButton overall_attendance;
-    private ImageButton predictor;
-    private FragmentActivity fragmentActivity;
+    private TextView detailedAnalysis;
+    private TextView go_to_date;
+    private TextView overall_attendance;
+    private TextView predictor;
     int year, month, day;
     SimpleDateFormat formatter;
     Date myDate;
@@ -47,20 +46,21 @@ public class SecondFragment extends Fragment {
         // Required empty public constructor
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        fragmentActivity=(FragmentActivity) activity;
-        super.onAttach(activity);
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_second, container, false);
-        viewTimeTable = (ImageButton) view.findViewById(R.id.view_timetable);
-        go_to_date = (ImageButton) view.findViewById(R.id.go_to_date);
-        overall_attendance = (ImageButton) view.findViewById(R.id.complete_attendance);
-        predictor= (ImageButton) view.findViewById(R.id.predictor);
+        detailedAnalysis = (TextView) view.findViewById(R.id.detailed_analysis);
+        detailedAnalysis.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        go_to_date = (TextView) view.findViewById(R.id.go_to_date);
+        go_to_date.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        overall_attendance = (TextView) view.findViewById(R.id.complete_attendance);
+        overall_attendance.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        predictor = (TextView) view.findViewById(R.id.predictor);
+        predictor.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
@@ -73,12 +73,11 @@ public class SecondFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        viewTimeTable.setOnClickListener(new View.OnClickListener() {
+        detailedAnalysis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), WeeklySubjectsActivity.class);
-                intent.putExtra("view_timetable", 1);
-                startActivity(intent);
+                startActivity(new Intent(getActivity(), DetailedAnalysisActivity.class));
+
             }
         });
         go_to_date.setOnClickListener(new View.OnClickListener() {
