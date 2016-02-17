@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import dotinc.attendancemanager2.R;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 import dotinc.attendancemanager2.Utils.Helper;
 
-//import dotinc.attendancemanager2.GraphActivity;
 
 /**
  * Created by vellapanti on 21/1/16.
@@ -204,7 +202,6 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private int freeBunks(int attendedClass, int totalClass, float percentage) {
-        int originalAttended = attendedClass;
         int freeBunks = 0;
         while (percentage > attendance_criteria) {
             totalClass++;
@@ -220,8 +217,8 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int flag = 0;
         int freeBunks = 0;
         int originalAttended = attendedClass;
-        if (attendance_criteria==100)
-            attendance_criteria=99;
+        if (attendance_criteria == 100)
+            attendance_criteria = 99;
         if (percentage >= attendance_criteria) {
             viewHolder.subject_percentage.setTextColor(ContextCompat.getColor(context, R.color.attendedColor));
             if (needBreak == 1) {
@@ -235,7 +232,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         } else if (attendedClass == 0 && totalClass == 0)
             flag = 2;
-        while (percentage < attendance_criteria ) {
+        while (percentage < attendance_criteria) {
             flag = 3;
             attendedClass++;
             totalClass++;
@@ -320,7 +317,6 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private SwipeLayout swipeLayout;
         private TextView attendedbtn, bunkedbtn, noClassbtn, resetbtn;
         private ImageView check_mark;
-        private CardView cardView;
 
         public AttendanceViewHolder(View itemView) {
             super(itemView);
@@ -335,7 +331,6 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             noClassbtn = (TextView) itemView.findViewById(R.id.no_class);
             resetbtn = (TextView) itemView.findViewById(R.id.reset_attendance);
             check_mark = (ImageView) itemView.findViewById(R.id.check_mark);
-            cardView = (CardView) itemView.findViewById(R.id.root_card);
         }
     }
 }

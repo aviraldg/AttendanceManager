@@ -1,11 +1,10 @@
 package dotinc.attendancemanager2;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,6 +20,7 @@ public class OverallAttendanceActivity extends AppCompatActivity {
     private ArrayList<SubjectsList> arrayList;
     private SubjectDatabase database;
     private OverallAttendanceAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +39,7 @@ public class OverallAttendanceActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.subjects);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new OverallAttendanceAdapter(this,arrayList);
+        adapter = new OverallAttendanceAdapter(this, arrayList);
         recyclerView.setAdapter(adapter);
     }
 

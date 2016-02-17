@@ -78,24 +78,10 @@ public class SubjectDatabase extends SQLiteOpenHelper {
             Log.d("option_cur", "null");
         }
         db.close();
+        Log.d("option_database_size", String.valueOf(SubjectName.size()));
         return SubjectName;
     }
 
-    public ArrayList<String> getAllSubjectName() {
-        ArrayList<String> subjectName = new ArrayList<>();
-        String query = "SELECT * FROM " + Subjects_Table;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-        if (cursor.moveToNext()) {
-            do {
-                subjectName.add(cursor.getString(1));
-            } while (cursor.moveToNext());
-        } else {
-            Log.d("option_cur", "null");
-        }
-        db.close();
-        return subjectName;
-    }
 
     public void addMultipleSubjects(ArrayList<String> subjects) {
         SQLiteDatabase database = this.getWritableDatabase();

@@ -17,7 +17,8 @@ public class WeeklySubjectsAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Fragment> fragments;
     private String[] tabTitles;
     private int view_timetable;
-    public WeeklySubjectsAdapter(FragmentManager fm, ArrayList<Fragment> fragments, String[] tabTitles,int view_timetable) {
+
+    public WeeklySubjectsAdapter(FragmentManager fm, ArrayList<Fragment> fragments, String[] tabTitles, int view_timetable) {
         super(fm);
         this.fragments = fragments;
         this.tabTitles = tabTitles;
@@ -29,7 +30,7 @@ public class WeeklySubjectsAdapter extends FragmentStatePagerAdapter {
         WeeklySubjectsFragment fragment = (WeeklySubjectsFragment) fragments.get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("pageNumber", position + 1);
-        bundle.putInt("view_timetable",view_timetable);
+        bundle.putInt("view_timetable", view_timetable);
         fragment.setArguments(bundle);
         return fragment;
     }

@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -54,6 +54,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
     private static int pageNumber = 1;
     private Boolean fromSettings;
     private CoordinatorLayout main_layout;
+
     void instantiate() {
         context = WeeklySubjectsActivity.this;
         oxyBold = Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD);
@@ -79,7 +80,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         timetableFlag = intent.getIntExtra("timetableFlag", 0);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.pager);
-        main_layout= (CoordinatorLayout) findViewById(R.id.main_content);
+        main_layout = (CoordinatorLayout) findViewById(R.id.main_content);
         fab = (FloatingActionButton) findViewById(R.id.add_subjects);
 
         fragments = new ArrayList<>();
@@ -173,11 +174,13 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         //database.toast();
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(pageNumber - 1);
-        showSnackbar(subjectSelected+" Added");
+        showSnackbar(subjectSelected + " Added");
     }
-    public void showSnackbar(String message){
-        Snackbar.make(main_layout,message,Snackbar.LENGTH_SHORT).show();
+
+    public void showSnackbar(String message) {
+        Snackbar.make(main_layout, message, Snackbar.LENGTH_SHORT).show();
     }
+
     private class PageListener extends ViewPager.SimpleOnPageChangeListener {
         @Override
         public void onPageSelected(int position) {

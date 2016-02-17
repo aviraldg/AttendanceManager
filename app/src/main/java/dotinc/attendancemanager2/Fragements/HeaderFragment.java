@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import dotinc.attendancemanager2.MainActivity;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.R;
-import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 import dotinc.attendancemanager2.WeeklySubjectsActivity;
@@ -28,8 +28,11 @@ import dotinc.attendancemanager2.WeeklySubjectsActivity;
 public class HeaderFragment extends Fragment {
 
     private TextView timetable;
-    private TextView userName, overallPercTv;
+    private static TextView userName, overallPercTv;
     private ImageView userImage;
+    //AttendanceDatabase attdb;
+    ArrayList<SubjectsList> subjects;
+    SubjectDatabase database;
 
     public HeaderFragment() {
         // Required empty public constructor
@@ -39,6 +42,7 @@ public class HeaderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //attdb = new AttendanceDatabase(getActivity());
         View view = inflater.inflate(R.layout.fragment_header, container, false);
         timetable = (TextView) view.findViewById(R.id.time_table_btn);
         timetable.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), Helper.JOSEFIN_SANS_REGULAR));
@@ -47,6 +51,10 @@ public class HeaderFragment extends Fragment {
         overallPercTv = (TextView) view.findViewById(R.id.overall_perc);
         overallPercTv.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), Helper.JOSEFIN_SANS_REGULAR));
         userImage = (ImageView) view.findViewById(R.id.user_img);
+        database = new SubjectDatabase(getActivity());
+        subjects = new ArrayList<>();
+        subjects = database.getAllSubjects();
+        ((MainActivity)getActivity()).updateOverallPerc();
         return view;
     }
 
@@ -57,7 +65,7 @@ public class HeaderFragment extends Fragment {
 
         setUserImage(getActivity());
         setUserName(getActivity());
-        setOverallPerc();
+        //setOverallPerc(subjects);
         timetable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,27 +90,14 @@ public class HeaderFragment extends Fragment {
             userImage.setImageResource(R.drawable.user_female);
     }
 
-    public void setOverallPerc() {
-        double totalPresent = 0, totalClasses = 0;
+    public void setOverallPerc(double totalPresent, double totalClasses) {
         double overallPerc;
-        SubjectDatabase db = new SubjectDatabase(getActivity());
-        AttendanceDatabase attdb = new AttendanceDatabase(getActivity());
-        ArrayList<SubjectsList> subjectsLists = db.getAllSubjects();
-
-        for (int pos = 0; pos < subjectsLists.size(); pos++) {
-            int id = subjectsLists.get(pos).getId();
-            totalPresent += attdb.totalPresent(id);
-            totalClasses += attdb.totalClasses(id);
-        }
-
-        if (attdb.checkEmpty())
-            overallPercTv.setText(getResources().getString(R.string.noClasses));
-        else {
+        if (totalClasses == 0 && totalPresent == 0) {
+            overallPercTv.setText("No classes yet");
+        } else {
             overallPerc = (totalPresent / totalClasses) * 100;
             overallPercTv.setText("Overall: " + String.format("%.1f", overallPerc) + "%");
         }
 
-        db.close();
-        attdb.close();
     }
 }

@@ -38,7 +38,7 @@ public class ExtraClassActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("d-M-yyyy");
         day = format.format(date);
 
 

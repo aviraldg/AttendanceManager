@@ -53,7 +53,7 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
                 int pos = cur.getInt(1);
                 int dc = cur.getInt(2);
                 String subject = cur.getString(3);
-                Toast.makeText(context,"id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos,Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos, Toast.LENGTH_LONG).show();
                 Log.d("option_database_toast", "id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos);
             }
         } else {
@@ -71,48 +71,6 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         values.put(POSITION, list.getPosition());
         db.insert(TimeTable_Table, null, values);
         db.close();
-    }
-
-    public void addPosition() {
-        SQLiteDatabase database = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TimeTable_Table;
-        Cursor cursor = database.rawQuery(query, null);
-        String updateQuery;
-        int position = 0;
-        cursor.moveToFirst();
-        if (cursor != null) {
-            while (cursor.moveToNext()) {
-                for (int dayCode = 1; dayCode < 7; dayCode++) {
-                    position = 0;
-                    while (cursor.getInt(1) == dayCode) {
-                        Toast.makeText(context, "position:" + position, Toast.LENGTH_LONG).show();
-                        cursor.moveToNext();
-                        position++;
-                        updateQuery = "UPDATE " + TimeTable_Table + " SET " + POSITION + " = " + position;
-                        database.execSQL(updateQuery);
-                        Log.d("option_quer", updateQuery);
-                        Toast.makeText(context, updateQuery, Toast.LENGTH_LONG).show();
-                        if (cursor.isAfterLast())
-                            break;
-                    }
-                }
-            }
-        }
-    }
-
-    public boolean checkEmpty() {
-        Boolean isEmpty;
-        SQLiteDatabase db = getReadableDatabase();
-        String query = "select exists(select 1 from " + TimeTable_Table + ");";
-        Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
-        if (cursor.getInt(0) >= 1)
-            isEmpty = false;
-        else
-            isEmpty = true;
-        db.close();
-        cursor.close();
-        return isEmpty;
     }
 
     public ArrayList<TimeTableList> getSubjects(TimeTableList List) {
