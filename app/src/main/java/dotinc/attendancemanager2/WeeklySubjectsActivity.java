@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,6 +55,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
     private static int pageNumber = 1;
     private Boolean fromSettings;
     private CoordinatorLayout main_layout;
+    private ImageView tick_mark;
 
     void instantiate() {
         context = WeeklySubjectsActivity.this;
@@ -67,6 +69,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         helpText = (TextView) findViewById(R.id.help_text);
         helpText.setTypeface(josefinReg);
         fab = (FloatingActionButton) findViewById(R.id.add_subjects);
+        tick_mark= (ImageView) findViewById(R.id.tickmark_timetable);
         fab.hide();
         view1 = findViewById(R.id.view1);
 
@@ -107,6 +110,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weekly_subjects);
         instantiate();
+        checkIfEmpty();
         if (view_timetable == 1)
             fab.setVisibility(View.INVISIBLE);
         else {
@@ -136,7 +140,13 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
             finish();
         }
     }
-
+    public void checkIfEmpty(){
+        int flag = database.checkEmpty();
+        if (flag==0)
+            tick_mark.setVisibility(View.INVISIBLE);
+        else
+            tick_mark.setVisibility(View.VISIBLE);
+    }
     private void addTimetable() {
         AlertDialog.Builder builder = new AlertDialog.Builder(WeeklySubjectsActivity.this);
         LayoutInflater layoutInflater = getLayoutInflater();
@@ -175,6 +185,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(pageNumber - 1);
         showSnackbar(subjectSelected + " Added");
+        checkIfEmpty();
     }
 
     public void showSnackbar(String message) {

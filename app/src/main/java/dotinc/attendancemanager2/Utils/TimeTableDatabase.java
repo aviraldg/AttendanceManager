@@ -72,7 +72,15 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         db.insert(TimeTable_Table, null, values);
         db.close();
     }
-
+    public int checkEmpty(){
+        int flag =0;
+        SQLiteDatabase database = this.getWritableDatabase();
+        String query = "SELECT * FROM "+ TimeTable_Table;
+        Cursor cursor = database.rawQuery(query,null);
+        if (cursor.getCount()!=0)
+            flag=1;
+        return flag;
+    }
     public ArrayList<TimeTableList> getSubjects(TimeTableList List) {
         ArrayList<TimeTableList> tableLists = new ArrayList<>();
         int day_code = List.getDayCode();

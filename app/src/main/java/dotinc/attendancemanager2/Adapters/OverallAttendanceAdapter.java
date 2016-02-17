@@ -2,6 +2,7 @@ package dotinc.attendancemanager2.Adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -90,11 +91,13 @@ public class OverallAttendanceAdapter extends RecyclerView.Adapter<OverallAttend
             flag = 3;
             attendedClass++;
             totalClass++;
+            viewHolder.subject_percentage.setTextColor(ContextCompat.getColor(context, R.color.absentColor));
             percentage = ((float) attendedClass / (float) totalClass) * 100;
         }
         switch (flag) {
             case 1:
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
+                viewHolder.subject_percentage.setTextColor(ContextCompat.getColor(context, R.color.attendedColor));
                 viewHolder.needClassDetail.setText(context.getResources().getString(R.string.on_track_message));
                 break;
 

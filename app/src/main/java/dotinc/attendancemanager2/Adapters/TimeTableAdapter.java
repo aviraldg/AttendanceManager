@@ -127,7 +127,8 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         String deleted_subject =arrayList.get(position).getSubjectName();
         arrayList.remove(position);
         this.notifyDataSetChanged();
-        ((WeeklySubjectsActivity)context).showSnackbar(deleted_subject+" Deleted");
+        ((WeeklySubjectsActivity)context).showSnackbar(deleted_subject + " Deleted");
+        ((WeeklySubjectsActivity)context).checkIfEmpty();
     }
 
     @Override
