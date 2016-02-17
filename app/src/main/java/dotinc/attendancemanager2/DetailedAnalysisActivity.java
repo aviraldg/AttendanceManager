@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -67,10 +68,13 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
         subjects = new ArrayList<>();
         totClass = (TextView) findViewById(R.id.tot_class);
         totClass.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        totClass.setText("Click on date for attendance");
         bunkedClass = (TextView) findViewById(R.id.bunk_class);
         bunkedClass.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        bunkedClass.setVisibility(View.GONE);
         attClass = (TextView) findViewById(R.id.att_class);
         attClass.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        attClass.setVisibility(View.GONE);
         presentView = (TextView) findViewById(R.id.present_view_text);
         presentView.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
         absentView = (TextView) findViewById(R.id.absent_view_text);
@@ -81,11 +85,6 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
 
         for (int pos = 0; pos < subjectsLists.size(); pos++)
             subjects.add(subjectsLists.get(pos).getSubjectName());
-
-        totClass = (TextView) findViewById(R.id.tot_class);
-        attClass = (TextView) findViewById(R.id.att_class);
-        bunkedClass = (TextView) findViewById(R.id.bunk_class);
-
     }
 
     @Override
@@ -125,13 +124,13 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
                 String date = attendanceObject.get(i).getDate();
                 greenDate = formatter.parse(date);
                 if (attendanceObject.get(i).getAction() == 1) {
-                    caldroidFragment.setBackgroundResourceForDate(R.color.colorPrimary,
+                    caldroidFragment.setBackgroundResourceForDate(R.color.attendedColor,
                             greenDate);
-                    caldroidFragment.setTextColorForDate(R.color.backgroundColor, greenDate);
+                    caldroidFragment.setTextColorForDate(R.color.white, greenDate);
                 } else if (attendanceObject.get(i).getAction() == 0) {
                     caldroidFragment.setBackgroundResourceForDate(R.color.absentColor,
                             greenDate);
-                    caldroidFragment.setTextColorForDate(R.color.backgroundColor, greenDate);
+                    caldroidFragment.setTextColorForDate(R.color.white, greenDate);
                 } else if (attendanceObject.get(i).getAction() == -1) {
                     caldroidFragment.setBackgroundResourceForDate(R.color.noClassColor, greenDate);
                     caldroidFragment.setTextColorForDate(R.color.white, greenDate);
@@ -173,11 +172,11 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
             @Override
             public void onSelectDate(Date date, View view) {
                 String myDate = formatter.format(date);
-
-                totClass.setText("Total classes:" + attendancedb.totalDayWiseClasses(subId, myDate));
-                attClass.setText("Attended classes:" + attendancedb.totalDayWisePresent(subId, myDate));
-                bunkedClass.setText("Bunked classes:" + attendancedb.totalDayWiseBunked(subId, myDate));
-
+                totClass.setText("Total Lectures:" + attendancedb.totalDayWiseClasses(subId, myDate));
+                attClass.setVisibility(View.VISIBLE);
+                attClass.setText("Attended Lectures:" + attendancedb.totalDayWisePresent(subId, myDate));
+                bunkedClass.setVisibility(View.VISIBLE);
+                bunkedClass.setText("Bunked Lectures:" + attendancedb.totalDayWiseBunked(subId, myDate));
             }
 
             @Override
@@ -189,9 +188,9 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
                 TextView textView = caldroidFragment.getMonthTitleTextView();
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    leftButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
-                    rightButton.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimaryDark));
-                    textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+                    leftButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.colorPrimaryDark));
+                    rightButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.colorPrimaryDark));
+                    textView.setTextColor(ContextCompat.getColorStateList(context, R.color.colorPrimaryDark));
                 }
                 textView.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
             }

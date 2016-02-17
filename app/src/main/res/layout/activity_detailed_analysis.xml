@@ -65,7 +65,7 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_margin="5dp"
-                        android:background="@color/colorPrimary" />
+                        android:background="@color/attendedColor" />
 
                     <View
                         android:id="@+id/absent_view"

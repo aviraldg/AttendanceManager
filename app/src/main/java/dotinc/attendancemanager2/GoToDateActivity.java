@@ -19,7 +19,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -220,7 +219,7 @@ public class GoToDateActivity extends AppCompatActivity {
                     showExtraClass();
                 } else {
                     //------------code for pre-lolipop of extra class------------//
-                    Intent intent = new Intent(GoToDateActivity.this,ExtraClassActivity.class);
+                    Intent intent = new Intent(GoToDateActivity.this, ExtraClassActivity.class);
                     startActivity(intent);
                 }
             }

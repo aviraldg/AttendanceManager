@@ -1,18 +1,17 @@
 package dotinc.attendancemanager2;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import com.appyvet.rangebar.RangeBar;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,6 @@ import dotinc.attendancemanager2.Utils.SubjectDatabase;
 public class PredictorActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Spinner attendOrBunked;
-    private RangeBar percentage;
     private EditText numClasses;
     private RecyclerView recyclerView;
     private PredictorAdapter adapter;
@@ -45,11 +43,27 @@ public class PredictorActivity extends AppCompatActivity {
         addItemsToSpinner();
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.go_to_date_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home)
+            finish();
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void addItemsToSpinner() {
         second_choice.add("Attended");
         second_choice.add("Bunked");
         attendOrBunked.setAdapter(new CustomSpinnerAdapter(this, second_choice));
-        percentage.setVisibility(View.INVISIBLE);
         attendOrBunked.setVisibility(View.VISIBLE);
         numClasses.setVisibility(View.VISIBLE);
         attendOrBunked.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -59,8 +73,8 @@ public class PredictorActivity extends AppCompatActivity {
                     flag = 1;
                 else
                     flag = 2;
-
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -83,12 +97,11 @@ public class PredictorActivity extends AppCompatActivity {
     private void instantiate() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Predictor");
         subjectDatabase = new SubjectDatabase(this);
         subjects = new ArrayList<>();
         attendOrBunked = (Spinner) findViewById(R.id.second_choice);
-        percentage = (RangeBar) findViewById(R.id.rangebar);
         numClasses = (EditText) findViewById(R.id.number_of_classes);
         recyclerView = (RecyclerView) findViewById(R.id.predictor_recycler);
         subjectsLists = subjectDatabase.getAllSubjects();

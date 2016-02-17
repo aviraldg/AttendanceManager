@@ -1,10 +1,10 @@
 package dotinc.attendancemanager2;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,7 +59,7 @@ public class HelpActivity extends AppCompatActivity {
     private void instantiate() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setTitle("Help");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView = (RecyclerView) findViewById(R.id.help_recycler);
         recyclerView.setHasFixedSize(true);
@@ -79,12 +79,13 @@ public class HelpActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.help) {
-            Intent intent = new Intent(HelpActivity.this, FeedbackActivity.class);
-            startActivity(intent);
+            if (id == android.R.id.home)
+                finish();
+            else if (id == R.id.help) {
+                Intent intent = new Intent(HelpActivity.this, FeedbackActivity.class);
+                startActivity(intent);
+            }
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-
 }
