@@ -82,9 +82,11 @@
     <string name="shortcut_add_attendance">•Hold on the \'+\'button and add your attendance.
     </string>
     <string name="detailed_analysis">•Select the subject to view day wise analytics.\n
-                                     •select a date to get detailed analytics for the subject on that day itself.
-
+                                     •Select a date to get detailed analytics for the subject on that day itself.
 
     </string>
-
+    <string name="gotodate">•Select a previous date to enter your attendance in case you forgot :P
+    </string>
+    <string name="predictor">•You can predict your percentage by entering  number of classes attended or number of classes bunked.
+    </string>
 </resources>

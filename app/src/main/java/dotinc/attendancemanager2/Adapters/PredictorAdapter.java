@@ -33,7 +33,6 @@ public class PredictorAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public PredictorAdapter(Context context, int flag, int attendedOrMiss, ArrayList<SubjectsList> subjects) {
         this.context = context;
         this.flag = flag;
-        this.percentagePredicted = percentagePredicted;
         this.attendedOrMiss = attendedOrMiss;
         this.subjects = subjects;
         inflater = LayoutInflater.from(context);

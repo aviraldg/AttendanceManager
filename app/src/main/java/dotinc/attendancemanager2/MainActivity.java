@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,10 +29,8 @@ import android.view.ViewAnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import dotinc.attendancemanager2.Adapters.MainPageAdapter;
@@ -127,7 +126,11 @@ public class MainActivity extends AppCompatActivity {
 
         dayCode = getdaycode();
         timeTableList.setDayCode(dayCode);
+
         arrayList = timeTableDatabase.getSubjects(timeTableList);
+        mainadapter = new MainPageAdapter(this, arrayList, day, activityName);
+        recyclerView.setAdapter(mainadapter);
+        extraClass();
 
     }
 
@@ -185,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 setTitle(getResources().getString(R.string.saturday));
                 break;
             case "Sun":
-                day_code=7;
+                day_code = 7;
                 setTitle(getResources().getString(R.string.sunday));
                 break;
         }
@@ -199,19 +202,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        exadapter.notifyDataSetChanged();
-        mainadapter.notifyDataSetChanged();
+        instantiate();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         instantiate();
-        extraClass();
-        mainadapter = new MainPageAdapter(this, arrayList, day, activityName);
-        recyclerView.setAdapter(mainadapter);
         pager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager(), pageList));
 
         pager.addOnPageChangeListener(new CustomOnPageChangeListener());
@@ -325,7 +323,7 @@ public class MainActivity extends AppCompatActivity {
     private void markedAtt() {
         final View fullAttView = findViewById(R.id.full_att_layout);
 
-        Animator anim ;
+        Animator anim;
         attAllViewOpen = false;
 
         int cX = fullAttView.getWidth();
@@ -356,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showExtraClass() {
         final View extraView = findViewById(R.id.extra_class_layout);
-        Animator anim ;
+        Animator anim;
         int cx = extraView.getWidth();
         int cY = 0;
         if (!attAllViewOpen) {
@@ -412,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (exclViewOpen) {
             final View extraView = findViewById(R.id.extra_class_layout);
-            Animator anim ;
+            Animator anim;
             int cx = extraView.getWidth();
             int cY = 0;
             int finalRadius = 0;
@@ -460,7 +458,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(context, SettingsActivity.class));
                 break;
             case R.id.help:
-                startActivity(new Intent(context,HelpActivity.class));
+                startActivity(new Intent(context, HelpActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

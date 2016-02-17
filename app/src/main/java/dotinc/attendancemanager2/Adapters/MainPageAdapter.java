@@ -137,7 +137,6 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
         });
 
-
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
         viewHolder.attended.setText(context.getResources().getString(R.string.attended) + ": " + attendedClasses);
         viewHolder.total.setText(context.getResources().getString(R.string.total) + ": " + totalClasses);
@@ -200,16 +199,17 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             percentage = ((float) attendedClass / (float) totalClass) * 100;
         }
 
-        return freeBunks-1;
+        return freeBunks - 1;
     }
 
     private void classesNeeded(int attendedClass, int totalClass, float percentage, AttendanceViewHolder viewHolder) {
         int needBreak = Integer.parseInt(Helper.getFromPref(context, Helper.NEEDBREAK, String.valueOf(0)));
-        Log.d("option_need", String.valueOf(needBreak));
         int flag = 0;
         int freeBunks = 0;
         int originalAttended = attendedClass;
-        if (percentage >= attendance_criteria) {
+        if (attendance_criteria==100)
+            attendance_criteria=99;
+        if (percentage > attendance_criteria ) {
             viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark
             ));
             if (needBreak == 1) {
@@ -223,7 +223,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         } else if (attendedClass == 0 && totalClass == 0)
             flag = 2;
-        while (percentage < attendance_criteria) {
+        while (percentage < attendance_criteria ) {
             flag = 3;
             attendedClass++;
             totalClass++;
@@ -243,7 +243,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
 
             case 3:
-                int need ;
+                int need;
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
                 need = attendedClass - originalAttended;
                 if (need == 1)

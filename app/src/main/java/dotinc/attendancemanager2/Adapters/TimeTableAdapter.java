@@ -18,6 +18,7 @@ import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.R;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
+import dotinc.attendancemanager2.WeeklySubjectsActivity;
 
 /**
  * Created by vellapanti on 18/1/16.
@@ -121,8 +122,10 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         timeTableList.setId(arrayList.get(position).getId());
         timeTableList.setPosition(arrayList.get(position).getPosition());
         database.deleteTimeTable(timeTableList);
+        String deleted_subject =arrayList.get(position).getSubjectName();
         arrayList.remove(position);
         this.notifyDataSetChanged();
+        ((WeeklySubjectsActivity)context).showSnackbar(deleted_subject+" Deleted");
     }
 
     @Override

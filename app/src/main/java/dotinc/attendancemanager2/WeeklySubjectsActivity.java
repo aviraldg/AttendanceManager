@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -47,7 +49,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
     private int view_timetable = 0;
     private static int pageNumber = 1;
     private Boolean fromSettings;
-
+    private CoordinatorLayout main_layout;
     void instantiate() {
         context = WeeklySubjectsActivity.this;
         Intent intent = getIntent();
@@ -62,6 +64,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         timetableFlag = intent.getIntExtra("timetableFlag", 0);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.pager);
+        main_layout= (CoordinatorLayout) findViewById(R.id.main_content);
         fab = (FloatingActionButton) findViewById(R.id.add_subjects);
 
         fragments = new ArrayList<>();
@@ -81,8 +84,6 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         database = new TimeTableDatabase(this);
         subjects = new ArrayList<>();
         arrayList = new ArrayList<>();
-
-
     }
 
     @Override
@@ -100,7 +101,6 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void doneAddTimetable(View view) {
         if (view_timetable != 1)
@@ -149,11 +149,13 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
         timeTableList.setPosition(arrayList.size());
         database.addTimeTable(timeTableList);
         //database.toast();
-
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(pageNumber - 1);
+        showSnackbar(subjectSelected+" Added");
     }
-
+    public void showSnackbar(String message){
+        Snackbar.make(main_layout,message,Snackbar.LENGTH_SHORT).show();
+    }
     private class PageListener extends ViewPager.SimpleOnPageChangeListener {
         @Override
         public void onPageSelected(int position) {
