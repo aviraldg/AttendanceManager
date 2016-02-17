@@ -43,8 +43,7 @@
                     android:layout_centerVertical="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:drawablePadding="5dp"
-                    android:drawableTint="@color/colorPrimaryDark"
-                    android:drawableTop="@mipmap/ic_remove_circle_black_36dp"
+                    android:drawableTop="@mipmap/ic_action_content_remove_circle"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Off"
@@ -66,8 +65,7 @@
                     android:layout_centerVertical="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:drawablePadding="5dp"
-                    android:drawableTint="@color/colorPrimaryDark"
-                    android:drawableTop="@mipmap/ic_cancel_black_36dp"
+                    android:drawableTop="@mipmap/ic_action_navigation_cancel"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Bunk"
@@ -89,8 +87,7 @@
                     android:layout_centerVertical="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:drawablePadding="5dp"
-                    android:drawableTint="@color/colorPrimaryDark"
-                    android:drawableTop="@mipmap/ic_check_circle_black_36dp"
+                    android:drawableTop="@mipmap/ic_action_checked_done"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Attend"
@@ -119,7 +116,7 @@
                     android:layout_centerVertical="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:drawablePadding="5dp"
-                    android:drawableTop="@mipmap/ic_restore_black_36dp"
+                    android:drawableTop="@mipmap/ic_action_action_restore"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Reset"
@@ -202,7 +199,7 @@
                         android:layout_centerVertical="true"
                         android:gravity="center"
                         android:text="88.8"
-                        android:textSize="30sp" />
+                        android:textSize="35sp" />
 
                 </RelativeLayout>
             </LinearLayout>

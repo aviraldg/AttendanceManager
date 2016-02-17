@@ -83,13 +83,13 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         attendanceList.setDate(myDate);
         markerValue = database.setMarker(myDate, position, id);
         if (markerValue == 1) {
-            viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
+            viewHolder.check_mark.setImageResource(R.mipmap.ic_action_checked_done);
             viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.attendedColor));
         } else if (markerValue == 0) {
-            viewHolder.check_mark.setImageResource(R.mipmap.ic_cancel_black_36dp);
+            viewHolder.check_mark.setImageResource(R.mipmap.ic_action_navigation_cancel);
             viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.absentColor));
         } else if (markerValue == -1) {
-            viewHolder.check_mark.setImageResource(R.mipmap.ic_remove_circle_black_36dp);
+            viewHolder.check_mark.setImageResource(R.mipmap.ic_action_content_remove_circle);
             viewHolder.check_mark.setColorFilter(ContextCompat.getColor(context, R.color.noClassColor));
         } else {
             viewHolder.check_mark.setImageResource(R.mipmap.ic_check_circle_black_36dp);
@@ -213,7 +213,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             percentage = ((float) attendedClass / (float) totalClass) * 100;
         }
 
-        return freeBunks-1;
+        return freeBunks - 1;
     }
 
     private void classesNeeded(int attendedClass, int totalClass, float percentage, AttendanceViewHolder viewHolder) {
@@ -223,8 +223,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         int freeBunks = 0;
         int originalAttended = attendedClass;
         if (percentage >= attendance_criteria) {
-            viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark
-            ));
+            viewHolder.subject_percentage.setTextColor(ContextCompat.getColor(context, R.color.attendedColor));
             if (needBreak == 1) {
                 freeBunks = freeBunks(attendedClass, totalClass, percentage);
                 if (freeBunks == 0)
@@ -240,14 +239,12 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             flag = 3;
             attendedClass++;
             totalClass++;
-            //viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.absentColor));
             viewHolder.subject_percentage.setTextColor(ContextCompat.getColor(context, R.color.absentColor));
             percentage = ((float) attendedClass / (float) totalClass) * 100;
         }
         switch (flag) {
             case 1:
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
-                //viewHolder.subject_percentage.setTextColor(context.getResources().getColor(R.color.attendedColor));
                 viewHolder.subject_percentage.setTextColor(ContextCompat.getColor(context, R.color.attendedColor));
                 viewHolder.needClassDetail.setText(context.getResources().getString(R.string.on_track_message));
                 break;
@@ -257,21 +254,21 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 break;
 
             case 3:
-                int need ;
+                int need;
                 viewHolder.needClassDetail.setVisibility(View.VISIBLE);
                 need = attendedClass - originalAttended;
                 if (need == 1)
-                    viewHolder.needClassDetail.setText(Html.fromHtml("Attend next <b><font color='#E64A19'>" + need + "</font></b> class"));
+                    viewHolder.needClassDetail.setText(Html.fromHtml("Attend next <b><font color='#E57373'>" + need + "</font></b> class"));
                 else
-                    viewHolder.needClassDetail.setText(Html.fromHtml("Attend next <b><font color='#E64A19'>" + need + "</font></b> classes"));
+                    viewHolder.needClassDetail.setText(Html.fromHtml("Attend next <b><font color='#E57373'>" + need + "</font></b> classes"));
                 break;
             case 4:
-                viewHolder.needClassDetail.setText("You have " + freeBunks + " Bunks");
+                if (freeBunks >= 1)
+                    viewHolder.needClassDetail.setText(Html.fromHtml("You have <b><font color='#8BC34A'>" + freeBunks + "</font></b> Bunks"));
                 break;
             case 5:
                 viewHolder.needClassDetail.setText("You have no free bunks");
         }
-
     }
 
     private void showSnackBar(String message) {

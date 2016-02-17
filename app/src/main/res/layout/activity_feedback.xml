@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="dotinc.attendancemanager2.navDrawerFeatures.Feedback">
+    android:background="@color/backgroundColor"
+    tools:context=".FeedbackActivity">
 
     <include
         android:id="@+id/app_bar"
@@ -13,18 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/app_bar"
-        android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="40dp">
 
         <EditText
             android:id="@+id/feedtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:hint="What is it about?"
             android:maxLines="1"
             android:singleLine="true"
-            android:hint="What is it about?"/>
+            android:textSize="20sp" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -33,26 +34,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textTitle"
-        android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="20dp">
 
         <EditText
             android:id="@+id/feedmsg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
             android:hint="Your feedback"
             android:inputType="textMultiLine"
-            android:minLines="2"
-            android:maxLines="5"
             android:lines="5"
-            android:scrollbars="vertical"/>
+            android:maxLines="5"
+            android:minLines="2"
+            android:scrollbars="vertical"
+            android:textSize="15sp" />
 
     </android.support.design.widget.TextInputLayout>
-
-
-
 
 
 </RelativeLayout>
