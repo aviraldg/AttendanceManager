@@ -9,21 +9,50 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme">
-        <activity android:name=".SubjectsActivity" />
-        <activity android:name=".WeeklySubjectsActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".NameAndCriteriaActivity" />
-        <activity android:name=".ChooseAvatarActivity" />
-        <activity android:name=".DetailedAnalysisActivity" />
-        <activity android:name=".GoToDateActivity" />
-        <activity android:name=".OverallAttendanceActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".ShowNameCardActivity" />
-        <activity android:name=".ExtraClassActivity" />
-        <activity android:name=".FeedbackActivity" />
-        <activity android:name=".HelpActivity" />
-        <activity android:name=".StartScreen">
+        <activity
+            android:name=".SubjectsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".WeeklySubjectsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NameAndCriteriaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChooseAvatarActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DetailedAnalysisActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GoToDateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".OverallAttendanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SettingsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ShowNameCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ExtraClassActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FeedbackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HelpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".StartScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,10 +60,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AboutUsActivity"></activity>
+        <activity
+            android:name=".AboutUsActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".GoToDateOldActivity" />
-        <activity android:name=".PredictorActivity"></activity>
-
+        <activity
+            android:name=".PredictorActivity"
+            android:screenOrientation="portrait" />
     </application>
-
 </manifest>

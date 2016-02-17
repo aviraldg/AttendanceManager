@@ -204,9 +204,9 @@ public class MainActivity extends AppCompatActivity {
         return day_code;
     }
 
-    public void updateOverallPerc() {
-        headerFragment.setOverallPerc();
-    }
+//    public void updateOverallPerc() {
+//        headerFragment.setOverallPerc();
+//    }
 
     @Override
     protected void onResume() {

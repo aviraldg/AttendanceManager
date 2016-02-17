@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
@@ -28,54 +28,152 @@
 
             <TextView
                 android:id="@+id/predict_text"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:padding="10dp"
                 android:text="Number of lectures: "
-                android:textSize="18sp" />
+                android:textSize="22sp" />
 
-            <Spinner
-                android:id="@+id/second_choice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/predict_text"
-                android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                android:layout_toRightOf="@+id/predict_text" />
-
-            <EditText
-                android:id="@+id/number_of_classes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:layout_below="@+id/predict_text"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/item_border"
-                android:ems="2"
-                android:gravity="center"
-                android:hint="3"
-                android:maxLength="3"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:textSize="20dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/backgroundColor" />
 
+
+            <RelativeLayout
+                android:id="@+id/spinner_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view1"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:background="@drawable/item_border"
+                android:padding="5dp">
+
+                <Spinner
+                    android:id="@+id/second_choice"
+                    android:layout_width="120dp"
+                    android:layout_height="50dp"
+                    android:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+                <EditText
+                    android:id="@+id/number_of_classes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/second_choice"
+                    android:layout_alignTop="@+id/second_choice"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/second_choice"
+                    android:background="#fafafa"
+                    android:ems="3"
+                    android:hint="Class"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/load_perc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/number_of_classes"
+                android:layout_below="@+id/spinner_card"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:padding="10dp"
-                android:text="Predict" />
+                android:background="?attr/selectableItemBackground"
+                android:text="Predict"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/display_card"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#fafafa">
+
+        <LinearLayout
+            android:id="@+id/items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/subjects"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:padding="5dp"
+                    android:text="Subjects"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/current"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="5dp"
+                    android:text="Current"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/predicted"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:padding="5dp"
+                    android:text="Predicted"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/items"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/backgroundColor" />
+
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/predictor_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/display_card"
-        android:layout_marginTop="10dp" />
+        android:layout_below="@+id/title" />
 </RelativeLayout>

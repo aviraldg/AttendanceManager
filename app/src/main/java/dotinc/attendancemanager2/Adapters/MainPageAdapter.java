@@ -277,7 +277,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (activityName.equals("MainActivity")) {
 
             ((MainActivity) context).showSnackbar(message);
-            ((MainActivity) context).updateOverallPerc();
+            //((MainActivity) context).updateOverallPerc();
         } else if (activityName.equals("ExtraClassActivity"))
             ((ExtraClassActivity) context).showSnackbar(message);
         else

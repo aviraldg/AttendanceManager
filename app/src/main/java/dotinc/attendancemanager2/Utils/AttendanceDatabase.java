@@ -24,14 +24,12 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
     public static final String DATE = "date";
     public static final String POSITION = "position";
 
-    public static String DB_FILEPATH;
     Context context;
 
     public AttendanceDatabase(Context context) {
         super(context, Database_Name, null, Database_Version);
         this.context = context;
-        final String packageName = context.getPackageName();
-        DB_FILEPATH = "/data/data/" + packageName + "/databases/" + Database_Name + ".db";
+
     }
 
     @Override
