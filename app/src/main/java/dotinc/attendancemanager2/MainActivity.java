@@ -21,6 +21,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -64,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
     private ProgressPageIndicator indicator;
     private FloatingActionButton fab;
 
+    private CardView rootEmptyView;
+    private TextView rootEmptyTitle, rootEmptyFooter;
+
+
+    private RelativeLayout extraEmptyView;
+    private TextView extraEmptyTitle;
+
+
     private ArrayList<TimeTableList> allSubjectsArrayList;      //add
     private ArrayList<TimeTableList> arrayList;
     private ArrayList<SubjectsList> subjectsName;
@@ -94,6 +103,18 @@ public class MainActivity extends AppCompatActivity {
         extraClassText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
         fullAttText = (TextView) findViewById(R.id.full_att_text);
         fullAttText.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+
+
+        rootEmptyView = (CardView) findViewById(R.id.root_empty_view);
+        rootEmptyTitle = (TextView) findViewById(R.id.root_empty_title);
+        rootEmptyTitle.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+        rootEmptyFooter = (TextView) findViewById(R.id.root_empty_footer);
+        rootEmptyFooter.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+
+
+        extraEmptyView = (RelativeLayout) findViewById(R.id.empty_view_extra);
+        extraEmptyTitle = (TextView) findViewById(R.id.empty_text_extra);
+        extraEmptyTitle.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
 
 
         extraClassLayout = (RelativeLayout) findViewById(R.id.extra_class_layout);
@@ -138,9 +159,21 @@ public class MainActivity extends AppCompatActivity {
         timeTableList.setDayCode(dayCode);
 
         arrayList = timeTableDatabase.getSubjects(timeTableList);
+
+
+        if (arrayList.isEmpty())
+            rootEmptyView.setVisibility(View.VISIBLE);
+        else
+            rootEmptyView.setVisibility(View.INVISIBLE);
+
+
         mainadapter = new MainPageAdapter(this, arrayList, day, activityName);
         recyclerView.setAdapter(mainadapter);
         extraClass();
+        if (allSubjectsArrayList.size() == 0)
+            extraEmptyView.setVisibility(View.VISIBLE);
+        else
+            extraEmptyView.setVisibility(View.INVISIBLE);
 
     }
 
@@ -253,8 +286,10 @@ public class MainActivity extends AppCompatActivity {
             public boolean onLongClick(final View view) {
                 if (!exclViewOpen) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        if (!attAllViewOpen)
+                        if (!attAllViewOpen && arrayList.size() != 0)
                             markAllClass();
+                        else
+                            showSnackbar("You don't have any classes today");
                     } else {
                         //------code for pre-lolipop-------//
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -332,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 fab.setImageResource(R.mipmap.ic_clear_white_36dp);
-                fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.grey)));
+                fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.colorPrimaryDark)));
                 fab.show();
             }
         }, 300);
@@ -373,16 +408,32 @@ public class MainActivity extends AppCompatActivity {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void showExtraClass() {
+
         final View extraView = findViewById(R.id.extra_class_layout);
         Animator anim;
         int cx = extraView.getWidth();
         int cY = 0;
         if (!attAllViewOpen) {
             if (!exclViewOpen) {
+
+
                 int finalRadius = Math.max(extraView.getWidth(), extraView.getHeight() + 1000);
 
                 anim = ViewAnimationUtils.createCircularReveal(extraView, cx, cY, 0, finalRadius);
                 anim.setDuration(1000).setInterpolator(new DecelerateInterpolator(1));
+                anim.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        rootEmptyView.setVisibility(View.INVISIBLE);
+                        if (allSubjectsArrayList.size() == 0)
+                            extraEmptyView.setVisibility(View.VISIBLE);
+                        else
+                            extraEmptyView.setVisibility(View.INVISIBLE);
+                    }
+
+
+                });
                 exclViewOpen = true;
                 extraView.setVisibility(View.VISIBLE);
                 anim.start();
@@ -406,6 +457,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
                         extraView.setVisibility(View.INVISIBLE);
+                        if (arrayList.size() == 0)
+                            rootEmptyView.setVisibility(View.VISIBLE);
 
                     }
                 });
@@ -442,6 +495,10 @@ public class MainActivity extends AppCompatActivity {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     extraView.setVisibility(View.INVISIBLE);
+                    if (arrayList.size() == 0)
+                        rootEmptyView.setVisibility(View.VISIBLE);
+
+                    extraEmptyView.setVisibility(View.INVISIBLE);
 
                 }
             });

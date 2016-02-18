@@ -14,6 +14,7 @@ import com.prolificinteractive.materialcalendarview.OnDateChangedListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class GoToDateOldActivity extends AppCompatActivity {
@@ -27,6 +28,9 @@ public class GoToDateOldActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_go_to_date_old);
         instantiate();
+        Calendar calendar = Calendar.getInstance();
+        calendarView.setCurrentDate(calendar.getTime());
+        calendarView.setSelectedDate(calendar.getTime());
         calendarView.setOnDateChangedListener(new OnDateChangedListener() {
             @Override
             public void onDateChanged(MaterialCalendarView widget, CalendarDay date) {

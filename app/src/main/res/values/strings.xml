@@ -61,6 +61,8 @@
 
 
     <string name="add_sub_help">Click \'+\' to add subjects and delete icon to remove from last.</string>
+    <string name="weekly_subjects_help">Add your day-wise timetable here</string>
+    <string name="subjects_help">Add your subjects here</string>
     <string name="subject_del_help">Swipe RIGHT to delete or LEFT to edit.</string>
     <string name="timetable_del_help">Swipe RIGHT on subject to delete.</string>
     <string name="need_break_text">Get the number of classes you can miss freely.\nYou need a break right?\nNote: This works only when your attendance is greater than criteria.</string>
@@ -92,12 +94,12 @@
 
     <string-array name="viewpager_title">
         <item>Confused on how to manage your attendance?</item>
-        <item>Becoming tedious tracking day-to-day attendance</item>
+        <item>Tedious tracking day-to-day attendance</item>
         <item>asdjhasdaid</item>
     </string-array>
 
     <string-array name="viewpager_desc">
-        <item>Sit back and chill.\nLet\'\s do that for you!</item>
+        <item>Let\'\s do that for you!</item>
         <item>Take a look at Detailed Analysis</item>
         <item>djkhljdahdauidaud</item>
     </string-array>

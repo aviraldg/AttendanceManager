@@ -27,5 +27,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/appbar_layout" />
+
+        <RelativeLayout
+            android:id="@+id/empty_view_extra"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/empty_image_extra"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/empty_book_green" />
+
+            <TextView
+                android:id="@+id/empty_text_extra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/empty_image_extra"
+                android:padding="10dp"
+                android:text="No extra classes today"
+                android:textSize="18sp" />
+        </RelativeLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

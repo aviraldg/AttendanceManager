@@ -25,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class SubjectsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private FloatingActionButton addSubjects;
-    private TextView subjectText, swipeHelpText;
+    private TextView subjectText, swipeHelpText, emptytext;
     private TextView multHelpText, multSubtitle;
     private LinearLayout edittextLayout, helpText;
     private View view1;
@@ -65,6 +66,10 @@ public class SubjectsActivity extends AppCompatActivity {
         oxyBold = Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD);
         josefinBold = Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_BOLD);
         josefinReg = Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR);
+
+        emptytext = (TextView) findViewById(R.id.empty_text);
+        emptytext.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+        Helper.animateText(emptytext, getResources().getString(R.string.subjects_help), 40);
 
         addSubjects = (FloatingActionButton) findViewById(R.id.add_subjects);
         addSubjects.hide();
@@ -113,10 +118,13 @@ public class SubjectsActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.LOLLIPOP) {
+            addSubjects.show();
+        }
+
         addSubjects.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     addMultipleSubjects();
                 } else {

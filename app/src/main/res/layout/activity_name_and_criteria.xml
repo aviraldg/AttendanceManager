@@ -70,6 +70,7 @@
                     android:background="@android:color/transparent"
                     android:gravity="center_horizontal"
                     android:hint="Your name"
+                    android:maxLength="10"
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textSize="18sp"
@@ -139,7 +140,7 @@
                         custom:barWeight="2dp"
                         custom:connectingLineWeight="2dp"
                         custom:rangeBar="false"
-                        custom:tickEnd="100"
+                        custom:tickEnd="95"
                         custom:tickInterval="5"
                         custom:tickStart="0" />
                 </RelativeLayout>

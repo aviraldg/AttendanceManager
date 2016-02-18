@@ -13,23 +13,12 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/footer" />
 
-    <TextView
-        android:id="@+id/title_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="This is the title Text"
-        android:textColor="@color/secondaryText"
-        android:textSize="20sp" />
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/footer"
-        android:src="@mipmap/strip" />
+        android:src="@mipmap/strip"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/footer"
@@ -74,8 +63,10 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
+            android:background="@color/attendedColor"
             android:padding="15dp"
             android:text="Let's Start"
+            android:textColor="@color/white"
             android:textSize="20sp" />
 
 

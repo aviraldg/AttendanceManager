@@ -77,8 +77,11 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
             title.setText(getResources().getString(R.string.timetable_activity));
             helpText.setVisibility(View.GONE);
             view1.setVisibility(View.GONE);
-        } else
+        } else{
             title.setText(getResources().getString(R.string.weekly_subjects));
+
+        }
+
 
         timetableFlag = intent.getIntExtra("timetableFlag", 0);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
