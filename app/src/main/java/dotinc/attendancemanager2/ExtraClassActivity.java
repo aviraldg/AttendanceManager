@@ -1,20 +1,21 @@
 package dotinc.attendancemanager2;
 
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -40,7 +41,7 @@ public class ExtraClassActivity extends AppCompatActivity {
     private RelativeLayout extraEmptyView;
     private TextView extraEmptyTitle;
 
-
+    private String day_selected;
     private MainPageAdapter exadapter;
     private ArrayList<TimeTableList> arrayList;
     private ArrayList<TimeTableList> allSubjectsArrayList;
@@ -49,18 +50,18 @@ public class ExtraClassActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("d-M-yyyy");
-        day = format.format(date);
-
-
+        Intent intent = getIntent();
+        day = intent.getStringExtra("date");
+        day_selected = intent.getStringExtra("day_selected");
+        Log.d("option_date", day + "  " + day_selected);
+        dayCode = getdaycode(day_selected);
         recyclerView = (RecyclerView) findViewById(R.id.extra_subjects);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
 
-        extraEmptyView = (RelativeLayout) findViewById(R.id.empty_view_extra);
-        extraEmptyTitle = (TextView) findViewById(R.id.empty_text_extra);
+        extraEmptyView = (RelativeLayout) findViewById(R.id.empty_view_extra_goto);
+        extraEmptyTitle = (TextView) findViewById(R.id.empty_text_extra_goto);
         extraEmptyTitle.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
 
 
@@ -70,7 +71,6 @@ public class ExtraClassActivity extends AppCompatActivity {
         subjectDatabase = new SubjectDatabase(this);
         root = (CoordinatorLayout) findViewById(R.id.root);
         arrayList = timeTableDatabase.getSubjects(timeTableList);
-        dayCode = getdaycode();
         extraClass();
         if (allSubjectsArrayList.size() == 0)
             extraEmptyView.setVisibility(View.VISIBLE);
@@ -79,12 +79,9 @@ public class ExtraClassActivity extends AppCompatActivity {
 
     }
 
-    private int getdaycode() {
+    private int getdaycode(String myDate) {
         int day_code = 1;
-        Date date = new Date();
-        String myDate;
-        SimpleDateFormat format = new SimpleDateFormat("EEE");
-        myDate = format.format(date.getTime());
+
         switch (myDate) {
             case "Mon":
                 day_code = 1;
@@ -122,19 +119,18 @@ public class ExtraClassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extra_class);
         instantiate();
-        extraClass();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.go_to_date_menu,menu);
+        getMenuInflater().inflate(R.menu.go_to_date_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
             finish();
 
         return super.onOptionsItemSelected(item);
@@ -153,6 +149,7 @@ public class ExtraClassActivity extends AppCompatActivity {
         exadapter = new MainPageAdapter(this, allSubjectsArrayList, day, "ExtraClassActivity");
         recyclerView.setAdapter(exadapter);
     }
+
     public void showSnackbar(String message) {
         Snackbar.make(root, message, Snackbar.LENGTH_SHORT).show();
     }

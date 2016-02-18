@@ -16,9 +16,11 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,6 +57,16 @@ public class GoToDateActivity extends AppCompatActivity {
     private ArrayList<TimeTableList> allSubjectsArrayList;      //add
     private ArrayList<TimeTableList> arrayList;
 
+
+
+    private RelativeLayout extraEmptyView;
+    private TextView extraEmptyTitle;
+
+    private CardView rootEmptyView;
+    private TextView rootEmptyTitle, rootEmptyFooter;
+
+
+
     private AttendanceDatabase database;
     private MainPageAdapter mainadapter;
     private TimeTableDatabase timeTableDatabase;
@@ -87,6 +99,21 @@ public class GoToDateActivity extends AppCompatActivity {
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
 
+
+
+        rootEmptyView = (CardView) findViewById(R.id.root_empty_view);
+        rootEmptyTitle = (TextView) findViewById(R.id.root_empty_title);
+        rootEmptyTitle.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+        rootEmptyFooter = (TextView) findViewById(R.id.root_empty_footer);
+        rootEmptyFooter.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+
+
+
+        extraEmptyView = (RelativeLayout) findViewById(R.id.empty_view_extra);
+        extraEmptyTitle = (TextView) findViewById(R.id.empty_text_extra);
+        extraEmptyTitle.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+
+
         dayName = (TextView) findViewById(R.id.day);
         dayName.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
         month = (TextView) findViewById(R.id.month);
@@ -113,12 +140,23 @@ public class GoToDateActivity extends AppCompatActivity {
         database = new AttendanceDatabase(this);
         timeTableDatabase = new TimeTableDatabase(this);
         subjectDatabase = new SubjectDatabase(this);
-
+        arrayList= new ArrayList<>();
         dayCode = getdaycode(day_name);
         timeTableList.setDayCode(dayCode);
         arrayList = timeTableDatabase.getSubjects(timeTableList);
-
+        Log.d("option_size", String.valueOf(arrayList.size()));
+        if (arrayList.isEmpty())
+            rootEmptyView.setVisibility(View.VISIBLE);
+        else
+            rootEmptyView.setVisibility(View.INVISIBLE);
         setUpHeader();
+
+
+        extraClass();
+        if (allSubjectsArrayList.size() == 0)
+            extraEmptyView.setVisibility(View.VISIBLE);
+        else
+            extraEmptyView.setVisibility(View.INVISIBLE);
 
     }
 
@@ -220,6 +258,8 @@ public class GoToDateActivity extends AppCompatActivity {
                 } else {
                     //------------code for pre-lolipop of extra class------------//
                     Intent intent = new Intent(GoToDateActivity.this, ExtraClassActivity.class);
+                    intent.putExtra("date",date);
+                    intent.putExtra("day_selected",day_name);
                     startActivity(intent);
                 }
             }
@@ -232,8 +272,10 @@ public class GoToDateActivity extends AppCompatActivity {
             public boolean onLongClick(View view) {
                 if (!exclViewOpen) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        if (!attAllViewOpen)
+                        if (!attAllViewOpen && arrayList.size() != 0)
                             markAllClass();
+                        else
+                            showSnackbar("You don't have any classes today");
                     } else {
                         //------code for pre-lolipop here-------//
                         AlertDialog.Builder builder = new AlertDialog.Builder(GoToDateActivity.this);
@@ -359,6 +401,19 @@ public class GoToDateActivity extends AppCompatActivity {
 
                 anim = ViewAnimationUtils.createCircularReveal(extraView, cx, cY, 0, finalRadius);
                 anim.setDuration(1000).setInterpolator(new DecelerateInterpolator(1));
+                anim.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        super.onAnimationStart(animation);
+                        rootEmptyView.setVisibility(View.INVISIBLE);
+                        if (allSubjectsArrayList.size() == 0)
+                            extraEmptyView.setVisibility(View.VISIBLE);
+                        else
+                            extraEmptyView.setVisibility(View.INVISIBLE);
+                    }
+
+
+                });
                 exclViewOpen = true;
                 extraView.setVisibility(View.VISIBLE);
                 anim.start();
@@ -382,6 +437,8 @@ public class GoToDateActivity extends AppCompatActivity {
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
                         extraView.setVisibility(View.INVISIBLE);
+                        if (arrayList.size() == 0)
+                            rootEmptyView.setVisibility(View.VISIBLE);
 
                     }
                 });
@@ -418,6 +475,10 @@ public class GoToDateActivity extends AppCompatActivity {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     extraView.setVisibility(View.INVISIBLE);
+                    if (arrayList.size() == 0)
+                        rootEmptyView.setVisibility(View.VISIBLE);
+
+                    extraEmptyView.setVisibility(View.INVISIBLE);
 
                 }
             });
