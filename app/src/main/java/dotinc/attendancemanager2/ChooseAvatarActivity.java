@@ -72,8 +72,7 @@ public class ChooseAvatarActivity extends AppCompatActivity {
 
         user_male.startAnimation(imageAnimation);
         user_female.startAnimation(imageAnimation);
-        animateText(getResources().getString(R.string.chooseAvatar));
-        setCharacterDelay(45);
+        Helper.animateText(avatarText, getResources().getString(R.string.chooseAvatar), 45);
     }
 
     public void onClickMale(View view) {
@@ -113,29 +112,5 @@ public class ChooseAvatarActivity extends AppCompatActivity {
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, p1, p2);
         startActivity(intent, options.toBundle());
-    }
-
-
-    private Runnable characterAdder = new Runnable() {
-        @Override
-        public void run() {
-
-            avatarText.setText(mText.subSequence(0, mIndex++));
-            if (mIndex <= mText.length())
-                mHandler.postDelayed(characterAdder, mDelay);
-        }
-    };
-
-    public void animateText(CharSequence text) {
-        mText = text;
-        mIndex = 0;
-
-        avatarText.setText("");
-        mHandler.removeCallbacks(characterAdder);
-        mHandler.postDelayed(characterAdder, mDelay);
-    }
-
-    public void setCharacterDelay(long millis) {
-        this.mDelay = millis;
     }
 }

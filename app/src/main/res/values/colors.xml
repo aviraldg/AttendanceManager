@@ -12,6 +12,8 @@
     <color name="attendedColor">#8BC34A</color>
     <color name="absentColor">#E57373</color>
 
+    <color name="button_disabled">#C5E1A5</color>
+
     <color name="white">#fff</color>
     <color name="tickColor">#888888</color>
     <color name="dividerColor">#dedede</color>

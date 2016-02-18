@@ -187,6 +187,11 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
             public void run() {
                 cardView.setVisibility(View.VISIBLE);
                 cardView.startAnimation(cardAnimation);
+
+                if (nameCard.getVisibility() == View.VISIBLE && percCard.getVisibility() == View.GONE)
+                    Helper.animateText(nameQuery, "What's your Name?", 45);
+                else if (percCard.getVisibility() == View.VISIBLE)
+                    Helper.animateText(attQuery, "Attendance Criteria", 45);
             }
         }, 100);
     }

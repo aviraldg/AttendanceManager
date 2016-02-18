@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/extra_class_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:visibility="visible">
+
+    <TextView
+        android:id="@+id/extra_class_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:text="Extra Class"
+        android:textSize="22sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/extra_class_text"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="#929292" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/extra_class_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/extra_class_text"
+        android:layout_marginTop="8dp" />
+</RelativeLayout>

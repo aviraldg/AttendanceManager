@@ -45,7 +45,6 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private String activityName;
     private int attendance_criteria;
     private int markerValue;
-    private int prevPosition = 0;
 
     public MainPageAdapter(Context context, ArrayList<TimeTableList> arrayList, String myDate, String activityName) {
         this.context = context;
@@ -73,14 +72,6 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final AttendanceViewHolder viewHolder = (AttendanceViewHolder) holder;
         final int id = arrayList.get(position).getId();
-
-        if (position >= prevPosition) {
-            Helper.animateCard(viewHolder, true);
-        } else {
-            Helper.animateCard(viewHolder, false);
-        }
-        prevPosition = position;
-
 
         list.setId(id);
         attendanceList.setDate(myDate);

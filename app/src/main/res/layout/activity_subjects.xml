@@ -80,20 +80,19 @@
             android:visibility="visible">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:src="@mipmap/ic_book_white_36dp"
-                android:tint="@color/white" />
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/empty_book" />
 
             <TextView
+                android:id="@+id/empty_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="Add your subjects here"
                 android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:textStyle="italic" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -185,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:text="@string/add_sub_help"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
 
             </LinearLayout>

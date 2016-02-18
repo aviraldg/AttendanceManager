@@ -124,11 +124,12 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         timeTableList.setId(arrayList.get(position).getId());
         timeTableList.setPosition(arrayList.get(position).getPosition());
         database.deleteTimeTable(timeTableList);
-        String deleted_subject =arrayList.get(position).getSubjectName();
+        String deleted_subject = arrayList.get(position).getSubjectName();
         arrayList.remove(position);
         this.notifyDataSetChanged();
-        ((WeeklySubjectsActivity)context).showSnackbar(deleted_subject + " Deleted");
-        ((WeeklySubjectsActivity)context).checkIfEmpty();
+        fragment.setEmptyView(arrayList.size());
+        ((WeeklySubjectsActivity) context).showSnackbar(deleted_subject + " Deleted");
+        ((WeeklySubjectsActivity) context).checkIfEmpty();
     }
 
     @Override

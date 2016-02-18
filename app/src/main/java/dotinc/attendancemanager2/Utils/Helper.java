@@ -1,10 +1,10 @@
 package dotinc.attendancemanager2.Utils;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
-import android.support.v7.widget.RecyclerView;
+import android.os.Handler;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +28,12 @@ public class Helper {
     public static final String OXYGEN_REGULAR = "fonts/oxygen-regular.ttf";
     public static final String JOSEFIN_SANS_REGULAR = "fonts/josefin_sans_regular.ttf";
     public static final String JOSEFIN_SANS_BOLD = "fonts/josefin_sans-bold.ttf";
+
+    private static Handler mHandler;
+    private static CharSequence mText;
+    private static int mIndex;
+    private static long mDelay;
+    private static Runnable characterAdder;
 
     public static void saveToPref(Context context, String key, String val) {
         SharedPreferences preferences = context.getSharedPreferences(FILENAME, context.MODE_PRIVATE);
@@ -101,13 +107,21 @@ public class Helper {
         return true;
     }
 
-
-    public static void animateCard(RecyclerView.ViewHolder viewHolder, Boolean state) {
-        ObjectAnimator animatorTranslateY = ObjectAnimator.ofFloat(viewHolder.itemView,
-                "translationY", state == true ? 300 : -300, 0);
-        animatorTranslateY.setDuration(500);
-        animatorTranslateY.start();
-
-
+    public static void animateText(final TextView textView, String text, long delay) {
+        mHandler = new Handler();
+        mIndex = 0;
+        mText = text;
+        mDelay = delay;
+        characterAdder = new Runnable() {
+            @Override
+            public void run() {
+                textView.setText(mText.subSequence(0, mIndex++));
+                if (mIndex <= mText.length())
+                    mHandler.postDelayed(characterAdder, mDelay);
+            }
+        };
+        textView.setText("");
+        mHandler.removeCallbacks(characterAdder);
+        mHandler.postDelayed(characterAdder, mDelay);
     }
 }

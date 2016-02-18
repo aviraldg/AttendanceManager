@@ -1,5 +1,6 @@
 package dotinc.attendancemanager2;
 
+import android.graphics.Typeface;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +21,7 @@ import java.util.Date;
 import dotinc.attendancemanager2.Adapters.MainPageAdapter;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
+import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
@@ -30,6 +37,10 @@ public class ExtraClassActivity extends AppCompatActivity {
     private TimeTableList timeTableList;
     private SubjectDatabase subjectDatabase;
 
+    private RelativeLayout extraEmptyView;
+    private TextView extraEmptyTitle;
+
+
     private MainPageAdapter exadapter;
     private ArrayList<TimeTableList> arrayList;
     private ArrayList<TimeTableList> allSubjectsArrayList;
@@ -37,6 +48,7 @@ public class ExtraClassActivity extends AppCompatActivity {
     private void instantiate() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("d-M-yyyy");
         day = format.format(date);
@@ -46,6 +58,12 @@ public class ExtraClassActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
+
+        extraEmptyView = (RelativeLayout) findViewById(R.id.empty_view_extra);
+        extraEmptyTitle = (TextView) findViewById(R.id.empty_text_extra);
+        extraEmptyTitle.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
+
+
         database = new AttendanceDatabase(this);
         timeTableDatabase = new TimeTableDatabase(this);
         timeTableList = new TimeTableList();
@@ -53,6 +71,11 @@ public class ExtraClassActivity extends AppCompatActivity {
         root = (CoordinatorLayout) findViewById(R.id.root);
         arrayList = timeTableDatabase.getSubjects(timeTableList);
         dayCode = getdaycode();
+        extraClass();
+        if (allSubjectsArrayList.size() == 0)
+            extraEmptyView.setVisibility(View.VISIBLE);
+        else
+            extraEmptyView.setVisibility(View.INVISIBLE);
 
     }
 
@@ -100,6 +123,21 @@ public class ExtraClassActivity extends AppCompatActivity {
         setContentView(R.layout.activity_extra_class);
         instantiate();
         extraClass();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.go_to_date_menu,menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home)
+            finish();
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void extraClass() {
