@@ -16,6 +16,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -243,7 +243,6 @@ public class SubjectsActivity extends AppCompatActivity {
                     });
                     anim.start();
                     addSubjects.hide();
-
                 }
             }
         }
@@ -261,6 +260,7 @@ public class SubjectsActivity extends AppCompatActivity {
         ed.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         ed.setPadding(25, 25, 25, 25);
         ed.setSingleLine(true);
+        ed.setFilters(new InputFilter[]{new InputFilter.LengthFilter(25)});
         ed.setBackground(getResources().getDrawable(R.drawable.item_border));
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

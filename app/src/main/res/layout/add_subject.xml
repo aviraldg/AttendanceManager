@@ -9,9 +9,11 @@
         android:id="@+id/subject_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:background="@drawable/item_border"
         android:hint="Enter Subject"
+        android:inputType="text"
+        android:maxLength="25"
         android:padding="10dp"
-        android:layout_margin="5dp"
         android:textSize="20sp" />
 </LinearLayout>

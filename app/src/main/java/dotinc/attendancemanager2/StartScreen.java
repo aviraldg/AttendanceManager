@@ -41,7 +41,7 @@ public class StartScreen extends AppCompatActivity {
         desc = getResources().getStringArray(R.array.viewpager_desc);
         indicator = (ProgressPageIndicator) findViewById(R.id.pageIndicator);
         helpTv = (TextView) findViewById(R.id.help_text);
-        helpTv.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
+        helpTv.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_BOLD));
         helpTv.setText(desc[0]);
     }
 
@@ -66,6 +66,8 @@ public class StartScreen extends AppCompatActivity {
 
         start = (Button) findViewById(R.id.start_btn);
         start.setEnabled(false);
+        start.setText("2 more to go");
+        start.setAllCaps(false);
         buttonEnabled();
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,18 +87,21 @@ public class StartScreen extends AppCompatActivity {
                     indicator.setViewPager(pager, 0);
                     indicator.setFillColor(ContextCompat.getColor(context, R.color.noClassColor));
                     start.setEnabled(false);
+                    start.setText("2 more to go");
                     buttonEnabled();
                     break;
                 case 1:
                     indicator.setViewPager(pager, 1);
                     indicator.setFillColor(ContextCompat.getColor(context, R.color.absentColor));
                     start.setEnabled(false);
+                    start.setText("1 more to go");
                     buttonEnabled();
                     break;
                 case 2:
                     indicator.setViewPager(pager, 2);
                     indicator.setFillColor(ContextCompat.getColor(context, R.color.attendedColor));
                     start.setEnabled(true);
+                    start.setText("LET'S START!");
                     buttonEnabled();
                     break;
                 default:
@@ -108,7 +113,7 @@ public class StartScreen extends AppCompatActivity {
 
     public void buttonEnabled() {
         if (!start.isEnabled()) {
-            start.setBackgroundColor(ContextCompat.getColor(context, R.color.button_disabled));
+            start.setBackgroundColor(ContextCompat.getColor(context, R.color.greyLight));
             start.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
         } else {
             start.setBackgroundColor(ContextCompat.getColor(context, R.color.attendedColor));

@@ -16,8 +16,5 @@
         android:title="About Us"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/clear"
-        android:title="Clear"
-        app:showAsAction="never" />
+
 </menu>

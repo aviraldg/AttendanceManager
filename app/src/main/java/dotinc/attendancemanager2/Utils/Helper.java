@@ -21,6 +21,8 @@ public class Helper {
     public static final String USER_IMAGE_ID = "USER_IMAGE_ID";
     public static final String COMPLETED = "COMPLETED";
     public static final String NEEDBREAK = "BREAK";
+    public static final String INITIAL_SETUP = "INITIAL_SETUP";
+    public static final String FIRST_TIME = "FIRST_TIME";
     public static final String PACKAGENAME = "dotinc.attendancemanager2";
 
 

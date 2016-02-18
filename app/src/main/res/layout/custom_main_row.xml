@@ -147,7 +147,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:padding="5dp"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
                         android:text="Compiler Design"
                         android:textSize="25sp" />
 

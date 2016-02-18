@@ -18,6 +18,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +43,7 @@ import dotinc.attendancemanager2.Adapters.MainPageAdapter;
 import dotinc.attendancemanager2.Adapters.MainViewPagerAdapter;
 import dotinc.attendancemanager2.Fragements.HeaderFragment;
 import dotinc.attendancemanager2.Fragements.SecondFragment;
+import dotinc.attendancemanager2.Fragements.TutorialFragment;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
 import dotinc.attendancemanager2.Utils.AttendanceDatabase;
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     private HeaderFragment headerFragment;
     private ProgressPageIndicator indicator;
     private FloatingActionButton fab;
+    private TutorialFragment fragment;
+    public FragmentTransaction transaction;
 
     private CardView rootEmptyView;
     private TextView rootEmptyTitle, rootEmptyFooter;
@@ -128,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
         root = (CoordinatorLayout) findViewById(R.id.root);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar_layout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
         pager = (ViewPager) findViewById(R.id.pager);
@@ -261,6 +265,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         instantiate();
+
+        if (Integer.parseInt(Helper.getFromPref(context, Helper.FIRST_TIME, String.valueOf(0))) == 0)
+            showTutorial();
+
         pager.setAdapter(new MainViewPagerAdapter(getSupportFragmentManager(), pageList));
 
         pager.addOnPageChangeListener(new CustomOnPageChangeListener());
@@ -521,16 +529,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_page_menu, menu);
+        getMenuInflater().inflate(R.menu.main_page_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.clear:
-                Helper.clearData(context);
-                break;
+
             case R.id.settings:
                 startActivity(new Intent(context, SettingsActivity.class));
                 break;
@@ -540,9 +546,34 @@ public class MainActivity extends AppCompatActivity {
             case R.id.about_us:
                 startActivity(new Intent(context, AboutUsActivity.class));
                 break;
+
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void showTutorial() {
+        fragment = new TutorialFragment();
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.root, fragment, "fragment").commit();
+        appBarLayout.setVisibility(View.GONE);
+
+        Log.d("Options_frag", "called");
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        params.setAnchorId(View.NO_ID);
+        fab.setLayoutParams(params);
+        fab.setVisibility(View.GONE);
+    }
+
+    public void closeTutorial() {
+        Helper.saveToPref(context, Helper.FIRST_TIME, String.valueOf(1));
+        appBarLayout.setVisibility(View.VISIBLE);
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        params.setAnchorId(R.id.appbar_layout);
+        fab.setLayoutParams(params);
+        fab.setVisibility(View.VISIBLE);
+        instantiate();
+    }
+
 
     private class CustomOnPageChangeListener extends ViewPager.SimpleOnPageChangeListener {
         @Override

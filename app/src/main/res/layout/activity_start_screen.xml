@@ -39,7 +39,7 @@
             app:dotGap="4dp"
             app:fillColor="#fff"
             app:radius="6dp"
-            app:strokeColor="#fff" />
+            app:strokeColor="@color/black" />
 
         <TextView
             android:id="@+id/help_text"
@@ -51,6 +51,7 @@
             android:layout_marginRight="16dp"
             android:gravity="center"
             android:padding="10dp"
+            android:textStyle="bold"
             android:text="This is an example of textview"
             android:textSize="18sp" />
 
@@ -63,8 +64,9 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
             android:background="@color/attendedColor"
-            android:padding="15dp"
+            android:padding="8dp"
             android:text="Let's Start"
             android:textColor="@color/white"
             android:textSize="20sp" />

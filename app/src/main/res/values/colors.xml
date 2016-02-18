@@ -19,4 +19,5 @@
     <color name="dividerColor">#dedede</color>
     <color name="black">#000</color>
     <color name="grey">#9E9E9E</color>
+    <color name="greyLight">#E0E0E0</color>
 </resources>
