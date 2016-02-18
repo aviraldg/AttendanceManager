@@ -38,9 +38,6 @@
 
     <string name="attended">Attended</string>
     <string name="total">Total</string>
-    <string name="attended_message">Attended class</string>
-    <string name="bunked_message">Bunked class</string>
-    <string name="noclass_message">No class </string>
     <string name="on_track_message">You are on the track !</string>
     <string name="noClasses">No classes yet </string>
     <string name="present">PRESENT</string>
