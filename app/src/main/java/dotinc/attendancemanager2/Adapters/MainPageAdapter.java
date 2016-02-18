@@ -159,7 +159,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.attendedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAttendance(1, position, context.getResources().getString(R.string.attended_message));
+                addAttendance(1, position, "Attended "+arrayList.get(position).getSubjectName()+" class");
                 markerValue = database.setMarker(myDate, position, id);
 
             }
@@ -168,7 +168,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.bunkedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAttendance(0, position, context.getResources().getString(R.string.bunked_message));
+                addAttendance(0, position, "Bunked "+arrayList.get(position).getSubjectName()+" class");
                 markerValue = database.setMarker(myDate, position, id);
 
 
@@ -178,7 +178,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.noClassbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAttendance(-1, position, context.getResources().getString(R.string.noclass_message));
+                addAttendance(-1, position, "No "+arrayList.get(position).getSubjectName()+" class");
             }
         });
 
