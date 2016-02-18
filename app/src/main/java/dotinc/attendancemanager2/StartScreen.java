@@ -66,7 +66,7 @@ public class StartScreen extends AppCompatActivity {
 
         start = (Button) findViewById(R.id.start_btn);
         start.setEnabled(false);
-        start.setText("2 more to go");
+        start.setText("Let's start");
         start.setAllCaps(false);
         buttonEnabled();
         start.setOnClickListener(new View.OnClickListener() {
@@ -87,14 +87,14 @@ public class StartScreen extends AppCompatActivity {
                     indicator.setViewPager(pager, 0);
                     indicator.setFillColor(ContextCompat.getColor(context, R.color.noClassColor));
                     start.setEnabled(false);
-                    start.setText("2 more to go");
+                    start.setText("Let's start");
                     buttonEnabled();
                     break;
                 case 1:
                     indicator.setViewPager(pager, 1);
                     indicator.setFillColor(ContextCompat.getColor(context, R.color.absentColor));
                     start.setEnabled(false);
-                    start.setText("1 more to go");
+                    start.setText("Let's start");
                     buttonEnabled();
                     break;
                 case 2:

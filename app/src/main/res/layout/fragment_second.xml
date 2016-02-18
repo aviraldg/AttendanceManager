@@ -82,7 +82,7 @@
             android:layout_marginTop="40dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:drawableTop="@mipmap/ic_today_white_36dp"
+            android:drawableTop="@mipmap/ic_timeline_white_36dp"
             android:gravity="center"
             android:padding="5dp"
             android:text="Predictor"

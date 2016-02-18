@@ -48,7 +48,6 @@ public class TutorialFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 number++;
-                Log.d("Options_pager", String.valueOf(number));
                 switch (number) {
                     case 1:
                         prev.setVisibility(View.VISIBLE);
@@ -73,7 +72,6 @@ public class TutorialFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 number--;
-                Log.d("Options_pager", String.valueOf(number));
                 switch (number) {
                     case 1:
                         imageView.setImageResource(R.drawable.tutorial2);

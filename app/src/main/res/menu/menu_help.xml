@@ -5,6 +5,6 @@
         android:id="@+id/help"
         android:icon="@mipmap/ic_feedback_white_36dp"
         android:orderInCategory="100"
-        android:title="Send"
+        android:title="Send Feedback"
         app:showAsAction="always" />
 </menu>

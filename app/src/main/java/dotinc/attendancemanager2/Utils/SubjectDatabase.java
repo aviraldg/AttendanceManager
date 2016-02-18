@@ -74,11 +74,9 @@ public class SubjectDatabase extends SQLiteOpenHelper {
                 SubjectName.add(subjectsList);
 
             } while (cursor.moveToNext());
-        } else {
-            Log.d("option_cur", "null");
         }
         db.close();
-        Log.d("option_database_size", String.valueOf(SubjectName.size()));
+
         return SubjectName;
     }
 
@@ -108,8 +106,6 @@ public class SubjectDatabase extends SQLiteOpenHelper {
                 SubjectName.add(timeTableList);
 
             } while (cursor.moveToNext());
-        } else {
-            Log.d("option_cur", "null");
         }
         db.close();
         return SubjectName;
@@ -123,20 +119,5 @@ public class SubjectDatabase extends SQLiteOpenHelper {
         return Helper.importDatabase(Subject_Name_Databse);
     }
 
-//    public void toast() {
-//        SQLiteDatabase dbs = this.getWritableDatabase();
-//
-//        String[] col = {Subject_Id, Subject_List};
-//        Cursor cur = dbs.query(Subjects_Table, col, null, null, null, null, null);
-//        StringBuffer buffer = new StringBuffer();
-//        if (cur != null) {
-//            while (cur.moveToNext()) {
-//                int id = cur.getInt(0);
-//                String subject = cur.getString(1);
-//                Log.d("option_database", "id:" + String.valueOf(id) + " " + "name:" + subject);
-//            }
-//        } else {
-//            Log.d("option", "cursor is null");
-//        }
-//    }
+
 }

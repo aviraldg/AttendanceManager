@@ -43,24 +43,7 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
         db.execSQL(table_update);
     }
 
-    public void toast() {
-        SQLiteDatabase dbs = this.getWritableDatabase();
-        String[] col = {Subject_Id, POSITION, Day_Code, Subjects_Selected};
-        Cursor cur = dbs.query(TimeTable_Table, col, null, null, null, null, null);
-        if (cur != null) {
-            while (cur.moveToNext()) {
-                int id = cur.getInt(0);
-                int pos = cur.getInt(1);
-                int dc = cur.getInt(2);
-                String subject = cur.getString(3);
-                Toast.makeText(context, "id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos, Toast.LENGTH_LONG).show();
-                Log.d("option_database_toast", "id:" + String.valueOf(id) + " " + "name:" + subject + "  " + "dc:" + dc + "pos:" + pos);
-            }
-        } else {
-            Log.d("option", "cursor is null");
-        }
-        dbs.close();
-    }
+
 
     public void addTimeTable(TimeTableList list) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -96,8 +79,6 @@ public class TimeTableDatabase extends SQLiteOpenHelper {
                 timeTableList.setPosition(cursor.getInt(3));
                 tableLists.add(timeTableList);
             }
-        } else {
-            Log.d("option_cur", "null");
         }
         return tableLists;
     }

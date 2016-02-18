@@ -159,7 +159,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.attendedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAttendance(1, position, "Attended "+arrayList.get(position).getSubjectName()+" class");
+                addAttendance(1, position, "Attended " + arrayList.get(position).getSubjectName() + " class");
                 markerValue = database.setMarker(myDate, position, id);
 
             }
@@ -168,7 +168,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.bunkedbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAttendance(0, position, "Bunked "+arrayList.get(position).getSubjectName()+" class");
+                addAttendance(0, position, "Bunked " + arrayList.get(position).getSubjectName() + " class");
                 markerValue = database.setMarker(myDate, position, id);
 
 
@@ -178,7 +178,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.noClassbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addAttendance(-1, position, "No "+arrayList.get(position).getSubjectName()+" class");
+                addAttendance(-1, position, "No " + arrayList.get(position).getSubjectName() + " class");
             }
         });
 
@@ -294,14 +294,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-//    private void setAnimation(View viewToAnimate, int position) {
-//        // If the bound view wasn't previously displayed on screen, it's animated
-//        if (position > lastPosition) {
-//            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-//            viewToAnimate.startAnimation(animation);
-//            lastPosition = position;
-//        }
-//    }
+
 
     static class AttendanceViewHolder extends RecyclerView.ViewHolder {
         private TextView subject;

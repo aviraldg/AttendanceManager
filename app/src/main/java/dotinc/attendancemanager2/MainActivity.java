@@ -557,7 +557,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.add(R.id.root, fragment, "fragment").commit();
         appBarLayout.setVisibility(View.GONE);
 
-        Log.d("Options_frag", "called");
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
         params.setAnchorId(View.NO_ID);
         fab.setLayoutParams(params);

@@ -58,7 +58,6 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
                 }
             }
         } else {
-            Log.d("option_cursor", "is null");
         }
         return markerValue;
     }
@@ -104,7 +103,6 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
             }
         } else {
         }
-        Log.d("option_cur", "null");
         return attendanceLists;
     }
 
@@ -118,24 +116,11 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         if (cursor != null) {
             while (cursor.moveToNext())
                 totalPresent = cursor.getInt(0);
-        } else
-            Log.d("option", "cursor is null");
+        }
         return totalPresent;
     }
 
-    public int totalBunked(int id) {
-        int totalBunked = 0;
-        SQLiteDatabase database = this.getWritableDatabase();
-        String query = "SELECT COUNT(" + Action + ") FROM " + ATTENDANCE_TRACKER + " WHERE " + Subject_Id + " = " +
-                id + " AND " + Action + " =0 ";
-        Cursor cursor = database.rawQuery(query, null);
-        if (cursor != null) {
-            while (cursor.moveToNext())
-                totalBunked = cursor.getInt(0);
-        } else
-            Log.d("option", "cursor is null");
-        return totalBunked;
-    }
+
 
     public int totalClasses(int id) {
         int totalClasses = 0;
@@ -146,8 +131,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         if (cursor != null) {
             while (cursor.moveToNext())
                 totalClasses = cursor.getInt(0);
-        } else
-            Log.d("option", "cursor is null");
+        }
         return totalClasses;
     }
 
@@ -161,8 +145,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         if (cursor != null) {
             while (cursor.moveToNext())
                 totalPresent = cursor.getInt(0);
-        } else
-            Log.d("option", "cursor is null");
+        }
         return totalPresent;
     }
 
@@ -175,8 +158,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         if (cursor != null) {
             while (cursor.moveToNext())
                 totalBunked = cursor.getInt(0);
-        } else
-            Log.d("option", "cursor is null");
+        }
         return totalBunked;
     }
 
@@ -189,8 +171,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         if (cursor != null) {
             while (cursor.moveToNext())
                 totalClasses = cursor.getInt(0);
-        } else
-            Log.d("option", "cursor is null");
+        }
         return totalClasses;
     }
 
@@ -216,24 +197,7 @@ public class AttendanceDatabase extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void toast() {
-        SQLiteDatabase dbs = this.getWritableDatabase();
-        String[] col = {Subject_Id, POSITION, Action, DATE};
-        Cursor cur = dbs.query(ATTENDANCE_TRACKER, col, null, null, null, null, null);
-        if (cur != null) {
-            while (cur.moveToNext()) {
-                int id = cur.getInt(0);
-                int pos = cur.getInt(1);
-                int dc = cur.getInt(2);
-                String subject = cur.getString(3);
 
-                Log.d("option_date_cal", "id:" + String.valueOf(id) + " " + "date:" + subject + "  " + "act:" + dc + "pos:" + pos);
-            }
-        } else {
-            Log.d("option", "cursor is null");
-        }
-        dbs.close();
-    }
 
 
     public boolean checkEmpty() {

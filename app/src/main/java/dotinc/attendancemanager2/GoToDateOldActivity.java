@@ -49,7 +49,6 @@ public class GoToDateOldActivity extends AppCompatActivity {
                 Intent intent = new Intent(GoToDateOldActivity.this, GoToDateActivity.class);
                 intent.putExtra("date", myDate);
                 intent.putExtra("day_name", day_selected);
-                Log.d("option_date_cal",day_selected);
                 startActivity(intent);
 
             }

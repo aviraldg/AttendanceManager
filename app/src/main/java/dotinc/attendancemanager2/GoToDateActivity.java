@@ -20,7 +20,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,13 +57,11 @@ public class GoToDateActivity extends AppCompatActivity {
     private ArrayList<TimeTableList> arrayList;
 
 
-
     private RelativeLayout extraEmptyView;
     private TextView extraEmptyTitle;
 
     private CardView rootEmptyView;
     private TextView rootEmptyTitle, rootEmptyFooter;
-
 
 
     private AttendanceDatabase database;
@@ -100,13 +97,11 @@ public class GoToDateActivity extends AppCompatActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
 
 
-
         rootEmptyView = (CardView) findViewById(R.id.root_empty_view);
         rootEmptyTitle = (TextView) findViewById(R.id.root_empty_title);
         rootEmptyTitle.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
         rootEmptyFooter = (TextView) findViewById(R.id.root_empty_footer);
         rootEmptyFooter.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
-
 
 
         extraEmptyView = (RelativeLayout) findViewById(R.id.empty_view_extra);
@@ -140,11 +135,10 @@ public class GoToDateActivity extends AppCompatActivity {
         database = new AttendanceDatabase(this);
         timeTableDatabase = new TimeTableDatabase(this);
         subjectDatabase = new SubjectDatabase(this);
-        arrayList= new ArrayList<>();
+        arrayList = new ArrayList<>();
         dayCode = getdaycode(day_name);
         timeTableList.setDayCode(dayCode);
         arrayList = timeTableDatabase.getSubjects(timeTableList);
-        Log.d("option_size", String.valueOf(arrayList.size()));
         if (arrayList.isEmpty())
             rootEmptyView.setVisibility(View.VISIBLE);
         else
@@ -258,8 +252,8 @@ public class GoToDateActivity extends AppCompatActivity {
                 } else {
                     //------------code for pre-lolipop of extra class------------//
                     Intent intent = new Intent(GoToDateActivity.this, ExtraClassActivity.class);
-                    intent.putExtra("date",date);
-                    intent.putExtra("day_selected",day_name);
+                    intent.putExtra("date", date);
+                    intent.putExtra("day_selected", day_name);
                     startActivity(intent);
                 }
             }
@@ -277,31 +271,35 @@ public class GoToDateActivity extends AppCompatActivity {
                         else
                             showSnackbar("You don't have any classes today");
                     } else {
-                        //------code for pre-lolipop here-------//
-                        AlertDialog.Builder builder = new AlertDialog.Builder(GoToDateActivity.this);
-                        builder.setTitle("Attended all the subjects?");
-                        builder.setPositiveButton("Attended all", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                database.addAllAttendance(arrayList, 1, date);
-                                mainadapter.notifyDataSetChanged();
-                            }
-                        });
-                        builder.setNegativeButton("Bunked all", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                database.addAllAttendance(arrayList, 0, date);
-                                mainadapter.notifyDataSetChanged();
-                            }
-                        });
-                        builder.setNeutralButton("No class", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                database.addAllAttendance(arrayList, -1, date);
-                                mainadapter.notifyDataSetChanged();
-                            }
-                        });
-                        builder.create().show();
+                        if (arrayList.size() == 0)
+                            showSnackbar("You don't have any classes today");
+                        else {
+                            //------code for pre-lolipop here-------//
+                            AlertDialog.Builder builder = new AlertDialog.Builder(GoToDateActivity.this);
+                            builder.setTitle("Attended all the subjects?");
+                            builder.setPositiveButton("Attended all", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    database.addAllAttendance(arrayList, 1, date);
+                                    mainadapter.notifyDataSetChanged();
+                                }
+                            });
+                            builder.setNegativeButton("Bunked all", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    database.addAllAttendance(arrayList, 0, date);
+                                    mainadapter.notifyDataSetChanged();
+                                }
+                            });
+                            builder.setNeutralButton("No class", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    database.addAllAttendance(arrayList, -1, date);
+                                    mainadapter.notifyDataSetChanged();
+                                }
+                            });
+                            builder.create().show();
+                        }
                     }
                 }
                 return true;

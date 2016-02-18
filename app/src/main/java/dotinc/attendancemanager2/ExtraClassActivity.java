@@ -29,7 +29,6 @@ import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 public class ExtraClassActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
-    private Date date;
     private String day;
     private int dayCode;
     private CoordinatorLayout root;
@@ -53,7 +52,6 @@ public class ExtraClassActivity extends AppCompatActivity {
         Intent intent = getIntent();
         day = intent.getStringExtra("date");
         day_selected = intent.getStringExtra("day_selected");
-        Log.d("option_date", day + "  " + day_selected);
         dayCode = getdaycode(day_selected);
         recyclerView = (RecyclerView) findViewById(R.id.extra_subjects);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

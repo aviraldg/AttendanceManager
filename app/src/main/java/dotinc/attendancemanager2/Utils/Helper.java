@@ -49,13 +49,7 @@ public class Helper {
         return sharedPreferences.getString(key, defVal);
     }
 
-    public static void clearData(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Helper.FILENAME, context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.commit();
 
-    }
 
     public static boolean exportDatabase(String dbName) {
         try {
