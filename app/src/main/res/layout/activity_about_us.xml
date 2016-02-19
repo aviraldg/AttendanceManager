@@ -33,7 +33,7 @@
         android:layout_below="@+id/app_name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:text="Version: 1.5"
+        android:text="Version: 2.0.1"
         android:textColor="@color/white"
         android:textSize="15sp" />
 

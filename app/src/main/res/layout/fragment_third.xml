@@ -23,7 +23,7 @@
         android:padding="10dp"
         android:text="This is the title Text"
         android:textColor="@color/secondaryText"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
     <ImageView
         android:id="@+id/strip"

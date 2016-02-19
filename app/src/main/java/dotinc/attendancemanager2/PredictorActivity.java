@@ -1,5 +1,7 @@
 package dotinc.attendancemanager2;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -7,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +28,8 @@ import dotinc.attendancemanager2.Utils.Helper;
 import dotinc.attendancemanager2.Utils.SubjectDatabase;
 
 public class PredictorActivity extends AppCompatActivity {
+
+    private Context context;
     private Toolbar toolbar;
     private Spinner attendOrBunked;
     private EditText numClasses;
@@ -51,7 +56,7 @@ public class PredictorActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.go_to_date_menu, menu);
+        getMenuInflater().inflate(R.menu.predictor_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -61,7 +66,8 @@ public class PredictorActivity extends AppCompatActivity {
 
         if (item.getItemId() == android.R.id.home)
             finish();
-
+        else if (item.getItemId() == R.id.help)
+            showHelp();
         return super.onOptionsItemSelected(item);
     }
 
@@ -103,6 +109,8 @@ public class PredictorActivity extends AppCompatActivity {
     }
 
     private void instantiate() {
+
+        context = PredictorActivity.this;
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -129,5 +137,16 @@ public class PredictorActivity extends AppCompatActivity {
         second_choice = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+
+    private void showHelp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_need_break, null);
+        builder.setView(view);
+        TextView textView = (TextView) view.findViewById(R.id.need_break_help);
+        textView.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_REGULAR));
+        textView.setText(getResources().getString(R.string.predictor_help));
+        builder.create().show();
     }
 }

@@ -116,13 +116,17 @@ public class NameAndCriteriaActivity extends AppCompatActivity {
                     else if (rangeBarValue == 0)
                         showSnackbar(getResources().getString(R.string.enter_criteria));
                     else {
-                        if (fromSettings)
+                        if (fromSettings) {
+                            Helper.saveToPref(context, Helper.USER_NAME, userName.getText().toString().trim());
                             finish();
-                        else {
+                        } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                Helper.saveToPref(context, Helper.USER_NAME, userName.getText().toString().trim());
                                 startSharedElement(new Intent(context, ShowNameCardActivity.class));
-                            } else
+                            } else {
+                                Helper.saveToPref(context, Helper.USER_NAME, userName.getText().toString().trim());
                                 startActivity(new Intent(NameAndCriteriaActivity.this, ShowNameCardActivity.class));
+                            }
                         }
                     }
                 }

@@ -57,6 +57,7 @@ public class ExtraClassActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
+//        Log.d("option_date_got_date",day);
 
         extraEmptyView = (RelativeLayout) findViewById(R.id.empty_view_extra_goto);
         extraEmptyTitle = (TextView) findViewById(R.id.empty_text_extra_goto);

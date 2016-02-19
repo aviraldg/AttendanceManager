@@ -122,6 +122,7 @@ public class DetailedAnalysisActivity extends AppCompatActivity {
         for (int i = 0; i < attendanceObject.size(); i++) {
             try {
                 String date = attendanceObject.get(i).getDate();
+                Log.d("option_date",date);
                 greenDate = formatter.parse(date);
                 if (attendanceObject.get(i).getAction() == 1) {
                     caldroidFragment.setBackgroundResourceForDate(R.color.attendedColor,

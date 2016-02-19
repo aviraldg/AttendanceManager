@@ -26,7 +26,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -282,6 +281,12 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //------------code for pre-lolipop for extra class------------//
                     Intent intent = new Intent(MainActivity.this, ExtraClassActivity.class);
+                    Date date = new Date();
+                    String myDate;
+                    SimpleDateFormat format = new SimpleDateFormat("EEE");
+                    myDate = format.format(date.getTime());
+                    intent.putExtra("day_selected", myDate);
+                    intent.putExtra("date",day);
                     startActivity(intent);
                 }
             }
@@ -299,31 +304,35 @@ public class MainActivity extends AppCompatActivity {
                         else
                             showSnackbar("You don't have any classes today");
                     } else {
-                        //------code for pre-lolipop-------//
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setTitle("Attended all the subjects?");
-                        builder.setPositiveButton("Attended all", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                database.addAllAttendance(arrayList, 1, day);
-                                mainadapter.notifyDataSetChanged();
-                            }
-                        });
-                        builder.setNegativeButton("Bunked all", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                database.addAllAttendance(arrayList, 0, day);
-                                mainadapter.notifyDataSetChanged();
-                            }
-                        });
-                        builder.setNeutralButton("No class", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                database.addAllAttendance(arrayList, -1, day);
-                                mainadapter.notifyDataSetChanged();
-                            }
-                        });
-                        builder.create().show();
+                        if (arrayList.size() == 0)
+                            showSnackbar("You don't have any classes today");
+                        else {
+                            //------code for pre-lolipop-------//
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            builder.setTitle("Attended all the subjects?");
+                            builder.setPositiveButton("Attended all", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    database.addAllAttendance(arrayList, 1, day);
+                                    mainadapter.notifyDataSetChanged();
+                                }
+                            });
+                            builder.setNegativeButton("Bunked all", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    database.addAllAttendance(arrayList, 0, day);
+                                    mainadapter.notifyDataSetChanged();
+                                }
+                            });
+                            builder.setNeutralButton("No class", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    database.addAllAttendance(arrayList, -1, day);
+                                    mainadapter.notifyDataSetChanged();
+                                }
+                            });
+                            builder.create().show();
+                        }
 
                     }
                 }

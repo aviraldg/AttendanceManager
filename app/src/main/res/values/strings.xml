@@ -78,16 +78,20 @@
     <string name="gotodate">•Select a previous date to enter your attendance in case you forgot :P</string>
     <string name="predictor">•Predict your percentage by entering  number of classes attended or number of classes bunked!</string>
 
+    <string name="predictor_help">Predict your percentage by entering  number of classes attended or bunked!
+        \n\nThink for a while you are on a holiday and you won\'t be able to attend your classes.
+        \n\nRelax! Just input the number of classes you gonna miss and we\'ll predict your percentage!</string>
+
 
     <string-array name="viewpager_title">
         <item>Confused about how to manage your attendance?</item>
-        <item>Tedious tracking day-to-day attendance</item>
-        <item>Sit back and relax </item>
+        <item>Tedious tracking your day-to-day attendance?</item>
+        <item>Sit back and relax  </item>
     </string-array>
 
     <string-array name="viewpager_desc">
         <item>Let\'s do that for you!</item>
         <item>Take a look at Detailed Analysis</item>
-        <item>And say hello to Attendance Manager</item>
+        <item>Say hello to Attendance Manager</item>
     </string-array>
 </resources>

@@ -47,7 +47,7 @@
                     android:gravity="center"
                     app:dotGap="4dp"
                     app:fillColor="#fff"
-                    app:radius="6dp"
+                    app:radius="8dp"
                     app:strokeColor="#fff" />
             </RelativeLayout>
 
