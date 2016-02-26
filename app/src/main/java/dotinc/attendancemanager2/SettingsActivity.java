@@ -80,34 +80,39 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
             @Override
             public void onCheckedChanged(Switch view, boolean checked) {
                 if (checked) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    View dialaogView = LayoutInflater.from(context).inflate(R.layout.custom_need_break, null);
-                    builder.setView(dialaogView);
-                    builder.setCancelable(false);
-
-                    TextView textView = (TextView) dialaogView.findViewById(R.id.need_break_help);
-                    textView.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_REGULAR));
-                    textView.setText(getResources().getString(R.string.need_break_text));
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            bunk_switch.setChecked(false);
-                            dialogInterface.dismiss();
-                        }
-                    });
-
-                    builder.setPositiveButton("Yes, Please!", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Helper.saveToPref(context, Helper.NEEDBREAK, String.valueOf(1));
-                            bunk_switch.setChecked(true);
-                        }
-                    });
-                    builder.create().show();
-                } else
+                    showBreakHelp();
+                } else {
                     Helper.saveToPref(context, Helper.NEEDBREAK, String.valueOf(0));
+                }
             }
         });
+    }
+
+    private void showBreakHelp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View dialaogView = LayoutInflater.from(context).inflate(R.layout.custom_need_break, null);
+        builder.setView(dialaogView);
+        builder.setCancelable(false);
+
+        TextView textView = (TextView) dialaogView.findViewById(R.id.need_break_help);
+        textView.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_REGULAR));
+        textView.setText(getResources().getString(R.string.need_break_text));
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                bunk_switch.setChecked(false);
+                dialogInterface.dismiss();
+            }
+        });
+
+        builder.setPositiveButton("Yes, Please!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Helper.saveToPref(context, Helper.NEEDBREAK, String.valueOf(1));
+                bunk_switch.setChecked(true);
+            }
+        });
+        builder.create().show();
     }
 
     @Override

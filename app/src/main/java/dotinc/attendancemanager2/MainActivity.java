@@ -34,6 +34,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.daimajia.swipe.util.Attributes;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,8 +93,7 @@ public class MainActivity extends AppCompatActivity {
     private String day;
     private Date date;
     private String activityName;
-    private MainPageAdapter exadapter;
-    private MainPageAdapter mainadapter;
+    private RecyclerView.Adapter exadapter, mainadapter;
     private Boolean exclViewOpen = false, attAllViewOpen = false;
 
 
@@ -114,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         rootEmptyTitle.setTypeface(Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD));
         rootEmptyFooter = (TextView) findViewById(R.id.root_empty_footer);
         rootEmptyFooter.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_REGULAR));
-
 
         extraEmptyView = (RelativeLayout) findViewById(R.id.empty_view_extra);
         extraEmptyTitle = (TextView) findViewById(R.id.empty_text_extra);
@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mainadapter = new MainPageAdapter(this, arrayList, day, activityName);
+        ((MainPageAdapter) mainadapter).setMode(Attributes.Mode.Single);
         recyclerView.setAdapter(mainadapter);
         extraClass();
         if (allSubjectsArrayList.size() == 0)
@@ -195,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         exadapter = new MainPageAdapter(this, allSubjectsArrayList, day, activityName);
+        ((MainPageAdapter) exadapter).setMode(Attributes.Mode.Single);
         exclRecyclerView.setAdapter(exadapter);
     }
 
@@ -286,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
                     SimpleDateFormat format = new SimpleDateFormat("EEE");
                     myDate = format.format(date.getTime());
                     intent.putExtra("day_selected", myDate);
-                    intent.putExtra("date",day);
+                    intent.putExtra("date", day);
                     startActivity(intent);
                 }
             }

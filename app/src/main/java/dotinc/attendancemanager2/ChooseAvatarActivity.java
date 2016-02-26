@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -27,15 +26,9 @@ public class ChooseAvatarActivity extends AppCompatActivity {
     private Context context;
     private Typeface type;
 
-    private Handler mHandler;
-    private CharSequence mText;
-    private int mIndex;
-    private long mDelay;
-
     void instantiate() {
         context = ChooseAvatarActivity.this;
 
-        mHandler = new Handler();
         type = Typeface.createFromAsset(getAssets(), Helper.OXYGEN_BOLD);
         avatarText = (TextView) findViewById(R.id.select_avatar_text);
         avatarText.setTypeface(type);
@@ -48,7 +41,6 @@ public class ChooseAvatarActivity extends AppCompatActivity {
         imageAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
@@ -58,7 +50,6 @@ public class ChooseAvatarActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
     }

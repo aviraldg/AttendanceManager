@@ -69,7 +69,8 @@
             android:padding="8dp"
             android:text="Let's Start"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone" />
 
 
     </RelativeLayout>

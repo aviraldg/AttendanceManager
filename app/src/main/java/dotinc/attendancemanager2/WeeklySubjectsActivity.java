@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import dotinc.attendancemanager2.Adapters.WeeklySubjectsAdapter;
+import dotinc.attendancemanager2.Adapters.WeeklySubjectsPagerAdapter;
 import dotinc.attendancemanager2.Fragements.WeeklySubjectsFragment;
 import dotinc.attendancemanager2.Objects.SubjectsList;
 import dotinc.attendancemanager2.Objects.TimeTableList;
@@ -49,7 +49,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
 
     private SubjectDatabase subjectDatabase;
     private TimeTableDatabase database;
-    private WeeklySubjectsAdapter pagerAdapter;
+    private WeeklySubjectsPagerAdapter pagerAdapter;
     private int timetableFlag;
     private int view_timetable = 0;
     private static int pageNumber = 1;
@@ -95,7 +95,7 @@ public class WeeklySubjectsActivity extends AppCompatActivity {
 
         tabTitles = getResources().getStringArray(R.array.tabs);
         pagerAdapter =
-                new WeeklySubjectsAdapter(getSupportFragmentManager(), fragments, tabTitles, view_timetable);
+                new WeeklySubjectsPagerAdapter(getSupportFragmentManager(), fragments, tabTitles, view_timetable);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

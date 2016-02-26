@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ import dotinc.attendancemanager2.Utils.Helper;
 
 //**********Adapter of MainActivity**************//
 
-public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MainPageAdapter extends RecyclerSwipeAdapter<MainPageAdapter.AttendanceViewHolder> {
 
     private Context context;
     private ArrayList<TimeTableList> arrayList;
@@ -46,6 +48,8 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private int attendance_criteria;
     private int markerValue;
 
+    protected SwipeItemRecyclerMangerImpl mItemManger;
+
     public MainPageAdapter(Context context, ArrayList<TimeTableList> arrayList, String myDate, String activityName) {
         this.context = context;
         this.arrayList = arrayList;
@@ -58,19 +62,20 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         list = new TimeTableList();
         markerValue = 2;
         attendance_criteria = Integer.parseInt(Helper.getFromPref(context, Helper.ATTENDANCE_CRITERIA, String.valueOf(0)));
+
+        mItemManger = new SwipeItemRecyclerMangerImpl(this);
+
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+    public AttendanceViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.custom_main_row, parent, false);
         AttendanceViewHolder viewHolder = new AttendanceViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        final AttendanceViewHolder viewHolder = (AttendanceViewHolder) holder;
+    public void onBindViewHolder(final AttendanceViewHolder viewHolder, final int position) {
         final int id = arrayList.get(position).getId();
 
         list.setId(id);
@@ -102,37 +107,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper));
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left,
                 viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper1));
-        viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
-            @Override
-            public void onStartOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onStartClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-
-            }
-
-            @Override
-            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-
-            }
-        });
+        mItemManger.bindView(viewHolder.itemView, position);
 
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
         viewHolder.subject.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.OXYGEN_BOLD));
@@ -189,12 +164,9 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             }
         });
+
     }
 
-    @Override
-    public int getItemCount() {
-        return arrayList.size();
-    }
 
     private int freeBunks(int attendedClass, int totalClass, float percentage) {
         int freeBunks = 0;
@@ -279,6 +251,7 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private void resetAttendance(int id, AttendanceViewHolder viewHolder, int position) {
         database.resetAttendance(id, myDate, position);
         this.notifyDataSetChanged();
+        mItemManger.closeAllItems();
         showSnackBar(context.getResources().getString(R.string.reset_attendance));
     }
 
@@ -290,11 +263,20 @@ public class MainPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         attendanceObject.add(attendanceList);
         database.addAttendance(attendanceList);
         this.notifyDataSetChanged();
+        mItemManger.closeAllItems();
         showSnackBar(message);
 
     }
 
+    @Override
+    public int getItemCount() {
+        return arrayList.size();
+    }
 
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
+    }
 
     static class AttendanceViewHolder extends RecyclerView.ViewHolder {
         private TextView subject;

@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,7 @@ import dotinc.attendancemanager2.WeeklySubjectsActivity;
 
 //Adapter of WeeklySubjectsActivity*******************//
 
-public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TimeTableAdapter extends RecyclerSwipeAdapter<TimeTableAdapter.TimeTableViewHolder> {
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<TimeTableList> arrayList;
@@ -37,10 +39,10 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private int view_timetable;
     private int pageNumber;
     private WeeklySubjectsFragment fragment;
+    protected SwipeItemRecyclerMangerImpl mItemManger;
 
-    public TimeTableAdapter
-            (Context context, ArrayList<TimeTableList> arrayList, TimeTableList timeTableList,
-             WeeklySubjectsFragment fragment, int view_timetable, int pageNumber) {
+    public TimeTableAdapter(Context context, ArrayList<TimeTableList> arrayList, TimeTableList timeTableList,
+                            WeeklySubjectsFragment fragment, int view_timetable, int pageNumber) {
         this.context = context;
         this.timeTableList = timeTableList;
         this.fragment = fragment;
@@ -50,19 +52,18 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         inflater = LayoutInflater.from(context);
         database = new TimeTableDatabase(context);
         subjectsLists = new ArrayList<>();
+        mItemManger = new SwipeItemRecyclerMangerImpl(this);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TimeTableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.custom_timetable, parent, false);
         TimeTableViewHolder viewHolder = new TimeTableViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        final TimeTableViewHolder viewHolder = (TimeTableViewHolder) holder;
-
+    public void onBindViewHolder(TimeTableViewHolder viewHolder, final int position) {
         viewHolder.subject.setText(arrayList.get(position).getSubjectName());
         viewHolder.subject.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_BOLD));
 
@@ -75,38 +76,7 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, null);
         }
 
-
-        viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
-            @Override
-            public void onStartOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onStartClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-
-            }
-
-            @Override
-            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-
-            }
-        });
+        mItemManger.bindView(viewHolder.itemView, position);
 
         viewHolder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,7 +84,16 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 deleteSubject(position);
             }
         });
+    }
 
+    @Override
+    public int getItemCount() {
+        return arrayList.size();
+    }
+
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
     }
 
     private void deleteSubject(int position) {
@@ -126,19 +105,15 @@ public class TimeTableAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         database.deleteTimeTable(timeTableList);
         String deleted_subject = arrayList.get(position).getSubjectName();
         arrayList.remove(position);
-        this.notifyDataSetChanged();
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, arrayList.size());
+        mItemManger.closeAllItems();
         fragment.setEmptyView(arrayList.size());
         ((WeeklySubjectsActivity) context).showSnackbar(deleted_subject + " Deleted");
         ((WeeklySubjectsActivity) context).checkIfEmpty();
     }
 
-    @Override
-    public int getItemCount() {
-        return arrayList.size();
-    }
-
     static class TimeTableViewHolder extends RecyclerView.ViewHolder {
-
         private TextView subject;
         private SwipeLayout swipeLayout;
         private ImageButton delete;

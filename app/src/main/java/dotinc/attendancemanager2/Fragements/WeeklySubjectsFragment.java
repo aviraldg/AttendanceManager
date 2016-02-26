@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.daimajia.swipe.util.Attributes;
+
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.Adapters.TimeTableAdapter;
@@ -29,7 +31,7 @@ public class WeeklySubjectsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RelativeLayout emptyView;
-    public TimeTableAdapter adapter;
+    public RecyclerView.Adapter adapter;
 
     public TimeTableList timeTableList;
     public TimeTableDatabase database;
@@ -37,6 +39,7 @@ public class WeeklySubjectsFragment extends Fragment {
     public ArrayList<TimeTableList> arrayList;
     public int pageNumber, view_timetable;
     private ImageView emptyImage;
+
     public WeeklySubjectsFragment() {
     }
 
@@ -51,11 +54,11 @@ public class WeeklySubjectsFragment extends Fragment {
         emptyView = (RelativeLayout) view.findViewById(R.id.empty_view);
         emptyText = (TextView) view.findViewById(R.id.empty_text);
         emptyText.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), Helper.OXYGEN_BOLD));
-        emptyImage= (ImageView) view.findViewById(R.id.empty_image);
+        emptyImage = (ImageView) view.findViewById(R.id.empty_image);
         Bundle bundle = getArguments();
         pageNumber = bundle.getInt("pageNumber", 1);
         view_timetable = bundle.getInt("view_timetable");
-        if (view_timetable==1){
+        if (view_timetable == 1) {
             emptyImage.setImageResource(R.drawable.rest_image);
             emptyText.setText("Enjoy your day off :)");
         }
@@ -70,6 +73,7 @@ public class WeeklySubjectsFragment extends Fragment {
         timeTableList.setDayCode(pageNumber);
         arrayList = database.getSubjects(timeTableList);
         adapter = new TimeTableAdapter(getActivity(), arrayList, timeTableList, WeeklySubjectsFragment.this, view_timetable, pageNumber);
+        ((TimeTableAdapter) adapter).setMode(Attributes.Mode.Single);
         recyclerView.setAdapter(adapter);
         setEmptyView(arrayList.size());
     }

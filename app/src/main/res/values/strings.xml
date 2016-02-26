@@ -60,7 +60,7 @@
     <string name="sunday">Sunday</string>
 
 
-    <string name="add_sub_help">Click \'+\' to add subjects and delete icon to remove from last.</string>
+    <string name="add_sub_help">Click on \'+\' to add multiple subjects at a time and delete icon to remove from last.</string>
     <string name="weekly_subjects_help">Add your day-wise timetable here</string>
     <string name="subjects_help">Add your subjects here</string>
     <string name="subject_del_help">Swipe RIGHT to delete or LEFT to edit.</string>

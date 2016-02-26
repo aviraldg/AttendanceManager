@@ -28,6 +28,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.daimajia.swipe.util.Attributes;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -51,7 +53,8 @@ public class SubjectsActivity extends AppCompatActivity {
     private EditText subject;
     private LinearLayout emptyView;
     private CoordinatorLayout root;
-    private SubjectsAdapter adapter;
+    private RecyclerView.Adapter adapter;
+
     private SubjectDatabase database;
     private SubjectsList subjectsList;
     private TimeTableDatabase timeTableDatabase;
@@ -102,7 +105,9 @@ public class SubjectsActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.subjects);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         adapter = new SubjectsAdapter(this, arrayList);
+        ((SubjectsAdapter) adapter).setMode(Attributes.Mode.Single);
         setEmptyView(arrayList.size());
         getPreviousSubjects();
 

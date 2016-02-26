@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+import com.daimajia.swipe.implments.SwipeItemRecyclerMangerImpl;
 
 import java.util.ArrayList;
 
@@ -30,7 +32,8 @@ import dotinc.attendancemanager2.Utils.TimeTableDatabase;
 
 //*********Adapter of Subjects activity************//
 
-public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SubjectsAdapter extends RecyclerSwipeAdapter<SubjectsAdapter.SubjectsViewHolder> {
+
     private Context context;
     private ArrayList<SubjectsList> arrayList;
     private LayoutInflater inflater;
@@ -38,6 +41,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private EditText subject;
     private TimeTableDatabase timeTableDatabase;
     private AttendanceDatabase attendanceDatabase;
+    protected SwipeItemRecyclerMangerImpl mItemManger;
 
     public SubjectsAdapter(Context context, ArrayList<SubjectsList> arrayList) {
         this.context = context;
@@ -46,18 +50,19 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         database = new SubjectDatabase(context);
         timeTableDatabase = new TimeTableDatabase(context);
         attendanceDatabase = new AttendanceDatabase(context);
+        mItemManger = new SwipeItemRecyclerMangerImpl(this);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SubjectsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.custom_subjects, parent, false);
         SubjectsViewHolder viewHolder = new SubjectsViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        SubjectsViewHolder viewHolder = (SubjectsViewHolder) holder;
+    public void onBindViewHolder(SubjectsViewHolder viewHolder, final int position) {
+
         viewHolder.subName.setText(arrayList.get(position).getSubjectName());
         viewHolder.subName.setTypeface(Typeface.createFromAsset(context.getAssets(), Helper.JOSEFIN_SANS_BOLD));
 
@@ -65,38 +70,7 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Left, viewHolder.swipeLayout.findViewById(R.id.right_swipe));
         viewHolder.swipeLayout.addDrag(SwipeLayout.DragEdge.Right, viewHolder.swipeLayout.findViewById(R.id.left_swipe));
 
-
-        viewHolder.swipeLayout.addSwipeListener(new SwipeLayout.SwipeListener() {
-            @Override
-            public void onStartOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onStartClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onClose(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-
-            }
-
-            @Override
-            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-
-            }
-        });
+        mItemManger.bindView(viewHolder.itemView, position);
 
 
         viewHolder.delSub.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +82,9 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 attendanceDatabase.deleteSubjects(arrayList.get(position).getId());
                 arrayList.remove(position);
                 ((SubjectsActivity) context).setEmptyView(arrayList.size());
-                notifyDataSetChanged();
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, arrayList.size());
+                mItemManger.closeAllItems();
 
             }
         });
@@ -134,10 +110,11 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             arrayList.clear();
                             arrayList.addAll(database.getAllSubjects());
                             notifyDataSetChanged();
+                            mItemManger.closeAllItems();
                         } else {
                             ((SubjectsActivity) context).showSnackbar(context.getResources().getString(R.string.subject_entry_same));
+                            mItemManger.closeAllItems();
                         }
-
                     }
                 });
                 builder.create().show();
@@ -148,6 +125,11 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemCount() {
         return arrayList.size();
+    }
+
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
     }
 
     static class SubjectsViewHolder extends RecyclerView.ViewHolder {
@@ -165,3 +147,4 @@ public class SubjectsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 }
+

@@ -192,7 +192,9 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/help_text">
+                android:layout_below="@+id/help_text"
+                android:isScrollContainer="false">
+
 
                 <LinearLayout
                     android:id="@+id/subjects_view"

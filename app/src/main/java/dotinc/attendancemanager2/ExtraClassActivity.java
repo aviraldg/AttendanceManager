@@ -9,15 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.daimajia.swipe.util.Attributes;
+
 import java.util.ArrayList;
-import java.util.Date;
 
 import dotinc.attendancemanager2.Adapters.MainPageAdapter;
 import dotinc.attendancemanager2.Objects.TimeTableList;
@@ -41,7 +41,7 @@ public class ExtraClassActivity extends AppCompatActivity {
     private TextView extraEmptyTitle;
 
     private String day_selected;
-    private MainPageAdapter exadapter;
+    private RecyclerView.Adapter exadapter;
     private ArrayList<TimeTableList> arrayList;
     private ArrayList<TimeTableList> allSubjectsArrayList;
 
@@ -56,8 +56,6 @@ public class ExtraClassActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.extra_subjects);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-
-//        Log.d("option_date_got_date",day);
 
         extraEmptyView = (RelativeLayout) findViewById(R.id.empty_view_extra_goto);
         extraEmptyTitle = (TextView) findViewById(R.id.empty_text_extra_goto);
@@ -146,6 +144,7 @@ public class ExtraClassActivity extends AppCompatActivity {
             }
         }
         exadapter = new MainPageAdapter(this, allSubjectsArrayList, day, "ExtraClassActivity");
+        ((MainPageAdapter) exadapter).setMode(Attributes.Mode.Single);
         recyclerView.setAdapter(exadapter);
     }
 

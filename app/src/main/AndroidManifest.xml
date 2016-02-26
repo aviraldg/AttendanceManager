@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SubjectsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".WeeklySubjectsActivity"
             android:screenOrientation="portrait" />

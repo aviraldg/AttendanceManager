@@ -84,13 +84,10 @@ public class FeedbackActivity extends AppCompatActivity {
                 Intent email = new Intent(Intent.ACTION_SEND);
                 email.putExtra(Intent.EXTRA_EMAIL, new String[]{"agamgupta2895@gmail.com", "subhakr11droy@gmail.com"});
                 email.putExtra(Intent.EXTRA_SUBJECT, sub);
-                email.putExtra(Intent.EXTRA_TEXT, msg);
-
+                email.putExtra(Intent.EXTRA_TEXT, msg + Helper.getDeviceInformation(FeedbackActivity.this));
                 email.setType("message/rfc822");
                 startActivity(Intent.createChooser(email, "Choose an Email Client"));
             }
-
-
         }
 
         return super.onOptionsItemSelected(item);

@@ -2,6 +2,8 @@ package dotinc.attendancemanager2.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Handler;
 import android.widget.TextView;
@@ -48,8 +50,6 @@ public class Helper {
         SharedPreferences sharedPreferences = context.getSharedPreferences(FILENAME, context.MODE_PRIVATE);
         return sharedPreferences.getString(key, defVal);
     }
-
-
 
     public static boolean exportDatabase(String dbName) {
         try {
@@ -119,5 +119,22 @@ public class Helper {
         textView.setText("");
         mHandler.removeCallbacks(characterAdder);
         mHandler.postDelayed(characterAdder, mDelay);
+    }
+
+
+    public static String getDeviceInformation(Context context) {
+        PackageManager manager = context.getPackageManager();
+        PackageInfo infoPackage = null;
+        try {
+            infoPackage = manager.getPackageInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String appversion = infoPackage.versionName;
+        String line = "\n\n---------------------------------------\n";
+        return line+"\n\n" + "Model: " + android.os.Build.MODEL
+                + "\nOS: " + android.os.Build.VERSION.RELEASE
+                + "\nAppVersion: "
+                + appversion + line;
     }
 }

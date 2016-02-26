@@ -4,7 +4,6 @@ package dotinc.attendancemanager2.Fragements;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,9 +57,12 @@ public class TutorialFragment extends Fragment {
                         break;
                     case 3:
                         imageView.setImageResource(R.drawable.tutorial4);
-                        next.setText("Got it!");
                         break;
                     case 4:
+                        imageView.setImageResource(R.drawable.tutorial5);
+                        next.setText("Got it!");
+                        break;
+                    case 5:
                         getActivity().getSupportFragmentManager().beginTransaction().remove(TutorialFragment.this).commit();
                         ((MainActivity) getActivity()).closeTutorial();
                         break;
@@ -73,6 +75,10 @@ public class TutorialFragment extends Fragment {
             public void onClick(View view) {
                 number--;
                 switch (number) {
+                    case 0:
+                        prev.setVisibility(View.GONE);
+                        imageView.setImageResource(R.drawable.tutorial1);
+                        break;
                     case 1:
                         imageView.setImageResource(R.drawable.tutorial2);
                         next.setText("Next");
@@ -81,9 +87,9 @@ public class TutorialFragment extends Fragment {
                         imageView.setImageResource(R.drawable.tutorial3);
                         next.setText("Next");
                         break;
-                    case 0:
-                        prev.setVisibility(View.GONE);
-                        imageView.setImageResource(R.drawable.tutorial1);
+                    case 3:
+                        imageView.setImageResource(R.drawable.tutorial4);
+                        next.setText("Next");
                         break;
                 }
             }

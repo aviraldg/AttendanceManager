@@ -28,6 +28,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.daimajia.swipe.util.Attributes;
+
 import java.util.ArrayList;
 
 import dotinc.attendancemanager2.Adapters.MainPageAdapter;
@@ -65,7 +67,7 @@ public class GoToDateActivity extends AppCompatActivity {
 
 
     private AttendanceDatabase database;
-    private MainPageAdapter mainadapter;
+    private RecyclerView.Adapter mainadapter;
     private TimeTableDatabase timeTableDatabase;
     private TimeTableList timeTableList;
     private SubjectDatabase subjectDatabase;                            //add
@@ -241,6 +243,7 @@ public class GoToDateActivity extends AppCompatActivity {
         extraClass();
 
         mainadapter = new MainPageAdapter(this, arrayList, date, activityName);
+        ((MainPageAdapter) mainadapter).setMode(Attributes.Mode.Single);
         recyclerView.setAdapter(mainadapter);
 
 

@@ -9,6 +9,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -30,6 +32,7 @@ public class StartScreen extends AppCompatActivity {
     private TextView helpTv;
     private Button start;
     private ProgressPageIndicator indicator;
+    private Animation btnAnim;
 
     private void instantiate() {
         pager = (ViewPager) findViewById(R.id.start_screen_pager);
@@ -43,6 +46,8 @@ public class StartScreen extends AppCompatActivity {
         helpTv = (TextView) findViewById(R.id.help_text);
         helpTv.setTypeface(Typeface.createFromAsset(getAssets(), Helper.JOSEFIN_SANS_BOLD));
         helpTv.setText(desc[0]);
+        btnAnim = AnimationUtils.loadAnimation(context, R.anim.bottom_to_up);
+        btnAnim.setDuration(500);
     }
 
     @Override
@@ -62,13 +67,8 @@ public class StartScreen extends AppCompatActivity {
         pager.addOnPageChangeListener(new CustomOnPageChangeListener());
         indicator.setViewPager(pager, 0);
         indicator.setFillColor(ContextCompat.getColor(context, R.color.noClassColor));
-
-
         start = (Button) findViewById(R.id.start_btn);
-        start.setEnabled(false);
-        start.setText("Let's start");
         start.setAllCaps(false);
-        buttonEnabled();
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,38 +86,25 @@ public class StartScreen extends AppCompatActivity {
                 case 0:
                     indicator.setViewPager(pager, 0);
                     indicator.setFillColor(ContextCompat.getColor(context, R.color.noClassColor));
-                    start.setEnabled(false);
-                    start.setText("Let's start");
-                    buttonEnabled();
                     break;
                 case 1:
                     indicator.setViewPager(pager, 1);
                     indicator.setFillColor(ContextCompat.getColor(context, R.color.absentColor));
-                    start.setEnabled(false);
-                    start.setText("Let's start");
-                    buttonEnabled();
+                    start.setVisibility(View.GONE);
                     break;
                 case 2:
                     indicator.setViewPager(pager, 2);
                     indicator.setFillColor(ContextCompat.getColor(context, R.color.attendedColor));
-                    start.setEnabled(true);
+                    start.setBackgroundColor(ContextCompat.getColor(context, R.color.attendedColor));
                     start.setText("LET'S START!");
-                    buttonEnabled();
+                    start.setTextColor(ContextCompat.getColor(context, R.color.white));
+                    start.setVisibility(View.VISIBLE);
+                    start.startAnimation(btnAnim);
                     break;
                 default:
                     break;
             }
             super.onPageSelected(position);
-        }
-    }
-
-    public void buttonEnabled() {
-        if (!start.isEnabled()) {
-            start.setBackgroundColor(ContextCompat.getColor(context, R.color.greyLight));
-            start.setTextColor(ContextCompat.getColor(context, R.color.secondaryText));
-        } else {
-            start.setBackgroundColor(ContextCompat.getColor(context, R.color.attendedColor));
-            start.setTextColor(ContextCompat.getColor(context, R.color.white));
         }
     }
 }
